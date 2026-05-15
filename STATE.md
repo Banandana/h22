@@ -245,7 +245,7 @@ _(none)_
 
 - [x] **(S)** T-131 [research] Research H22A Redtop ATTS (Active Torque Transfer System): SH model application, clutch pack, bias ratio -- full spec: docs/plans/03-h-series-variants.md @ T-131 — done 2026-05-15, sha f5e9146
 - [x] **(S)** T-132 [research] Research H22A Redtop suspension: strut design, spring rates, anti-roll bar sizes, damper valving -- full spec: docs/plans/03-h-series-variants.md @ T-132 — 2026-05-15, sha eed1efb
-- [ ] **(S)** T-133 [research] Research H22A Redtop braking: caliper size, rotor diameter, pad compound, ABS tuning -- full spec: docs/plans/03-h-series-variants.md @ T-133
+- [x] **(S)** T-133 [research] Research H22A Redtop braking: caliper size, rotor diameter, pad compound, ABS tuning -- done 2026-05-15, sha dfcc85f -- full spec: docs/plans/03-h-series-variants.md @ T-133
 - [ ] **(S)** T-134 [research] Research H22A Redtop wheel and tire specs: rim size, width, offset, tire size, load index -- full spec: docs/plans/03-h-series-variants.md @ T-134
 - [ ] **(S)** T-135 [research] Research H22A Redtop weight and balance: curb weight, weight distribution, center of gravity height -- full spec: docs/plans/03-h-series-variants.md @ T-135
 - [ ] **(S)** T-136 [research] Research H22A Redtop acceleration and lap times: 0-100 km/h, quarter mile, Nürburgring lap times if available -- full spec: docs/plans/03-h-series-variants.md @ T-136
