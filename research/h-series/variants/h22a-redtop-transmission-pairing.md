@@ -9,7 +9,7 @@
 
 ## Summary
 
-The Honda H22A Redtop engine was paired exclusively with close-ratio 5-speed manual transmissions across all JDM applications (Prelude SiR S-Spec, Prelude Type S, Accord SiR, Accord Euro-R). The primary transmission codes were the M2B4 (with factory limited-slip differential) for SiR models and the M2A4 (standard/open differential) for non-SiR variants. Both share identical gear ratios with a 4.266:1 final drive. The USDM H22A1 received the M2F4, which has slightly taller 4th and 5th gears but the same final drive. All H22A transmissions use a viscous-coupling limited-slip differential when equipped. The transmissions are fully interchangeable with other H-series and F-series transmissions (M-prefix), though ATTS-equipped units (M2U4, T2W4, U2Q7) are not compatible with non-ATTS vehicles without modification.
+The Honda H22A Redtop engine was paired exclusively with close-ratio 5-speed manual transmissions across all JDM applications (Prelude SiR S-Spec, Prelude Type S, Accord SiR, Accord Euro-R). The primary factory transmission for JDM SiR/S-Spec models was the M2B4 (with viscous LSD), while non-SiR variants used the M2A4 (open diff). Both share identical gear ratios with a 4.266:1 final drive. The USDM H22A1 received the M2F4, which has slightly taller 4th and 5th gears but the same final drive. All H22A transmissions use a viscous-coupling limited-slip differential when equipped. The transmissions are fully interchangeable with other H-series and F-series transmissions (M-prefix), though ATTS-equipped units require modification to fit non-ATTS chassis.
 
 ---
 
@@ -23,7 +23,6 @@ The Honda H22A Redtop engine was paired exclusively with close-ratio 5-speed man
 | Application | JDM Honda Prelude SiR S-Spec (BB1/BB4), 1992–1996 |
 | Also in | JDM Accord SiR (CD6), JDM Torneo Euro-R (CL1) |
 | LSD | Yes — viscous coupling type |
-| Gear ratios | See table below |
 | Final drive | 4.266:1 |
 | Clutch cable attachment | Standard H-series |
 | Interchangeable with | All M-prefix H/F-series transmissions (non-ATTS) |
@@ -35,7 +34,6 @@ The Honda H22A Redtop engine was paired exclusively with close-ratio 5-speed man
 | Transmission code | M2A4 |
 | Application | JDM Honda Prelude (non-SiR), 1992–1996; JDM Accord (non-VTEC) |
 | LSD | No — open differential |
-| Gear ratios | Identical to M2B4 (see table below) |
 | Final drive | 4.266:1 |
 | Clutch cable attachment | Standard H-series |
 | Interchangeable with | All M-prefix H/F-series transmissions (non-ATTS) |
@@ -49,7 +47,6 @@ The Honda H22A Redtop engine was paired exclusively with close-ratio 5-speed man
 | Transmission code | M2F4 |
 | Application | USDM Honda Prelude VTEC (BA8), 1993–1996 |
 | LSD | No — open differential (aftermarket Quaife/helical LSD can be added) |
-| Gear ratios | Different 4th and 5th from M2B4/M2A4 (see table below) |
 | Final drive | 4.266:1 |
 | Clutch cable attachment | Standard H-series |
 | Interchangeable with | All M-prefix H/F-series transmissions (non-ATTS) |
@@ -264,22 +261,6 @@ This appendix consolidates all known H-series and related F-series transmission 
 | P2A5 | USDM Accord DX/LX | 1994–1997 | No | F22B1 non-VTEC |
 | P2U5 | USDM Accord EX | 1994–1997 | No | F22B1 VTEC |
 | P2A8 | USDM Accord Wagon | 1998–2002 | No | Later wagon |
-| N2C4 | — | — | — | Unknown application |
-| N2D4 | — | — | — | Unknown application |
-| N2E5 | — | — | — | Unknown application |
-| N2S4 | — | — | — | Unknown application |
-| S2A4 | — | — | — | Unknown application |
-| S2A8 | — | — | — | Unknown application |
-| H2A5 | — | — | — | Non-Prelude (H-prefix) |
-| H2C4 | — | — | — | Non-Prelude (H-prefix) |
-| H2S8 | — | — | — | Non-Prelude (H-prefix) |
-| H2U4 | — | — | — | Non-Prelude (H-prefix) |
-| H2U5 | — | — | — | Non-Prelude (H-prefix) |
-| U2G5 | — | — | — | Unknown application |
-| U2J4 | — | — | — | Unknown application |
-| U2L4 | — | — | — | Unknown application |
-| U2N4 | — | — | — | Unknown application |
-| T2C5 | — | — | — | Unknown application |
 
 **Legend:**
 - LSD = Limited-Slip Differential
