@@ -41,6 +41,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | JDM Redtop (1992-1996) | QWEN.md | Engine Variants section | 220 PS @ 7,200 RPM, 221 Nm @ 6,500 RPM, 11.0:1 compression |
 | JDM Blacktop (1992-2001) | QWEN.md | Engine Variants section | 200 PS @ 7,000 RPM, 219 Nm @ 5,500 RPM, 10.6:1 compression |
 | Camshaft specs comparison | QWEN.md | Camshaft Specifications table | Redtop: 306°/310°, Blacktop: 288°/308° |
+| Camshaft profiles (detailed) | h22a-blacktop-camshaft-profiles.md | Full research file | Advertised duration, .050" duration, lift, overlap, three-lobe VTEC profiles, aftermarket cams |
 | Internal component comparison | QWEN.md | Connecting Rod & Piston Data table | Baseline for H22A vs H22A1 vs H22A4 vs H23A |
 | Valve & journal specs | QWEN.md | Valve & Journal Specifications table | 1992-1996: 50mm main journals |
 | Oil squirters | h-series-oil-gallery-layout.md | Piston Oil Squirters section | H22A/H22Z have oil squirters; locations under cam main caps |
@@ -269,6 +270,7 @@ All files written following `research/template.md` format. Cross-referenced agai
 | [`h22a-redtop-applications.md`](../h-series/specifications/h22a-redtop-applications.md) | T-127 | Complete application matrix: 4th-gen Prelude (BB1/BB4), 5th-gen Prelude (BB6/BB8), Accord Euro R/Torneo (CL1), serial codes, market exclusivity | 2026-05-15 |
 | [`h22a-redtop-ecu.md`](../h-series/specifications/h22a-redtop-ecu.md) | T-128 | P28/P06 ECU architecture, chipping process, tuning parameters, aftermarket solutions (Hondata S300, Chrome HTS), flash procedures | 2026-05-15 |
 | [`h22a-redtop-camshaft-profiles.md`](../h-series/specifications/h22a-redtop-camshaft-profiles.md) | T-123 | Camshaft specs: 306°/310° duration, 11.91/11.12 mm lift, comparison vs. Blacktop | 2026-05-15 |
+| [`h22a-blacktop-camshaft-profiles.md`](../h-series/specifications/h22a-blacktop-camshaft-profiles.md) | T-153 | Camshaft profiles: 288°/308° advertised, 231°/234° @.050", 11.38/10.54 mm lift, overlap calc, three-lobe VTEC, aftermarket cams | 2026-05-15 |
 | [`h22a-redtop-intake-system.md`](../h-series/specifications/h22a-redtop-intake-system.md) | T-124 | Dual runner manifold, 62.5 mm throttle body, plenum design, Dynamic Chambering airbox | 2026-05-15 |
 | [`h22a-redtop-exhaust-system.md`](../h-series/specifications/h22a-redtop-exhaust-system.md) | T-125 | 57 mm exhaust, improved manifolds, catalytic converter placement | 2026-05-15 |
 | [`h22a-redtop-head-porting.md`](../h-series/specifications/h22a-redtop-head-porting.md) | T-126 | Light factory head porting, flow numbers, port shape, valve job angle | 2026-05-15 |
