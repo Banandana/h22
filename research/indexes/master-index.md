@@ -217,6 +217,7 @@ Each subdirectory below will contain one or more research markdown files followi
 | [`h22a-redtop-jdm-origin.md`](../h-series/variants/h22a-redtop-jdm-origin.md) | H22A Redtop JDM origin: when introduced, which models received it, production years, market exclusivity, applications across Prelude/Accord/Torneo, serial code ranges | ✅ T-121 (2026-05-15) |
 | [`h22a-redtop-specifications.md`](../h-series/specifications/h22a-redtop-specifications.md) | H22A Redtop full specifications: 220 PS @ 7200 RPM, 221 Nm @ 6500 RPM, 11.0:1 CR, dome pistons, cam profiles, induction/exhaust, ECU, applications, block serial codes | ✅ T-122 (2026-05-15) |
 | [`h22a-redtop-camshaft-profiles.md`](../h-series/specifications/h22a-redtop-camshaft-profiles.md) | H22A Redtop camshaft profiles: 306° intake / 310° exhaust duration, lift values (11.91 mm IN / 11.12 mm EX), overlap (~14°), VTEC vs idle lobe heights, aftermarket comparison (Crower stages) | ✅ T-123 (2026-05-15) |
+| [`h22a-redtop-intake-system.md`](../h-series/specifications/h22a-redtop-intake-system.md) | H22A Redtop intake system: dual runner manifold (Prelude Type S/SiR), single runner (Accord Euro R), 62.5 mm throttle body, plenum design, runner length characteristics, IAB butterfly timing (~4,800 RPM), factory porting, aftermarket options | ✅ T-124 (2026-05-15) |
 
 ### Mechanical Design & Internals
 
