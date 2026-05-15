@@ -260,7 +260,7 @@ _(none)_
 - [x] **(S)** T-145 [research] Research H22A Redtop autocross capability: grip levels, turn-in response, mid-corner stability, driver feedback -- done 2026-05-15, sha b8d27f1 -- full spec: docs/plans/03-h-series-variants.md @ T-145
 - [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability — done 2026-05-15, sha 213c79c — full spec: docs/plans/03-h-series-variants.md @ T-146
 - [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options -- done 2026-05-15, sha 7a0e927 -- full spec: docs/plans/03-h-series-variants.md @ T-147
-- [ ] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility -- full spec: docs/plans/03-h-series-variants.md @ T-149
+- [x] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility — done 2026-05-15, sha 9b71865 — full spec: docs/plans/03-h-series-variants.md @ T-149
 - [ ] **(S)** T-150 [checkpoint] Phase 3 checkpoint: review H22A Redtop research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-150
 
 ### H22A Blacktop (JDM 1992-2001)
@@ -685,6 +685,7 @@ _(none yet)_
 - [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability — done 2026-05-15, sha 213c79c — full spec: docs/plans/03-h-series-variants.md @ T-146
 - [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options — done 2026-05-15, sha 7a0e927 — full spec: docs/plans/03-h-series-variants.md @ T-147
 - [x] **(S)** T-148 [research] Research H22A Redtop daily usability: NVH levels, visibility, seat comfort, storage space, climate control — done 2026-05-15, sha d20bc28 — full spec: docs/plans/03-h-series-variants.md @ T-148
+- [x] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility — done 2026-05-15, sha 9b71865 — full spec: docs/plans/03-h-series-variants.md @ T-149
 
 **Phase 1: H-Series Development History & Timeline
 
