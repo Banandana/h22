@@ -235,7 +235,7 @@ _(none)_
 ### H22A Redtop (JDM 1992-1996)
 
 - [x] **(M)** T-121 [research] Research H22A Redtop JDM origin: when introduced, which models received it, production years, market exclusivity — done 2026-05-15, sha 24cf548 — full spec: docs/plans/03-h-series-variants.md @ T-121
-- [ ] **(M)** T-122 [research] Research H22A Redtop specifications: 220 PS @ 7200 RPM, 221 Nm @ 6500 RPM, 11.0:1 compression, dome pistons -- full spec: docs/plans/03-h-series-variants.md @ T-122
+- [x] **(M)** T-122 [research] Research H22A Redtop specifications: 220 PS @ 7200 RPM, 221 Nm @ 6500 RPM, 11.0:1 compression, dome pistons -- done 2026-05-15, sha d24758d -- full spec: docs/plans/03-h-series-variants.md @ T-122
 - [ ] **(M)** T-123 [research] Research H22A Redtop camshaft profiles: 306° intake duration, 310° exhaust duration, lift values, overlap -- full spec: docs/plans/03-h-series-variants.md @ T-123
 - [ ] **(M)** T-124 [research] Research H22A Redtop intake system: dual runner manifold, 62.5mm throttle body, plenum design, runner length -- full spec: docs/plans/03-h-series-variants.md @ T-124
 - [ ] **(M)** T-125 [research] Research H22A Redtop exhaust system: 57mm exhaust diameter, header design, catalytic converter placement -- full spec: docs/plans/03-h-series-variants.md @ T-125
