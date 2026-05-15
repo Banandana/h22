@@ -267,7 +267,7 @@ _(none)_
 
 
 
-- [x] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- done 2026-05-15, sha TBD -- full spec: docs/plans/03-h-series-variants.md @ T-155
+- [x] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- done 2026-05-15, sha 1330e29 -- full spec: docs/plans/03-h-series-variants.md @ T-155
 - [ ] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- full spec: docs/plans/03-h-series-variants.md @ T-156
 - [ ] **(M)** T-157 [research] Research H22A Blacktop applications: Prelude SiR, Accord SiR, Torneo — model years, chassis codes, features -- full spec: docs/plans/03-h-series-variants.md @ T-157
 - [ ] **(M)** T-158 [research] Research H22A Blacktop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures -- full spec: docs/plans/03-h-series-variants.md @ T-158
