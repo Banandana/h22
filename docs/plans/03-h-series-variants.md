@@ -28,6 +28,18 @@ This plan doc contains the authoritative specs for Phase 3 tasks covering detail
 
 ---
 
+### T-142
+
+**Description:** Research H22A Redtop restoration guides: nut-and-bolt examples, frame-off rebuild costs, parts availability. Compile comprehensive documentation on restoring a JDM H22A Redtop engine from disassembly through reassembly. Cover step-by-step teardown/rebuild procedures documented by enthusiasts, complete parts lists with OEM part numbers, frame-off rebuild cost breakdowns (labor + parts), gasket kit pricing, bearing sets, piston/ring options, ARP fastener kits, cylinder sleeving solutions (RS Machine, Darton), remanufactured long-block pricing, used engine sourcing (eBay JDM prices), aftermarket supplier landscape (SpeedFactory Racing, Brian Crower, King Motorsports), and community restoration guides (Honda-Tech threads, YouTube teardown videos). Cross-reference against Honda-Tech forums, PreludePower, eBay listings, SpeedFactory Racing catalog, Yonaka Motor Sports, Engine Part Store, VAPENGINES.com, and QWEN.md.
+
+**Depends on:** None directly; benefits from T-122 (Redtop specs), T-141 (common issues) for context.
+
+**Spawns:** None directly; follow-on tasks T-143 through T-149 cover track day viability, drag racing, autocross, rally, winter driving, daily usability, insurance.
+
+**DoD notes:** This is a pure research task — no code changes. Focus on accurate cost figures (note that prices vary by year/source), proper source attribution with URLs and retrieval timestamps, noting any conflicts between sources (e.g., rebuild cost estimates range widely from $2,500 DIY to $6,000+ shop labor), and clearly distinguishing between OBD1 (H22A1/H22A2) and OBD2 (H22A4) parts differences where relevant. The research file should be written to `research/h-series/specifications/h22a-redtop-restoration.md` following the template in `research/template.md`.
+
+---
+
 ### T-139
 
 **Description:** Research H22A Redtop sound character: exhaust note, intake roar, VTEC kick description, dB levels. Compile comprehensive documentation on the acoustic profile of the H22A Redtop engine: the raspy idle character from double-walled cast-iron headers, the progressive exhaust note build under WOT, the distinctive VTEC crossover at ~5,500 RPM characterized by deeper/louder exhaust tone and sharp pitch shift, the intake roar amplified by the 62.5 mm throttle body and dual-runner manifold with IAB butterfly, and available dB level measurements. Cross-reference against professional reviews (MotorTrend/Automobile Magazine), enthusiast forums (Honda-Tech, PreludePower, NZHondas.com), technical databases (mywikimotors, specsnode.com), community video documentation, and QWEN.md.
