@@ -42,7 +42,8 @@ N/A — this is a documentation-only task with no code changes. One new research
 
 ## Commit SHA(s)
 
-Pending commit (to be recorded after push to origin/main).
+- `d20bc28` — docs: T-148 Research H22A Redtop daily usability — NVH, visibility, seats, storage, climate control (main research file, plan doc, index, report, STATE.md move)
+- `5662373` — chore: T-148 Update Done archive with actual commit SHA d20bc28
 
 ## DoD Checklist
 
