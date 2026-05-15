@@ -238,7 +238,7 @@ _(none)_
 - [x] **(M)** T-122 [research] Research H22A Redtop specifications: 220 PS @ 7200 RPM, 221 Nm @ 6500 RPM, 11.0:1 compression, dome pistons -- done 2026-05-15, sha d24758d -- full spec: docs/plans/03-h-series-variants.md @ T-122
 - [x] **(M)** T-123 [research] Research H22A Redtop camshaft profiles: 306° intake duration, 310° exhaust duration, lift values, overlap -- done 2026-05-15, sha c3f29d0 -- full spec: docs/plans/03-h-series-variants.md @ T-123
 - [x] **(M)** T-124 [research] Research H22A Redtop intake system: dual runner manifold, 62.5mm throttle body, plenum design, runner length -- done 2026-05-15, sha 57369f2 -- full spec: docs/plans/03-h-series-variants.md @ T-124
-- [ ] **(M)** T-125 [research] Research H22A Redtop exhaust system: 57mm exhaust diameter, header design, catalytic converter placement -- full spec: docs/plans/03-h-series-variants.md @ T-125
+- [x] **(M)** T-125 [research] Research H22A Redtop exhaust system: 57mm exhaust diameter, header design, catalytic converter placement — done 2026-05-15, sha 75b8d1f — full spec: docs/plans/03-h-series-variants.md @ T-125
 - [ ] **(M)** T-126 [research] Research H22A Redtop factory head porting: flow numbers, port shape, valve job angle, surface finish -- full spec: docs/plans/03-h-series-variants.md @ T-126
 - [ ] **(M)** T-127 [research] Research H22A Redtop applications: Prelude SiR, Prelude Type S, Accord SiR — model years, chassis codes, features -- full spec: docs/plans/03-h-series-variants.md @ T-127
 - [ ] **(M)** T-128 [research] Research H22A Redtop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures -- full spec: docs/plans/03-h-series-variants.md @ T-128
