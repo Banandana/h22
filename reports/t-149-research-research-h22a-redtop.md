@@ -64,7 +64,14 @@ These could spawn follow-up tasks in a future phase.
 
 ## Commit SHA(s)
 
-Pending commit — will be appended after push.
+```
+$ git log --oneline -2
+06f6467 chore: T-149 mark done in STATE.md with commit SHA
+9b71865 docs: T-149 Research H22A Redtop insurance costs — classification, premiums, classic car eligibility
+```
+
+- `9b71865` — research file + index update + report
+- `06f6467` — STATE.md Done archive update
 
 ## DoD Checklist
 
@@ -85,10 +92,10 @@ Pending commit — will be appended after push.
 
 - [x] **Documentation in sync** — Master index updated in same commit. README.md and CLAUDE.md do not require updates (no behavior/flags/layout/convention changes).
 
-- [ ] **STATE.md updated** — Pending commit (task moved to Done with commit SHA)
+- [x] **STATE.md updated** — Task moved to Done archive with commit SHA 9b71865 and date 2026-05-15. Also committed to Done archive section under Phase 3.
 
-- [ ] **CI green** — N/A (pure research/documentation task, no code changes, no CI scripts exist in package.json)
+- [x] **CI green** — N/A (pure research/documentation task, no code changes, no CI scripts exist in package.json)
 
-- [ ] **No regressions** — N/A (no code changes)
+- [x] **No regressions** — N/A (no code changes)
 
 - [x] **Reviewable diff** — Single-purpose commit: research file + index update. Conventional prefix: `docs:`. No drive-by reformatting.
