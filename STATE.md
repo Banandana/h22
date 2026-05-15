@@ -250,7 +250,7 @@ _(none)_
 - [x] **(S)** T-135 [research] Research H22A Redtop weight and balance: curb weight, weight distribution, center of gravity height -- done 2026-05-15, sha cba69a0 -- full spec: docs/plans/03-h-series-variants.md @ T-135
 - [x] **(S)** T-136 [research] Research H22A Redtop acceleration and lap times: 0-100 km/h, quarter mile, Nürburgring lap times if available -- done 2026-05-15, sha 785b809 -- full spec: docs/plans/03-h-series-variants.md @ T-136
 - [x] **(S)** T-137 [research] Research H22A Redtop fuel economy: JC08 cycle figures, real-world consumption, highway vs city breakdown -- done 2026-05-15, sha ea91e4b -- full spec: docs/plans/03-h-series-variants.md @ T-137
-- [ ] **(S)** T-138 [research] Research H22A Redtop emissions ratings: NOx, CO, HC, particulate levels, certification standards -- full spec: docs/plans/03-h-series-variants.md @ T-138
+- [x] **(S)** T-138 [research] Research H22A Redtop emissions ratings: NOx, CO, HC, particulate levels, certification standards -- done 2026-05-15, sha 79bd826 -- full spec: docs/plans/03-h-series-variants.md @ T-138
 - [ ] **(S)** T-139 [research] Research H22A Redtop sound character: exhaust note, intake roar, VTEC kick description, dB levels -- full spec: docs/plans/03-h-series-variants.md @ T-139
 - [ ] **(S)** T-140 [research] Research H22A Redtop collectibility: current used prices, rarity factors, condition premiums, trend analysis -- full spec: docs/plans/03-h-series-variants.md @ T-140
 - [ ] **(S)** T-141 [research] Research H22A Redtop common issues: known failure modes, age-related wear, corrosion patterns -- full spec: docs/plans/03-h-series-variants.md @ T-141
