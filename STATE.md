@@ -268,7 +268,7 @@ _(none)_
 
 
 - [x] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- done 2026-05-15, sha 1330e29 -- full spec: docs/plans/03-h-series-variants.md @ T-155
-- [ ] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- full spec: docs/plans/03-h-series-variants.md @ T-156
+- [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
 - [ ] **(M)** T-157 [research] Research H22A Blacktop applications: Prelude SiR, Accord SiR, Torneo — model years, chassis codes, features -- full spec: docs/plans/03-h-series-variants.md @ T-157
 - [ ] **(M)** T-158 [research] Research H22A Blacktop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures -- full spec: docs/plans/03-h-series-variants.md @ T-158
 - [ ] **(M)** T-159 [research] Research H22A Blacktop transmission pairing: gear ratios, final drive, differential type, limited-slip availability -- full spec: docs/plans/03-h-series-variants.md @ T-159
@@ -707,6 +707,8 @@ _(none yet)_
 - [x] **(M)** T-152 [research] Research H22A Blacktop specifications: 200 PS @ 7000 RPM, 219 Nm @ 5500 RPM, 10.6:1 compression, flat-top pistons -- full spec: docs/plans/03-h-series-variants.md @ T-152 — done 2026-05-15, sha 8fc8666
 - [x] **(M)** T-153 [research] Research H22A Blacktop camshaft profiles: 288° intake duration, 308° exhaust duration, lift values, overlap -- full spec: docs/plans/03-h-series-variants.md @ T-153 — done 2026-05-15, sha 41f98d0
 - [x] **(M)** T-154 [research] Research H22A Blacktop intake system: single runner manifold, 60mm throttle body, plenum design, runner length -- full spec: docs/plans/03-h-series-variants.md @ T-154 — done 2026-05-15, sha 9e15a4c
+- [x] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- done 2026-05-15, sha 1330e29 -- full spec: docs/plans/03-h-series-variants.md @ T-155
+- [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
 
 **Phase 0 infrastructure**
 
