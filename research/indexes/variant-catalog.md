@@ -294,6 +294,7 @@ All files written following `research/template.md` format. Cross-referenced agai
 | [`h22a-redtop-daily-usability.md`](../h-series/specifications/h22a-redtop-daily-usability.md) | T-148 | NVH levels, visibility, seat comfort, storage space, climate control | 2026-05-15 |
 | [`h22a-redtop-insurance-costs.md`](../h-series/specifications/h22a-redtop-insurance-costs.md) | T-149 | Standard vs. collector insurance, premium cost factors, agreed-value policies, appreciation trends | 2026-05-15 |
 | [`h22a-redtop-4ws-integration.md`](../h-series/specifications/h22a-redtop-4ws-integration.md) | T-129? | H22A Redtop 4WS integration details | 2026-05-15 |
+| [`h22a-blacktop-intake-system.md`](../h-series/specifications/h22a-blacktop-intake-system.md) | T-154 | H22A Blacktop intake system: single runner manifold, 60 mm TB, plenum design, runner length, IAB butterfly, EGR circuit, aftermarket options | 2026-05-15 |
 
 ## Coverage Assessment
 
