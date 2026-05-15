@@ -210,7 +210,7 @@ Each subdirectory below will contain one or more research markdown files followi
 
 | Subdirectory | Purpose | Files |
 |--------------|---------|-------|
-| `../h-series/variants/` | Per-variant research files (one per variant code) | ✅ T-121 (origin), T-122 (specifications) |
+| `../h-series/variants/` | Per-variant research files (one per variant code) | ✅ T-121 (origin), T-122 (specifications), T-129 (transmission pairing) |
 
 | File | Description | Status |
 |------|-------------|--------|
@@ -221,6 +221,7 @@ Each subdirectory below will contain one or more research markdown files followi
 | [`h22a-redtop-exhaust-system.md`](../h-series/specifications/h22a-redtop-exhaust-system.md) | H22A Redtop exhaust system: 57 mm exhaust diameter, header design (stock double-wall cast iron vs aftermarket 4-2-1/4-1), primary/secondary tube diameters, collector sizing, catalytic converter placement in downpipe, O2 sensor location, aftermarket header recommendations by build level | ✅ T-125 (2026-05-15) |
 | [`h22a-redtop-head-porting.md`](../h-series/specifications/h22a-redtop-head-porting.md) | H22A Redtop factory head porting: flow numbers (stock ~190–210 CFM intake), port shape (round-to-oval transition, mild short-turn blend), valve job angles (30-45-60° intake / 45° exhaust), surface finish (hand-deburred cast-aluminum), comparison vs Blacktop (no factory porting), aftermarket CNC landscape (4 Piston Racing up to 360 CFM) | ✅ T-126 (2026-05-15) |
 | [`h22a-redtop-applications.md`](../h-series/variants/h22a-redtop-applications.md) | H22A Redtop applications: Prelude SiR S-Spec (BB1/BB4 1992–1996), Prelude Type S (BB6 1997–2001), Accord SiR Sedan/Wagon (CD6/CF2 1994–1997), Accord Euro-R/Torneo Euro-R (CL1 1999–2001) — model years, chassis codes, features, sub-trims, cross-application comparison, block serial codes | ✅ T-127 (2026-05-15) |
+| [`h22a-redtop-transmission-pairing.md`](../h-series/variants/h22a-redtop-transmission-pairing.md) | H22A Redtop transmission pairing: M2B4/M2A4/M2F4 close-ratio 5-speed gear ratios, final drive (4.266:1), viscous LSD vs helical LSD types, factory and aftermarket LSD options, transmission identification, speed calculations, common issues (5th gear synchro wear), complete H-series transmission code reference table | ✅ T-129 (2026-05-15) |
 
 ### Mechanical Design & Internals
 
