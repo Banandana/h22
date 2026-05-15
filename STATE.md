@@ -253,7 +253,7 @@ _(none)_
 - [x] **(S)** T-138 [research] Research H22A Redtop emissions ratings: NOx, CO, HC, particulate levels, certification standards -- done 2026-05-15, sha 79bd826 -- full spec: docs/plans/03-h-series-variants.md @ T-138
 - [x] **(S)** T-139 [research] Research H22A Redtop sound character: exhaust note, intake roar, VTEC kick description, dB levels -- done 2026-05-15, sha 46ad895 -- full spec: docs/plans/03-h-series-variants.md @ T-139
 - [x] **(S)** T-140 [research] Research H22A Redtop collectibility: current used prices, rarity factors, condition premiums, trend analysis -- done 2026-05-15, sha 717a090 -- full spec: docs/plans/03-h-series-variants.md @ T-140
-- [ ] **(S)** T-141 [research] Research H22A Redtop common issues: known failure modes, age-related wear, corrosion patterns -- full spec: docs/plans/03-h-series-variants.md @ T-141
+- [x] **(S)** T-141 [research] Research H22A Redtop common issues: known failure modes, age-related wear, corrosion patterns — done 2026-05-15, sha 51f868e — full spec: docs/plans/03-h-series-variants.md @ T-141
 - [ ] **(S)** T-142 [research] Research H22A Redtop restoration guides: nut-and-bolt examples, frame-off rebuild costs, parts availability -- full spec: docs/plans/03-h-series-variants.md @ T-142
 - [ ] **(S)** T-143 [research] Research H22A Redtop track day viability: reliability on track, cooling capacity, tire wear, brake fade -- full spec: docs/plans/03-h-series-variants.md @ T-143
 - [ ] **(S)** T-144 [research] Research H22A Redtop drag racing potential: 60-foot times, trap speed, launch technique, traction limits -- full spec: docs/plans/03-h-series-variants.md @ T-144
