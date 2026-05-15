@@ -244,7 +244,7 @@ _(none)_
 - [x] **(M)** T-128 [research] Research H22A Redtop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures — done 2026-05-15, sha 2fb8d2d — full spec: docs/plans/03-h-series-variants.md @ T-128
 
 - [x] **(S)** T-131 [research] Research H22A Redtop ATTS (Active Torque Transfer System): SH model application, clutch pack, bias ratio -- full spec: docs/plans/03-h-series-variants.md @ T-131 — done 2026-05-15, sha f5e9146
-- [ ] **(S)** T-132 [research] Research H22A Redtop suspension: strut design, spring rates, anti-roll bar sizes, damper valving -- full spec: docs/plans/03-h-series-variants.md @ T-132
+- [x] **(S)** T-132 [research] Research H22A Redtop suspension: strut design, spring rates, anti-roll bar sizes, damper valving -- full spec: docs/plans/03-h-series-variants.md @ T-132 — 2026-05-15, sha eed1efb
 - [ ] **(S)** T-133 [research] Research H22A Redtop braking: caliper size, rotor diameter, pad compound, ABS tuning -- full spec: docs/plans/03-h-series-variants.md @ T-133
 - [ ] **(S)** T-134 [research] Research H22A Redtop wheel and tire specs: rim size, width, offset, tire size, load index -- full spec: docs/plans/03-h-series-variants.md @ T-134
 - [ ] **(S)** T-135 [research] Research H22A Redtop weight and balance: curb weight, weight distribution, center of gravity height -- full spec: docs/plans/03-h-series-variants.md @ T-135
