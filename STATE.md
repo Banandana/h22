@@ -265,7 +265,6 @@ _(none)_
 
 ### H22A Blacktop (JDM 1992-2001)
 
-- [ ] **(M)** T-152 [research] Research H22A Blacktop specifications: 200 PS @ 7000 RPM, 219 Nm @ 5500 RPM, 10.6:1 compression, flat-top pistons -- full spec: docs/plans/03-h-series-variants.md @ T-152
 - [ ] **(M)** T-153 [research] Research H22A Blacktop camshaft profiles: 288° intake duration, 308° exhaust duration, lift values, overlap -- full spec: docs/plans/03-h-series-variants.md @ T-153
 - [ ] **(M)** T-154 [research] Research H22A Blacktop intake system: single runner manifold, 60mm throttle body, plenum design, runner length -- full spec: docs/plans/03-h-series-variants.md @ T-154
 - [ ] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- full spec: docs/plans/03-h-series-variants.md @ T-155
@@ -705,6 +704,7 @@ _(none yet)_
 **Phase 3: H-Series Engine Variants Detailed Research**
 
 - [x] **(M)** T-151 [research] Research H22A Blacktop JDM origin: when introduced, which models received it, production years, market exclusivity -- full spec: docs/plans/03-h-series-variants.md @ T-151 — done 2026-05-15, sha fc1ac8a
+- [x] **(M)** T-152 [research] Research H22A Blacktop specifications: 200 PS @ 7000 RPM, 219 Nm @ 5500 RPM, 10.6:1 compression, flat-top pistons -- full spec: docs/plans/03-h-series-variants.md @ T-152 — done 2026-05-15, sha 8fc8666
 
 **Phase 0 infrastructure**
 
