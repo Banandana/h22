@@ -684,7 +684,7 @@ _(none yet)_
 
 - [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability — done 2026-05-15, sha 213c79c — full spec: docs/plans/03-h-series-variants.md @ T-146
 - [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options — done 2026-05-15, sha 7a0e927 — full spec: docs/plans/03-h-series-variants.md @ T-147
-- [x] **(S)** T-148 [research] Research H22A Redtop daily usability: NVH levels, visibility, seat comfort, storage space, climate control — done 2026-05-15, sha PENDING — full spec: docs/plans/03-h-series-variants.md @ T-148
+- [x] **(S)** T-148 [research] Research H22A Redtop daily usability: NVH levels, visibility, seat comfort, storage space, climate control — done 2026-05-15, sha d20bc28 — full spec: docs/plans/03-h-series-variants.md @ T-148
 
 **Phase 1: H-Series Development History & Timeline
 
