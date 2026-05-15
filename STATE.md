@@ -676,6 +676,10 @@ _(none yet)_
 - [x] **(S)** T-120 [checkpoint] Phase 2 checkpoint: review H-series specifications research, identify gaps, spawn new tasks if needed — done 2026-05-15 (no git repo yet) — full spec: docs/plans/02-h-series-specs.md @ T-120
 - [x] **(S)** T-096 [research] Research H-series intake manifold designs: dual runner vs single runner, plenum volume, runner length — done 2026-05-15, sha 3e3a0c0 — full spec: docs/plans/02-h-series-specs.md @ T-096
 
+**Phase 3: H-Series Engine Variants Detailed Research**
+
+- [x] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type — done 2026-05-15, sha 8a0f02b — full spec: docs/plans/03-h-series-variants.md @ T-129
+
 **Phase 1: H-Series Development History & Timeline**
 
 - [x] **(S)** T-070 [checkpoint] Phase 1 checkpoint: review H-series development research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/01-h-series-development.md @ T-070 — 2026-05-15, sha d95fe1c
