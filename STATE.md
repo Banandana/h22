@@ -271,7 +271,7 @@ _(none)_
 - [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
 - [x] **(M)** T-157 [research] Research H22A Blacktop applications: Prelude SiR, Accord SiR, Torneo — model years, chassis codes, features -- done 2026-05-15, sha 2764b69 -- full spec: docs/plans/03-h-series-variants.md @ T-157
 
-- [ ] **(M)** T-159 [research] Research H22A Blacktop transmission pairing: gear ratios, final drive, differential type, limited-slip availability -- full spec: docs/plans/03-h-series-variants.md @ T-159
+
 - [ ] **(M)** T-160 [research] Research H22A Blacktop closed deck vs open deck: 1992-1996 closed deck, 1997-2001 open deck differences -- full spec: docs/plans/03-h-series-variants.md @ T-160
 - [ ] **(S)** T-161 [research] Research H22A Blacktop vs Redtop comparison: power difference, torque curve, character, which is better and why -- full spec: docs/plans/03-h-series-variants.md @ T-161
 - [ ] **(S)** T-162 [research] Research H22A Blacktop streetability: low-RPM torque, drivability, fuel economy, daily use characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-162
@@ -685,6 +685,7 @@ _(none yet)_
 - [x] **(S)** T-148 [research] Research H22A Redtop daily usability: NVH levels, visibility, seat comfort, storage space, climate control — done 2026-05-15, sha d20bc28 — full spec: docs/plans/03-h-series-variants.md @ T-148
 - [x] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility — done 2026-05-15, sha 9b71865 — full spec: docs/plans/03-h-series-variants.md @ T-149
 - [x] **(M)** T-158 [research] Research H22A Blacktop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures — done 2026-05-15, sha 325df27 — full spec: docs/plans/03-h-series-variants.md @ T-158
+- [x] **(M)** T-159 [research] Research H22A Blacktop transmission pairing: gear ratios, final drive, differential type, limited-slip availability — done 2026-05-15, sha d602523 — full spec: docs/plans/03-h-series-variants.md @ T-159
 
 **Phase 1: H-Series Development History & Timeline
 
