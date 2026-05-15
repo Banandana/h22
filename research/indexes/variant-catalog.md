@@ -261,6 +261,7 @@ Contains all 11 variant codes plus H22A6 is absent:
 | File | Task | Description | Date |
 |------|------|-------------|------|
 | [`h22a-redtop-jdm-origin.md`](../h-series/variants/h22a-redtop-jdm-origin.md) | T-121 | H22A Redtop JDM origin, introduction, applications, production years, market exclusivity | 2026-05-15 |
+| [`h22a-redtop-specifications.md`](../h-series/specifications/h22a-redtop-specifications.md) | T-122 | H22A Redtop full specifications: power, torque, compression, pistons, camshafts, intake/exhaust, ECU, fluid capacities | 2026-05-15 |
 
 ## Coverage Assessment
 
