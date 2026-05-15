@@ -25,3 +25,15 @@ This plan doc contains the authoritative specs for Phase 3 tasks covering detail
 **Spawns:** None directly; follow-on tasks T-132 through T-150 cover suspension, braking, wheels, weight, performance, and other topics.
 
 **DoD notes:** This is a pure research task — no code changes. Focus on accuracy of technical specifications (clutch pack design, bias ratios, overdrive percentages), proper source attribution (Honda official engineering article, BB6 Helms Manual OCR), and noting any conflicts between sources (e.g., 80:20 vs 85:15 bias ratio discrepancy). The research file should be written to `research/h-series/specifications/h22a-redtop-atts.md` following the template in `research/template.md`. Cross-reference against Honda Global Technology article, Fisher Discount blog, CarThrottle, AutoZine, local BB6 manual OCR, and QWEN.md.
+
+---
+
+### T-139
+
+**Description:** Research H22A Redtop sound character: exhaust note, intake roar, VTEC kick description, dB levels. Compile comprehensive documentation on the acoustic profile of the H22A Redtop engine: the raspy idle character from double-walled cast-iron headers, the progressive exhaust note build under WOT, the distinctive VTEC crossover at ~5,500 RPM characterized by deeper/louder exhaust tone and sharp pitch shift, the intake roar amplified by the 62.5 mm throttle body and dual-runner manifold with IAB butterfly, and available dB level measurements. Cross-reference against professional reviews (MotorTrend/Automobile Magazine), enthusiast forums (Honda-Tech, PreludePower, NZHondas.com), technical databases (mywikimotors, specsnode.com), community video documentation, and QWEN.md.
+
+**Depends on:** T-122 (Redtop specs), T-124 (intake system), T-125 (exhaust system) for context.
+
+**Spawns:** None directly; follow-on tasks T-140 through T-150 cover collectibility, common issues, restoration, and performance topics.
+
+**DoD notes:** This is a pure research task — no code changes. Focus on accurate description of sound character (not subjective opinions presented as fact), proper source attribution for all claims about VTEC crossover experience, noting any conflicts between sources (e.g., VTEC engagement RPM varies 5,200–5,800 RPM across sources), and clearly distinguishing measured data from estimates (dB levels are scarce — most are estimates based on similar systems). The research file should be written to `research/h-series/specifications/h22a-redtop-sound-character.md` following the template in `research/template.md`.
