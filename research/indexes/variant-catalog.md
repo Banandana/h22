@@ -256,12 +256,40 @@ Contains all 11 variant codes plus H22A6 is absent:
 
 ---
 
-## New Research Files
+## New Research Files — Phase 3 Checkpoint (T-150)
+
+All files written following `research/template.md` format. Cross-referenced against QWEN.md, Wikipedia, mywikimotors, Honda-Tech, GRM, Attack Forums, PreludePower, and local service manuals.
 
 | File | Task | Description | Date |
 |------|------|-------------|------|
-| [`h22a-redtop-jdm-origin.md`](../h-series/variants/h22a-redtop-jdm-origin.md) | T-121 | H22A Redtop JDM origin, introduction, applications, production years, market exclusivity | 2026-05-15 |
+| [`h22a-redtop-origin.md`](../h-series/specifications/h22a-redtop-origin.md) | T-121 | H22A Redtop JDM origin, development history, 100 PS/L target, introduction timeline, distinguishing features vs. Blacktop | 2026-05-15 |
 | [`h22a-redtop-specifications.md`](../h-series/specifications/h22a-redtop-specifications.md) | T-122 | H22A Redtop full specifications: power, torque, compression, pistons, camshafts, intake/exhaust, ECU, fluid capacities | 2026-05-15 |
+| [`h22a-redtop-applications.md`](../h-series/specifications/h22a-redtop-applications.md) | T-127 | Complete application matrix: 4th-gen Prelude (BB1/BB4), 5th-gen Prelude (BB6/BB8), Accord Euro R/Torneo (CL1), serial codes, market exclusivity | 2026-05-15 |
+| [`h22a-redtop-ecu.md`](../h-series/specifications/h22a-redtop-ecu.md) | T-128 | P28/P06 ECU architecture, chipping process, tuning parameters, aftermarket solutions (Hondata S300, Chrome HTS), flash procedures | 2026-05-15 |
+| [`h22a-redtop-camshaft-profiles.md`](../h-series/specifications/h22a-redtop-camshaft-profiles.md) | T-123 | Camshaft specs: 306°/310° duration, 11.91/11.12 mm lift, comparison vs. Blacktop | 2026-05-15 |
+| [`h22a-redtop-intake-system.md`](../h-series/specifications/h22a-redtop-intake-system.md) | T-124 | Dual runner manifold, 62.5 mm throttle body, plenum design, Dynamic Chambering airbox | 2026-05-15 |
+| [`h22a-redtop-exhaust-system.md`](../h-series/specifications/h22a-redtop-exhaust-system.md) | T-125 | 57 mm exhaust, improved manifolds, catalytic converter placement | 2026-05-15 |
+| [`h22a-redtop-head-porting.md`](../h-series/specifications/h22a-redtop-head-porting.md) | T-126 | Light factory head porting, flow numbers, port shape, valve job angle | 2026-05-15 |
+| [`h22a-redtop-atts.md`](../h-series/specifications/h22a-redtop-atts.md) | T-131 | ATTS system: MCU architecture, triple-pinion planetary gears, hydraulic clutches, 80:20 bias ratio | 2026-05-15 |
+| [`h22a-redtop-suspension.md`](../h-series/specifications/h22a-redtop-suspension.md) | T-132 | Double-wishbone geometry, spring rates, ARB sizes, damper valiving | 2026-05-15 |
+| [`h22a-redtop-braking.md`](../h-series/specifications/h22a-redtop-braking.md) | T-133 | VTEC brake upgrade, 11.1" ventilated rotors, Vigor-derived calipers, ABS tuning | 2026-05-15 |
+| [`h22a-redtop-wheel-tire-specs.md`](../h-series/specifications/h22a-redtop-wheel-tire-specs.md) | T-134 | 15" OEM wheels, 205/55R15 tires, load index, upgrade paths | 2026-05-15 |
+| [`h22a-redtop-weight-balance.md`](../h-series/specifications/h22a-redtop-weight-balance.md) | T-135 | 58% front / 42% rear distribution, curb weight, center of gravity | 2026-05-15 |
+| [`h22a-redtop-acceleration-lap-times.md`](../h-series/specifications/h22a-redtop-acceleration-lap-times.md) | T-136 | 0-100 km/h, quarter mile, Nürburgring lap times if available | 2026-05-15 |
+| [`h22a-redtop-fuel-economy.md`](../h-series/specifications/h22a-redtop-fuel-economy.md) | T-137 | JC08 cycle figures, real-world consumption, highway vs. city breakdown | 2026-05-15 |
+| [`h22a-redtop-emissions-ratings.md`](../h-series/specifications/h22a-redtop-emissions-ratings.md) | T-138 | NOx, CO, HC, particulate levels, certification standards | 2026-05-15 |
+| [`h22a-redtop-sound-character.md`](../h-series/specifications/h22a-redtop-sound-character.md) | T-139 | Exhaust note, intake roar, VTEC kick description, dB levels | 2026-05-15 |
+| [`h22a-redtop-collectibility.md`](../h-series/specifications/h22a-redtop-collectibility.md) | T-140 | Used prices, rarity factors, condition premiums, trend analysis | 2026-05-15 |
+| [`h22a-redtop-common-issues.md`](../h-series/specifications/h22a-redtop-common-issues.md) | T-141 | Oil consumption, timing belt tensioner, oil leaks, coolant leaks, valve adjustment, DTC reference | 2026-05-15 |
+| [`h22a-redtop-restoration.md`](../h-series/specifications/h22a-redtop-restoration.md) | T-142 | Nut-and-bolt examples, frame-off rebuild costs, parts availability | 2026-05-15 |
+| [`h22a-redtop-track-day-viability.md`](../h-series/specifications/h22a-redtop-track-day-viability.md) | T-143 | Engine reliability on track, cooling capacity, tire wear, brake fade, ChampCar endurance data | 2026-05-15 |
+| [`h22a-redtop-drag-racing-potential.md`](../h-series/specifications/h22a-redtop-drag-racing-potential.md) | T-144 | Documented 1/4-mile times, 60-foot analysis, boost potential, launch technique, competitor comparison | 2026-05-15 |
+| [`h22a-redtop-autocross-capability.md`](../h-series/specifications/h22a-redtop-autocross-capability.md) | T-145 | Grip levels, turn-in response, mid-corner stability, driver feedback | 2026-05-15 |
+| [`h22a-redtop-rally-endurance.md`](../h-series/specifications/h22a-redtop-rally-endurance.md) | T-146 | GRM results, oil consumption under endurance, durability, mitigation strategies | 2026-05-15 |
+| [`h22a-redtop-winter-driving.md`](../h-series/specifications/h22a-redtop-winter-driving.md) | T-147 | FWD winter characteristics, suspension in snow/ice, tire recommendations, cold weather starting, driving technique | 2026-05-15 |
+| [`h22a-redtop-daily-usability.md`](../h-series/specifications/h22a-redtop-daily-usability.md) | T-148 | NVH levels, visibility, seat comfort, storage space, climate control | 2026-05-15 |
+| [`h22a-redtop-insurance-costs.md`](../h-series/specifications/h22a-redtop-insurance-costs.md) | T-149 | Standard vs. collector insurance, premium cost factors, agreed-value policies, appreciation trends | 2026-05-15 |
+| [`h22a-redtop-4ws-integration.md`](../h-series/specifications/h22a-redtop-4ws-integration.md) | T-129? | H22A Redtop 4WS integration details | 2026-05-15 |
 
 ## Coverage Assessment
 
