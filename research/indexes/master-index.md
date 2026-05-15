@@ -309,7 +309,12 @@ Each subdirectory below will contain one or more research markdown files followi
 
 | Subdirectory | Purpose | Files |
 |--------------|---------|-------|
-| `../h-series/motorsport/` | Racing heritage and motorsport applications | ⬜ Placeholder |
+| `../h-series/motorsport/` | Racing heritage and motorsport applications | ✅ Active (T-143, T-144+) |
+
+| File | Description | Status |
+|------|-------------|--------|
+| [`h22a-redtop-track-day-viability.md`](../h-series/specifications/h22a-redtop-track-day-viability.md) | H22A Redtop track day viability: engine reliability on track, cooling capacity, tire wear, brake fade, upgrade path by stage, known failure modes under track conditions | ✅ T-143 (2026-05-15) |
+| [`h22a-redtop-drag-racing-potential.md`](../h-series/motorsport/h22a-redtop-drag-racing-potential.md) | H22A Redtop drag racing potential: 60-foot times, quarter-mile ETs, trap speeds, launch technique, traction management, wheel hop mitigation, LSD benefits, suspension upgrades, power-to-weight analysis, FWD-specific tuning strategies | ✅ T-144 (2026-05-15) |
 | `../h-series/development/h-series-homologation-racing-eligibility.md` | H-series homologation requirements and racing series eligibility (NASA Honda Challenge, SCCA TT/Solo, FIA Historic, SVRA Group 12, European F3, BTCC, JTCC) | ✅ T-063 (2026-05-15) |
 
 ### Aftermarket
