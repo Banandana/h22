@@ -6,7 +6,7 @@
 
 ## Summary
 
-Completed comprehensive research on Honda H22A Redtop transmission pairing. The H22A Redtop was paired exclusively with close-ratio 5-speed manual transmissions. The primary factory transmission for JDM SiR/S-Spec models was the M2B4 (with viscous LSD), while non-SiR variants used the M2A4 (open diff). Both share identical gear ratios (3.307 / 1.950 / 1.360 / 1.034 / 0.787) with a 4.266:1 final drive. The USDM H22A1 received the M2F4, which has slightly taller 4th (1.071) and 5th (0.870) gears. All H-series M-prefix transmissions are interchangeable, though ATTS-equipped units require modification. The research documents factory transmission codes, complete gear ratio comparison tables, LSD types (viscous vs helical), aftermarket LSD options, final drive specs, speed calculations, common issues, and a comprehensive H-series transmission code reference appendix.
+Completed comprehensive research on Honda H22A Redtop transmission pairing. The H22A Redtop was paired exclusively with close-ratio 5-speed manual transmissions across all JDM applications. Primary factory transmission for JDM SiR/S-Spec models was the M2B4 (with viscous LSD), while non-SiR variants used the M2A4 (open diff). Both share identical gear ratios (3.307 / 1.950 / 1.360 / 1.034 / 0.787) with a 4.266:1 final drive. The USDM H22A1 received the M2F4, which has slightly taller 4th (1.071) and 5th (0.870) gears. All H-series M-prefix transmissions are interchangeable; ATTS-equipped units require modification. Research documents factory transmission codes, complete gear ratio comparison tables, LSD types (viscous vs helical), aftermarket LSD options, final drive specs, speed calculations, common issues, and a comprehensive H-series transmission code reference appendix.
 
 ## Files Changed
 
@@ -18,17 +18,10 @@ Completed comprehensive research on Honda H22A Redtop transmission pairing. The 
 This is a pure research task (no code changes). No typecheck/lint/test/format commands applicable.
 
 Research commands executed:
-```bash
-tavily-search "Honda H22A Redtop transmission gear ratios close-ratio 5-speed final drive differential" (max_results=10)
-tavily-search "Honda Prelude BB1 BB2 H22A transmission T20 T22 gear ratios specifications JDM" (max_results=10)
-tavily-extract "https://honda-tech.com/forums/honda-prelude-4/prelude-h-series-transmission-codes-ratios-master-list-2548441/"
-tavily-extract "https://nzhondas.com/topic/77840-h22a-gearboxes-m2f5-what-are-the-ratios/"
-tavily-extract "https://www.preludepower.com/threads/what-is-the-best-transmission-that-hooks-up-to-the-h22a.342863/"
-tavily-extract "https://www.preludeonline.com/threads/which-transmission-to-get.263789/"
-tavily-extract "https://honda-tech.com/forums/honda-prelude-4/prelude-h-series-transmission-codes-ratios-master-list-2548441/page3/"
-tavily-extract "https://md-jdmmotors.com/honda/engines/98-02-accord-prelude-f20b-sir-h23a-h22a-h22a4-euro-r/687/jdm-honda-prelude-h22a-dohc-vtec-2-2l-engine-5-speed-manual-lsd-transmission-m2b4-md-jdm-motors/"
-tavily-search "Honda H22A Redtop M2B4 M2A4 transmission complete gear ratios LSD" (max_results=10)
-```
+- `tavily-search "Honda H22A Redtop transmission gear ratios close-ratio 5-speed final drive differential"` (max_results=10)
+- `tavily-search "Honda Prelude BB1 BB2 H22A transmission T20 T22 gear ratios specifications JDM"` (max_results=10)
+- `tavily-extract` on Honda-Tech master list, NZHondas forum, PreludePower thread, PreludeOnline thread, Honda-Tech page3, MD JDM Motors product listing
+- `tavily-search "Honda H22A Redtop M2B4 M2A4 transmission complete gear ratios LSD"` (max_results=10)
 
 ## Manual Verification
 
