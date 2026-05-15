@@ -256,7 +256,7 @@ _(none)_
 - [x] **(S)** T-141 [research] Research H22A Redtop common issues: known failure modes, age-related wear, corrosion patterns — done 2026-05-15, sha 51f868e — full spec: docs/plans/03-h-series-variants.md @ T-141
 - [x] **(S)** T-142 [research] Research H22A Redtop restoration guides: nut-and-bolt examples, frame-off rebuild costs, parts availability -- done 2026-05-15, sha 7806247 -- full spec: docs/plans/03-h-series-variants.md @ T-142
 - [x] **(S)** T-143 [research] Research H22A Redtop track day viability: reliability on track, cooling capacity, tire wear, brake fade -- done 2026-05-15, sha 6a7e9c0 -- full spec: docs/plans/03-h-series-variants.md @ T-143
-- [x] **(S)** T-144 [research] Research H22A Redtop drag racing potential: 60-foot times, trap speed, launch technique, traction limits — done 2026-05-15, sha TBD -- full spec: docs/plans/03-h-series-variants.md @ T-144
+- [x] **(S)** T-144 [research] Research H22A Redtop drag racing potential: 60-foot times, trap speed, launch technique, traction limits — done 2026-05-15, sha 878afc6 -- full spec: docs/plans/03-h-series-variants.md @ T-144
 - [ ] **(S)** T-145 [research] Research H22A Redtop autocross capability: grip levels, turn-in response, mid-corner stability, driver feedback -- full spec: docs/plans/03-h-series-variants.md @ T-145
 - [ ] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability -- full spec: docs/plans/03-h-series-variants.md @ T-146
 - [ ] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options -- full spec: docs/plans/03-h-series-variants.md @ T-147
