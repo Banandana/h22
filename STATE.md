@@ -242,7 +242,6 @@ _(none)_
 - [x] **(M)** T-126 [research] Research H22A Redtop factory head porting: flow numbers, port shape, valve job angle, surface finish -- done 2026-05-15, sha f44c23e -- full spec: docs/plans/03-h-series-variants.md @ T-126
 - [x] **(M)** T-127 [research] Research H22A Redtop applications: Prelude SiR, Prelude Type S, Accord SiR — model years, chassis codes, features -- full spec: docs/plans/03-h-series-variants.md @ T-127 — done 2026-05-15, sha e880bdf
 - [x] **(M)** T-128 [research] Research H22A Redtop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures — done 2026-05-15, sha 2fb8d2d — full spec: docs/plans/03-h-series-variants.md @ T-128
-- [ ] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type -- full spec: docs/plans/03-h-series-variants.md @ T-129
 - [ ] **(M)** T-130 [research] Research H22A Redtop 4WS integration: which models had it, hydraulic system, steering ratio, turning circle -- full spec: docs/plans/03-h-series-variants.md @ T-130
 - [ ] **(S)** T-131 [research] Research H22A Redtop ATTS (Active Torque Transfer System): SH model application, clutch pack, bias ratio -- full spec: docs/plans/03-h-series-variants.md @ T-131
 - [ ] **(S)** T-132 [research] Research H22A Redtop suspension: strut design, spring rates, anti-roll bar sizes, damper valving -- full spec: docs/plans/03-h-series-variants.md @ T-132
@@ -679,6 +678,8 @@ _(none yet)_
 **Phase 3: H-Series Engine Variants Detailed Research**
 
 - [x] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type — done 2026-05-15, sha 8a0f02b — full spec: docs/plans/03-h-series-variants.md @ T-129
+
+- [x] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type — done 2026-05-15, sha d225133 — full spec: docs/plans/03-h-series-variants.md @ T-129
 
 **Phase 1: H-Series Development History & Timeline**
 
