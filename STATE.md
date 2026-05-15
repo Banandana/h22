@@ -259,7 +259,7 @@ _(none)_
 - [x] **(S)** T-144 [research] Research H22A Redtop drag racing potential: 60-foot times, trap speed, launch technique, traction limits — done 2026-05-15, sha 878afc6 -- full spec: docs/plans/03-h-series-variants.md @ T-144
 - [x] **(S)** T-145 [research] Research H22A Redtop autocross capability: grip levels, turn-in response, mid-corner stability, driver feedback -- done 2026-05-15, sha b8d27f1 -- full spec: docs/plans/03-h-series-variants.md @ T-145
 - [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability — done 2026-05-15, sha 213c79c — full spec: docs/plans/03-h-series-variants.md @ T-146
-- [ ] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options -- full spec: docs/plans/03-h-series-variants.md @ T-147
+- [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options -- done 2026-05-15, sha 7a0e927 -- full spec: docs/plans/03-h-series-variants.md @ T-147
 - [ ] **(S)** T-148 [research] Research H22A Redtop daily usability: NVH levels, visibility, seat comfort, storage space, climate control -- full spec: docs/plans/03-h-series-variants.md @ T-148
 - [ ] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility -- full spec: docs/plans/03-h-series-variants.md @ T-149
 - [ ] **(S)** T-150 [checkpoint] Phase 3 checkpoint: review H22A Redtop research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-150
@@ -684,8 +684,9 @@ _(none yet)_
 - [x] **(M)** T-130 [research] Research H22A Redtop 4WS integration: which models had it, hydraulic system, steering ratio, turning circle — done 2026-05-15, sha 70bfce6 — full spec: docs/plans/03-h-series-variants.md @ T-130
 
 - [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability — done 2026-05-15, sha 213c79c — full spec: docs/plans/03-h-series-variants.md @ T-146
+- [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options — done 2026-05-15, sha 7a0e927 — full spec: docs/plans/03-h-series-variants.md @ T-147
 
-**Phase 1: H-Series Development History & Timeline**
+**Phase 1: H-Series Development History & Timeline
 
 - [x] **(S)** T-070 [checkpoint] Phase 1 checkpoint: review H-series development research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/01-h-series-development.md @ T-070 — 2026-05-15, sha d95fe1c
 
