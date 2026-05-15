@@ -205,6 +205,30 @@ This compiled research document covers:
 
 ---
 
+## 11. External Research — H22A Blacktop ECU Variants
+
+### P28 / P06 / OBD2a / P13 ECU Analysis
+
+**Source:** `research/h-series/engine-management/h22a-blacktop-ecu-p28-p06-obd2a.md`
+**Task:** T-158 [research]
+**Date:** 2026-05-15
+
+This compiled research document covers:
+- P28 ECU (4th-gen Blacktop OBD1; same hardware as Redtop, different basemap calibration)
+- P06 ECU (budget swap option; requires VTEC conversion and socketing)
+- P13 ECU (5th-gen Blacktop OBD2; immobilizer-integrated, S300 incompatible)
+- P13-A12 (1996 only; rare non-immobilizer OBD2 variant; "hardest Honda ECU to find")
+- Basemap differences between Blacktop and Redtop P28 (fuel maps, ignition timing, IAB control)
+- Blacktop-specific tuning advantages (10.6:1 CR = more ignition advance margin vs Redtop's 11.0:1)
+- Chip socket location and physical architecture (identical to Redtop P28/P06)
+- Tuning potential (9–20 hp NA gains; Hondata S300 recommended for OBD1; P13 severely limited)
+- Flash/programming procedures (OSTRICH 2.0, Cobra RTP, Moates Universal Programmer)
+- OBD2-to-OBD1 conversion guide for 5th-gen Blacktop owners wanting full tuning capability
+- Injector impedance mismatch warning (OBD1 low-impedance peak-and-hold vs OBD2 high-impedance saturated)
+- Cross-compatibility matrix including P13-A12 rarity notes
+
+---
+
 ## 9. Known Gaps
 
 The following items are **NOT found** in the local manual materials scanned:
