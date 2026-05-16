@@ -224,6 +224,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Task list reference | STATE.md | T-013 task line | Listed as one of target variant codes |
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Brief entry |
 | Gap analysis | research/indexes/qwen-gap-analysis.md | Gap Analysis | Missing: disputed power output investigation |
+| **Research file** | **research/h-series/specifications/h22z1-australian-vti-r.md** | **H22Z1 comprehensive research: Australian-market exclusive engine (1999–2001), disputed power output (200 PS official vs 203–220 PS community claims), black valve cover on VTi-R / red on VTi-R ATTS, ATTS compatibility confirmed, parts interchangeability with H22A4 verified (piston code AOP5V), ECU P13 OBD2 AU calibration, single-runner intake, 10.0:1 CR (claimed 11.0:1 in owner manual), comparison matrices vs H22A4/H22A Redtop/H22A7, identification guide, swap implications** | 2026-05-15
 
 ---
 
@@ -357,7 +358,7 @@ All files written following `research/template.md` format. Cross-referenced agai
 | H22A6 | None | None | 1 (task list only) |
 | H22A7 | None | Moderate | 2 |
 | H22A8 | None | Moderate | 2 |
-| H22Z1 | None | Moderate | 3 |
+| H22Z1 | None | Extensive | 4 |
 | H23A | Partial (OBD1 manual mentions) | Extensive | 4+ |
 
 **Key findings:**
