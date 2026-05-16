@@ -77,6 +77,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Full entry with specs and features |
 | Gap analysis | research/indexes/qwen-gap-analysis.md | Gap Analysis | Missing: swap legality, California vs non-CA details |
 | **Research file** | **research/h-series/specifications/h22a1-specifications.md** | **Full spec sheet** | **Power, torque, compression, internal components, cam profiles, induction/exhaust, ECU, emissions, fluids, torque specs, casting numbers, C&D test results, Redtop comparison** | 2026-05-15
+| **Research file** | **research/h-series/specifications/h22a1-applications.md** | **Applications across markets** | **USDM VTEC (BB1), Canada SR-V (BB1), Australia VTi-R (BB1) — model year evolution, features, pricing, trim differentiation, cross-market comparison** | 2026-05-15
 
 ---
 

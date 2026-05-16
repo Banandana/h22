@@ -283,7 +283,7 @@ _(none)_
 - [x] **(M)** T-167 [research] Research H22A1 USDM origin: 1993 introduction, first DOHC VTEC in US market, regulatory drivers — done 2026-05-15, sha 39f555c — full spec: docs/plans/03-h-series-variants.md @ T-167
 - [x] **(M)** T-168 [research] Research H22A1 specifications: 190 PS @ 6800 RPM, 207 Nm @ 5500 RPM, 10.0:1 compression, OBD1 — done 2026-05-15, sha 1b26fd5 — full spec: docs/plans/03-h-series-variants.md @ T-168
 - [x] **(M)** T-169 [research] Research H22A1 ECU: P5M (automatic), P51 (manual), socketed chips, tuning methods, Hondata compatibility — done 2026-05-15, sha 8811daf -- full spec: docs/plans/03-h-series-variants.md @ T-169
-- [ ] **(M)** T-170 [research] Research H22A1 applications: 1993-1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features -- full spec: docs/plans/03-h-series-variants.md @ T-170
+- [x] **(M)** T-170 [research] Research H22A1 applications: 1993-1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features — done 2026-05-15, sha baa8953 — full spec: docs/plans/03-h-series-variants.md @ T-170
 - [ ] **(M)** T-171 [research] Research H22A1 emissions equipment: EGR, PCV, secondary air injection, evaporative system, catalytic converter -- full spec: docs/plans/03-h-series-variants.md @ T-171
 - [ ] **(M)** T-172 [research] Research H22A1 OBD1 diagnostics: connector pinout, test mode, live data, trouble code retrieval procedures -- full spec: docs/plans/03-h-series-variants.md @ T-172
 - [ ] **(S)** T-173 [research] Research H22A1 USDM detuning: what was changed vs JDM Redtop, power loss mechanisms, emissions compromises -- full spec: docs/plans/03-h-series-variants.md @ T-173
@@ -671,6 +671,8 @@ _(none yet)_
 - [x] **(S)** T-096 [research] Research H-series intake manifold designs: dual runner vs single runner, plenum volume, runner length — done 2026-05-15, sha 3e3a0c0 — full spec: docs/plans/02-h-series-specs.md @ T-096
 
 **Phase 3: H-Series Engine Variants Detailed Research**
+
+- [x] **(M)** T-170 [research] Research H22A1 applications: 1993-1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features — done 2026-05-15, sha baa8953 — full spec: docs/plans/03-h-series-variants.md @ T-170
 
 - [x] **(S)** T-165 [research] Research H22A Blacktop value proposition: used prices, cost of ownership, modification investment returns — done 2026-05-15, sha ba9ef8c — full spec: docs/plans/03-h-series-variants.md @ T-165
 
