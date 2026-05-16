@@ -274,7 +274,7 @@ _(none)_
 - [x] **(S)** T-161 [research] Research H22A Blacktop vs Redtop comparison: power difference, torque curve, character, which is better and why -- done 2026-05-15, sha 8e3e65f -- full spec: docs/plans/03-h-series-variants.md @ T-161
 - [x] **(S)** T-162 [research] Research H22A Blacktop streetability: low-RPM torque, drivability, fuel economy, daily use characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-162 — done 2026-05-15, sha 9310c42
 - [x] **(S)** T-163 [research] Research H22A Blacktop modification potential: bolt-on gains, cam upgrade path, head work recommendations -- done 2026-05-15, sha fd5479c -- full spec: docs/plans/03-h-series-variants.md @ T-163
-- [ ] **(S)** T-164 [research] Research H22A Blacktop reliability record: compared to Redtop, known issues, longevity data -- full spec: docs/plans/03-h-series-variants.md @ T-164
+
 - [ ] **(S)** T-165 [research] Research H22A Blacktop value proposition: used prices, cost of ownership, modification investment returns -- full spec: docs/plans/03-h-series-variants.md @ T-165
 - [ ] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-166
 
@@ -710,6 +710,7 @@ _(none yet)_
 - [x] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- done 2026-05-15, sha 1330e29 -- full spec: docs/plans/03-h-series-variants.md @ T-155
 - [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
 - [x] **(M)** T-160 [research] Research H22A Blacktop closed deck vs open deck: 1992-1996 closed deck, 1997-2001 open deck differences -- done 2026-05-15, sha 55373ea -- full spec: docs/plans/03-h-series-variants.md @ T-160
+- [x] **(S)** T-164 [research] Research H22A Blacktop reliability record: compared to Redtop, known issues, longevity data -- done 2026-05-15, sha PENDING -- full spec: docs/plans/03-h-series-variants.md @ T-164
 
 **Phase 0 infrastructure**
 

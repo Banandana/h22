@@ -297,6 +297,15 @@ All files written following `research/template.md` format. Cross-referenced agai
 | [`h22a-blacktop-intake-system.md`](../h-series/specifications/h22a-blacktop-intake-system.md) | T-154 | H22A Blacktop intake system: single runner manifold, 60 mm TB, plenum design, runner length, IAB butterfly, EGR circuit, aftermarket options | 2026-05-15 |
 | [`h22a-blacktop-streetability.md`](../h-series/specifications/h22a-blacktop-streetability.md) | T-162 | H22A Blacktop streetability assessment: low-RPM torque, drivability, fuel economy, daily use characteristics, swap viability, maintenance schedule | 2026-05-15 |
 | [`h22a-blacktop-modification-potential.md`](../h-series/tuning/h22a-blacktop-modification-potential.md) | T-163 | H22A Blacktop modification potential: bolt-on gains (+15–25 WHP Stage 1), cam upgrade path (Brian Crower Stage 2 NA/FI, JUN, Skunk2, Toda Racing specs), head work recommendations (mild P&P +8–15 HP to CNC up to 360 CFM by 4 Piston Racing), ECU/tuning platform comparison, fuel system considerations, budget build paths, realistic all-motor targets 190–260 WHP | 2026-05-15 |
+| [`h22a-blacktop-reliability.md`](../h-series/reliability/h22a-blacktop-reliability.md) | T-164 | H22A Blacktop reliability record vs Redtop: FRM oil consumption, timing belt tensioner failure, VTEC solenoid gasket leaks, PCV system, cam seal leaks, valve adjustment, water pump failures, longevity data (200k+ km), forced induction limits (~6–8 psi stock), maintenance schedule, pre-purchase inspection checklist, community consensus from GRM/Honda-Tech/Attack Forums | 2026-05-15 |
+
+## New Research Files — T-164 Blacktop Reliability
+
+All files written following `research/template.md` format. Cross-referenced against GRM, Attack Forums, Honda-Tech, mywikimotors, MotorTrend, Facebook groups, PreludeOnline, NZHondas.com, and local service manuals.
+
+| File | Task | Description | Date |
+|------|------|-------------|------|
+| [`h22a-blacktop-reliability.md`](../h-series/reliability/h22a-blacktop-reliability.md) | T-164 | H22A Blacktop reliability record vs Redtop: FRM oil consumption, timing belt tensioner failure, VTEC solenoid gasket leaks, PCV system, cam seal leaks, valve adjustment, water pump failures, longevity data (200k+ km), forced induction limits (~6–8 psi stock), maintenance schedule, pre-purchase inspection checklist, community consensus from GRM/Honda-Tech/Attack Forums | 2026-05-15 |
 
 ## Coverage Assessment
 
