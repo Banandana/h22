@@ -369,7 +369,7 @@ acquires a real Honda service manual PDF (Helms reprint acceptable) via
 Playwright before OBD1 extraction can run.
 
 - [x] **(S)** T-414 [infra] Write SCHEMA.md: canonical row (incl. corroboration block) + per-invocation record schema + role taxonomy + consensus algorithm + gitignore policy -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414 - done 2026-05-15, sha 5d099658
-- [ ] **(S)** T-414b [infra] Write models.json (provider/model registry) + extraction-matrix.json (default Together-only + high-stakes overrides + rescue tier); verify Together model ids -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414b
+- [x] **(S)** T-414b [infra] Write models.json (provider/model registry) + extraction-matrix.json (default Together-only + high-stakes overrides + rescue tier); verify Together model ids -- done 2026-05-16, sha de3ec2f -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414b
 - [ ] **(M)** T-414c [infra] Acquire real OBD1 Honda service manual PDF via Playwright (techinfo.honda.com / Honda Service Express / enthusiast forums / archive.org); replace mislabeled HTML placeholder; verify with file/pdfinfo/pdftoppm sample render -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414c
 - [ ] **(S)** T-415 [infra] Build chapters.json mapping each manual chapter to {system, page_start, page_end} for BB6 whole-vehicle + OBD1 engine-only -- full spec: docs/plans/04b-torque-fastener-index.md @ T-415
 - [ ] **(S)** T-416 [infra] Scaffold durable response store: per-page response subdirs, cache/, cost-ledger with multi-model columns, gitignore, Zod validators for both schemas -- full spec: docs/plans/04b-torque-fastener-index.md @ T-416
