@@ -284,7 +284,7 @@ _(none)_
 - [x] **(M)** T-168 [research] Research H22A1 specifications: 190 PS @ 6800 RPM, 207 Nm @ 5500 RPM, 10.0:1 compression, OBD1 — done 2026-05-15, sha 1b26fd5 — full spec: docs/plans/03-h-series-variants.md @ T-168
 - [x] **(M)** T-169 [research] Research H22A1 ECU: P5M (automatic), P51 (manual), socketed chips, tuning methods, Hondata compatibility — done 2026-05-15, sha 8811daf -- full spec: docs/plans/03-h-series-variants.md @ T-169
 - [x] **(M)** T-170 [research] Research H22A1 applications: 1993-1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features — done 2026-05-15, sha baa8953 — full spec: docs/plans/03-h-series-variants.md @ T-170
-- [ ] **(M)** T-171 [research] Research H22A1 emissions equipment: EGR, PCV, secondary air injection, evaporative system, catalytic converter -- full spec: docs/plans/03-h-series-variants.md @ T-171
+- [x] **(M)** T-171 [research] Research H22A1 emissions equipment: EGR, PCV, secondary air injection, evaporative system, catalytic converter -- done 2026-05-15, sha 0e00f52 -- full spec: docs/plans/03-h-series-variants.md @ T-171
 - [ ] **(M)** T-172 [research] Research H22A1 OBD1 diagnostics: connector pinout, test mode, live data, trouble code retrieval procedures -- full spec: docs/plans/03-h-series-variants.md @ T-172
 - [ ] **(S)** T-173 [research] Research H22A1 USDM detuning: what was changed vs JDM Redtop, power loss mechanisms, emissions compromises -- full spec: docs/plans/03-h-series-variants.md @ T-173
 - [ ] **(S)** T-174 [research] Research H22A1 alloy oil sump: OBD1-specific design, capacity, baffle pattern, aftermarket alternatives -- full spec: docs/plans/03-h-series-variants.md @ T-174
