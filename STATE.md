@@ -323,7 +323,6 @@ _(none)_
 - [x] **(S)** T-202 [research] Research H22A4 5th gen Prelude redesign: styling changes, interior updates, chassis stiffening, weight changes -- done 2026-05-15, sha 4fc9127 -- full spec: docs/plans/03-h-series-variants.md @ T-202
 - [x] **(S)** T-203 [research] Research H22A4 main journal increase: 1997 50mm to 1998+ 55mm reason, bearing part number changes, block casting -- done 2026-05-15, sha 5db8506 -- full spec: docs/plans/03-h-series-variants.md @ T-203
 - [x] **(S)** T-204 [research] Research H22A4 US market reception: reviews, magazine tests, owner satisfaction, depreciation curves — done 2026-05-15, sha baebe2f — full spec: docs/plans/03-h-series-variants.md @ T-204
-- [ ] **(S)** T-205 [checkpoint] Phase 3 checkpoint: review H22A4 research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-205
 
 ### H22A5-H22A8, H22Z1, H23A (European, Australian, JDM variants)
 
@@ -710,6 +709,8 @@ _(none yet)_
 - [x] **(S)** T-103 [research] Research H-series oil specification: viscosity grades, capacity by variant, filter part numbers - done 2026-05-15, sha 4c922fe - full spec: docs/plans/02-h-series-specs.md @ T-103
 
 **Phase 3: H-Series Engine Variants Detailed Research**
+
+- [x] **(S)** T-205 [checkpoint] Phase 3 checkpoint: review H22A4 research, identify gaps, spawn new tasks if needed — done 2026-05-15, sha <PENDING> — full spec: docs/plans/03-h-series-variants.md @ T-205
 
 - [x] **(M)** T-151 [research] Research H22A Blacktop JDM origin: when introduced, which models received it, production years, market exclusivity -- full spec: docs/plans/03-h-series-variants.md @ T-151 - done 2026-05-15, sha fc1ac8a
 - [x] **(M)** T-152 [research] Research H22A Blacktop specifications: 200 PS @ 7000 RPM, 219 Nm @ 5500 RPM, 10.6:1 compression, flat-top pistons -- full spec: docs/plans/03-h-series-variants.md @ T-152 - done 2026-05-15, sha 8fc8666
