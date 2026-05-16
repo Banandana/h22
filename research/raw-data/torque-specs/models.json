@@ -1,0 +1,39 @@
+{
+  "together.kimi-k2-6-fp4": {
+    "provider": "together",
+    "model": "moonshotai/Kimi-K2.6",
+    "vision": true,
+    "default_temp": 0,
+    "input_per_M_usd": 1.20,
+    "output_per_M_usd": 4.50,
+    "tier": "primary-cheap"
+  },
+  "together.qwen3-vl-235b": {
+    "provider": "together",
+    "model": "Qwen/Qwen3-VL-235B-A22B-Instruct",
+    "vision": true,
+    "default_temp": 0,
+    "input_per_M_usd": 0.60,
+    "output_per_M_usd": 3.60,
+    "tier": "primary-cheap",
+    "note": "Not available on Together serverless API; requires dedicated endpoint (fine-tuning docs confirm LoRA/full-ft support). Use as fallback or replace with serverless vision model if dedicated endpoint unavailable."
+  },
+  "anthropic.claude-sonnet-4-6": {
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "vision": true,
+    "default_temp": 0,
+    "input_per_M_usd": 3.00,
+    "output_per_M_usd": 15.00,
+    "tier": "primary-high"
+  },
+  "anthropic.claude-opus-4-7": {
+    "provider": "anthropic",
+    "model": "claude-opus-4-7",
+    "vision": true,
+    "default_temp": 0,
+    "input_per_M_usd": 15.00,
+    "output_per_M_usd": 75.00,
+    "tier": "rescue"
+  }
+}
