@@ -563,8 +563,11 @@ export function getResponsePath(manual, pageNum, provider, modelId, run) {
   const safeProvider = provider.replace(/[\/\\:*?"<>|]/g, "_");
   const ts = new Date().toISOString().replace(/[:.]/g, "-") + "Z";
   const fileName = `${safeProvider}__${safeModel}__${run}__${ts}.json`;
-  const pageDir = join(ROOT, "research", "raw-data", "torque-specs", "responses", manual.toLowerCase(), String(pageNum));
-  return join(pageDir, fileName);
+  // Return a relative path from ROOT so checkCache can join it correctly.
+  // path.join on POSIX treats absolute second args as literal segments,
+  // so we must store relative paths in the cache.
+  const relDir = join("research", "raw-data", "torque-specs", "responses", manual.toLowerCase(), String(pageNum));
+  return join(relDir, fileName);
 }
 
 /**

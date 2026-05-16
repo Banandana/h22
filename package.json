@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "vitest run",
+    "test": "node --test research/raw-data/torque-specs/__tests__/*.test.mjs && vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "consensus": "tsx src/torque-runner/run-consensus.ts"
