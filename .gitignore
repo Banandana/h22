@@ -7,6 +7,10 @@ node_modules/
 # Scratch / temp
 .tmp-commit.sh
 
+# Python bytecode
+__pycache__/
+*.pyc
+
 # OCR working set (846M PNG + per-page TSV, regenerable from BB6 PDF)
 bb6_ocr/
 
