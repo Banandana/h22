@@ -109,3 +109,15 @@ This plan doc contains the authoritative specs for Phase 3 tasks covering detail
 **Spawns:** None directly; follow-on tasks T-179 through T-181 cover California vs non-California emissions differences, swap legality, and Phase 3 checkpoint.
 
 **DoD notes:** This is a pure research task — no code changes. Focus on accurate extraction of professional test numbers (C/D 0–60: 6.9 sec pre-production / 6.7 sec comparison; quarter-mile 15.4 @ 91 mph; skidpad 0.80 g; braking 186 ft), proper source attribution with URLs and retrieval timestamps, noting any conflicts between sources (e.g., VTEC engagement RPM varies 4,800–5,500 rpm across sources depending on throttle/load conditions; quarter-mile times vary slightly between pre-production and production tests). The research file should be written to `research/h-series/specifications/h22a1-us-market-reception.md` following the template in `research/template.md`. Cross-reference against Car and Driver archive, Road & Track, MotorTrend, KBB, Edmunds, CarGurus, Classic.com, CarBuzz, Wikipedia, Honda-Tech, PreludePower, and YouTube.
+
+---
+
+### T-194
+
+**Description:** Research H22A4 specifications: 200 PS @ 7000 RPM, 212 Nm @ 5250 RPM, 10.0:1 compression, OBD2. Compile a comprehensive specification sheet covering power output, torque curve, compression ratio, piston design, camshaft profiles, intake/exhaust systems, block architecture (open deck transition), ECU calibration (P13 OBD2), all supporting internal component data, and differences from prior H22A1 variant. Cross-reference against Wikipedia, Honda-Tech, mywikimotors, local 5th gen BB6 Helms Manual OCR, and enthusiast technical resources.
+
+**Depends on:** T-193 (H22A4 USDM 5th gen origin)
+
+**Spawns:** None directly; follow-on tasks T-195 through T-205 cover ECU, applications, block architecture, ATTS, intake, OBD2 diagnostics, trim levels, chassis redesign, main journal change, market reception, and checkpoint.
+
+**DoD notes:** This is a pure research task — no code changes. Focus on accuracy of numbers, proper source attribution, and noting any conflicts between sources (e.g., VTEC engagement RPM varies across sources, exact compression ratio may differ slightly between 1997 and 1998+ blocks due to main journal change). The research file should be written to `research/h-series/specifications/h22a4-specifications.md` following the template in `research/template.md`. Cross-reference against Wikipedia, Honda-Tech, mywikimotors, local BB6 Helms Manual OCR, and QWEN.md.

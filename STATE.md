@@ -313,7 +313,7 @@ _(none)_
 ### H22A4 (USDM/5th Gen 1997-2001)
 
 - [x] **(M)** T-193 [research] Research H22A4 USDM 5th gen origin: 1997 BB6 chassis introduction, open deck transition, market positioning -- done 2026-05-15, sha 7c9ceb0 -- full spec: docs/plans/03-h-series-variants.md @ T-193
-- [ ] **(M)** T-194 [research] Research H22A4 specifications: 200 PS @ 7000 RPM, 212 Nm @ 5250 RPM, 10.0:1 compression, OBD2 -- full spec: docs/plans/03-h-series-variants.md @ T-194
+- [x] **(M)** T-194 [research] Research H22A4 specifications: 200 PS @ 7000 RPM, 212 Nm @ 5250 RPM, 10.0:1 compression, OBD2 -- done 2026-05-15, sha 32d97f7 -- full spec: docs/plans/03-h-series-variants.md @ T-194
 - [ ] **(M)** T-195 [research] Research H22A4 ECU: P13 OBD2, immobilizer integration, tuning methods, Hondata FlashPro compatibility -- full spec: docs/plans/03-h-series-variants.md @ T-195
 - [ ] **(M)** T-196 [research] Research H22A4 applications: 1997-2001 Prelude Base, Type-SH, SE - chassis codes, features, model years -- full spec: docs/plans/03-h-series-variants.md @ T-196
 - [ ] **(M)** T-197 [research] Research H22A4 open deck block: 1997-2001 design, 55mm main journals (1998+), structural implications -- full spec: docs/plans/03-h-series-variants.md @ T-197
