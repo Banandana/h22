@@ -346,10 +346,10 @@ two cross-indexed markdown views (by-location, by-fastener). Runs before the
 remaining Phase 4 mechanical research because several of those tasks (T-244
 head gasket sequence, T-219 rod bolts) become easier once the index exists.
 
-Estimated API spend: $20-50 with default Together-only matrix (Kimi K2.6 FP4
-+ Qwen3-VL-235B, single-run temp=0 for ordinary pages; 3-run Kimi @ temp=0.3
-+ 2-run Qwen3-VL @ temp=0.2 for TTY-critical chapters). Anthropic Opus rescue
-adds ~$5-15 IF ANTHROPIC_API_KEY is set; auto-skipped otherwise. Every
+Default extraction matrix is Together-only (Kimi K2.6 FP4 + Qwen3-VL-235B,
+single-run temp=0 for ordinary pages; 3-run Kimi @ temp=0.3 + 2-run
+Qwen3-VL @ temp=0.2 for TTY-critical chapters). Anthropic Opus rescue tier
+runs only if ANTHROPIC_API_KEY is set; auto-skipped otherwise. Every
 invocation (model, run, seed) retained on disk individually; content-hash
 cache extended to (provider, model, temperature, seed) so multi-run is
 correctly uncached.
@@ -359,9 +359,19 @@ populates a `corroboration` block on every canonical row, with vote-strength
 + intra-model consistency + paths to every contributing per-invocation record.
 No-majority cases land in h22-torques-disputed.jsonl for manual resolution.
 
+Future-client interface: ships a SQLite DB (h22-torques.db) built from JSONLs
+with FTS5 over markdown, plus a curated WebP page-image set (~10-25 MB) so
+any future client (web UI, MCP server, CLI tool, mobile app) can query
+torques + view source pages from a single git clone.
+
+OBD1 source: the repo's "OBD1 PDF" is actually mislabeled HTML; T-414c
+acquires a real Honda service manual PDF (Helms reprint acceptable) via
+Playwright before OBD1 extraction can run.
+
 - [ ] **(S)** T-414 [infra] Write SCHEMA.md: canonical row (incl. corroboration block) + per-invocation record schema + role taxonomy + consensus algorithm + gitignore policy -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414
 - [ ] **(S)** T-414b [infra] Write models.json (provider/model registry) + extraction-matrix.json (default Together-only + high-stakes overrides + rescue tier); verify Together model ids -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414b
-- [ ] **(S)** T-415 [infra] Build chapters.json mapping each Helms chapter to {system, page_start, page_end} for BB6 whole-vehicle + OBD1 engine-only -- full spec: docs/plans/04b-torque-fastener-index.md @ T-415
+- [ ] **(M)** T-414c [infra] Acquire real OBD1 Honda service manual PDF via Playwright (techinfo.honda.com / Honda Service Express / enthusiast forums / archive.org); replace mislabeled HTML placeholder; verify with file/pdfinfo/pdftoppm sample render -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414c
+- [ ] **(S)** T-415 [infra] Build chapters.json mapping each manual chapter to {system, page_start, page_end} for BB6 whole-vehicle + OBD1 engine-only -- full spec: docs/plans/04b-torque-fastener-index.md @ T-415
 - [ ] **(S)** T-416 [infra] Scaffold durable response store: per-page response subdirs, cache/, cost-ledger with multi-model columns, gitignore, Zod validators for both schemas -- full spec: docs/plans/04b-torque-fastener-index.md @ T-416
 - [ ] **(M)** T-417a [infra] Write scripts/extract-torques-vision.mjs skeleton: CLI flags (incl --matrix-profile/--model-id/--runs/--temperature/--seed-base), provider abstraction (Anthropic + Together), matrix loader, prompt loader stub + scripts/prompts/extract-torques-v1.md -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417a
 - [ ] **(M)** T-417b [infra] Implement extract-torques-vision.mjs: TogetherProvider + AnthropicProvider, multi-run loop, content-hash cache w/ seed, per-invocation record write, retry-with-backoff, ledger append -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417b
@@ -378,10 +388,13 @@ No-majority cases land in h22-torques-disputed.jsonl for manual resolution.
 - [ ] **(M)** T-425 [research] Honda OEM PN fill-in via partsouq/hondapartsnow for rows with null honda_part_number; PN only, never touch torques -- full spec: docs/plans/04b-torque-fastener-index.md @ T-425
 - [ ] **(M)** T-426 [research] ARP catalog aftermarket section: emit h22-torques-arp.jsonl with oem:false for tty-stretch + cap-screw roles -- full spec: docs/plans/04b-torque-fastener-index.md @ T-426
 - [ ] **(M)** T-427 [infra] Write scripts/render-torque-index.mjs; emit torque-by-location.md (with vote-strength badges + conflict callouts) + torque-by-fastener.md ((thread,role) groups + ARP subsection) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-427
+- [ ] **(M)** T-432 [infra] Write scripts/build-torque-db.mjs; emit h22-torques.db (SQLite) from JSONLs + markdown with FTS5 over markdown sections; include QUERIES.md with 5-10 example SQL patterns -- full spec: docs/plans/04b-torque-fastener-index.md @ T-432
+- [ ] **(M)** T-433 [infra] Write scripts/curate-page-images.mjs; filter union of cited (manual,page) tuples; recompress PNG->WebP q75 maxwidth=1200 to images/<manual>/p<page>.webp; commit (~10-25 MB total) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-433
+- [ ] **(S)** T-434 [infra] Backfill source.image_path on every torque/disputed/reject row; refresh h22-torques.db; verify 10 random rows resolve to existing WebP files -- full spec: docs/plans/04b-torque-fastener-index.md @ T-434
 - [ ] **(M)** T-428 [research] Spot-check: 100% review of TTY-stretch rows + 20-row stratified random sample + consensus-correctness analysis (per-model empirical reliability) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-428
-- [ ] **(S)** T-429 [research] Update research/indexes/master-index.md + QWEN.md §Specifications with links to both views and SCHEMA.md -- full spec: docs/plans/04b-torque-fastener-index.md @ T-429
-- [ ] **(S)** T-430 [checkpoint] Phase 4b checkpoint: identify gaps, spawn follow-ups (Hasport mounts, M/T internals, variant coverage, per-model reliability tuning) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-430
-- [ ] **(S)** T-431 [gate] Phase 4b gate: TTY 100% correct, sample >=18/20, consensus-correctness reported, rescue ran-or-waived, disputed file empty-or-acknowledged, both views render, JSONL has corroboration on every row, ledger reconciled, retention guarantees demonstrated -- full spec: docs/plans/04b-torque-fastener-index.md @ T-431
+- [ ] **(S)** T-429 [research] Update research/indexes/master-index.md + QWEN.md §Specifications with links to both views, SQLite DB, image set, SCHEMA.md, QUERIES.md -- full spec: docs/plans/04b-torque-fastener-index.md @ T-429
+- [ ] **(S)** T-430 [checkpoint] Phase 4b checkpoint: identify gaps, spawn follow-ups (Hasport mounts, M/T internals, variant coverage, per-model reliability tuning, bbox/clipping layer) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-430
+- [ ] **(S)** T-431 [gate] Phase 4b gate: TTY 100% correct, sample >=18/20, consensus-correctness reported, rescue ran-or-waived, disputed file empty-or-acknowledged, both views render, JSONL has corroboration on every row, SQLite DB queryable, every row's image_path resolves, curated images <50MB, ledger reconciled -- full spec: docs/plans/04b-torque-fastener-index.md @ T-431
 
 ---
 

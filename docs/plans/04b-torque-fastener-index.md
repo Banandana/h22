@@ -323,11 +323,170 @@ Non-negotiable. T-416 implements; T-418 verifies; every extraction task inherits
 - `research/raw-data/torque-specs/h22-torques-rejects.jsonl` — invocations whose responses failed schema validation
 - `research/raw-data/torque-specs/consensus-report.md` — per-page vote-strength + single-source + disputed counts
 - `research/raw-data/torque-specs/h22-torques-arp.jsonl` — aftermarket (ARP) cross-reference, segregated
+- `research/raw-data/torque-specs/h22-torques.db` — **SQLite query layer** (FTS5 over markdown; tables for torques, invocations, pages, chapters, disputes, ARP)
+- `research/raw-data/torque-specs/images/<manual>/p<page>.webp` — **curated page images** filtered to torque-bearing pages only; WebP-recompressed, git-committed
 - `research/h-series/maintenance/torque-by-location.md` — `system → assembly → fastener` view
 - `research/h-series/maintenance/torque-by-fastener.md` — `(thread, role)` view
 - `scripts/extract-torques-vision.mjs` — pipeline script (standalone-runnable, multi-provider)
 - `scripts/render-torque-index.mjs` — JSONL → markdown renderer
+- `scripts/build-torque-db.mjs` — JSONL + markdown → SQLite renderer (idempotent)
+- `scripts/curate-page-images.mjs` — filter + WebP-recompress source PNGs for git commit
+- `scripts/acquire-obd1-pdf.mjs` — Playwright-based search/download of the OBD1 H22A1 Helms manual PDF
 - `scripts/prompts/extract-torques-v1.md` — vision prompt
+
+## Database & image layer (Future-client interface)
+
+Phase 4b ships not just data files but a **stable, queryable interface** any future client (web UI, MCP server, CLI tool, mobile app, next year's different agent) can consume without rebuilding from raw JSONL.
+
+### SQLite schema (h22-torques.db)
+
+Single-file binary, git-tracked, rebuilt by `scripts/build-torque-db.mjs` from the JSONL + markdown sources. Idempotent — running on identical inputs produces a byte-identical DB.
+
+```sql
+-- Source materials
+CREATE TABLE chapters (
+  id TEXT PRIMARY KEY,                  -- e.g. "bb6.engine-mechanical"
+  manual TEXT NOT NULL,                 -- "BB6" | "OBD1"
+  name TEXT NOT NULL,
+  system TEXT NOT NULL,                 -- engine/drivetrain/chassis/body/electrical
+  page_start INTEGER NOT NULL,
+  page_end INTEGER NOT NULL
+);
+
+CREATE TABLE pages (
+  manual TEXT NOT NULL,
+  page INTEGER NOT NULL,
+  chapter_id TEXT REFERENCES chapters(id),
+  image_path TEXT NOT NULL,             -- "images/bb6/p6617.webp"
+  ocr_text TEXT,                        -- nullable, optional
+  PRIMARY KEY (manual, page)
+);
+
+-- Extraction provenance
+CREATE TABLE invocations (
+  id TEXT PRIMARY KEY,                  -- invocation_id
+  manual TEXT NOT NULL,
+  page INTEGER NOT NULL,
+  provider TEXT NOT NULL,
+  model_id TEXT NOT NULL,
+  run TEXT NOT NULL,                    -- "r1" | "r2" | ...
+  temperature REAL NOT NULL,
+  seed INTEGER NOT NULL,
+  prompt_version TEXT NOT NULL,
+  timestamp_start TEXT NOT NULL,
+  latency_ms INTEGER,
+  input_tokens INTEGER,
+  output_tokens INTEGER,
+  cost_usd REAL,
+  parse_ok INTEGER NOT NULL,            -- 0|1
+  response_path TEXT NOT NULL,          -- relative path to the full JSON record
+  FOREIGN KEY (manual, page) REFERENCES pages(manual, page)
+);
+
+-- Canonical torque rows (one per fastener after consensus + cross-page merge)
+CREATE TABLE torques (
+  id TEXT PRIMARY KEY,                  -- stable hash
+  manual TEXT NOT NULL,
+  page INTEGER NOT NULL,
+  system TEXT NOT NULL,
+  assembly TEXT NOT NULL,
+  fastener_name TEXT NOT NULL,
+  thread_nominal_mm REAL,
+  thread_pitch_mm REAL,
+  thread_length_mm REAL,
+  thread_grade TEXT,
+  qty INTEGER,
+  role TEXT NOT NULL,                   -- role taxonomy enum
+  -- torque is JSON (steps array) — query via json_extract
+  torque_json TEXT NOT NULL,
+  lubrication TEXT,
+  reusable INTEGER,                     -- 0|1|null
+  reuse_conditions TEXT,
+  honda_part_number TEXT,
+  tty_stretch_max_mm REAL,
+  tty_pre_stretch_mm REAL,
+  special_tool TEXT,
+  notes TEXT,
+  confidence TEXT,
+  oem INTEGER NOT NULL,                 -- 0|1
+  conflict_group_id TEXT,
+  vote_strength REAL,                   -- from corroboration
+  single_source INTEGER,                -- 0|1
+  consensus_strategy TEXT,
+  meta_json TEXT,
+  FOREIGN KEY (manual, page) REFERENCES pages(manual, page)
+);
+
+-- Many-to-many: torque ← contributing invocations
+CREATE TABLE torque_invocations (
+  torque_id TEXT NOT NULL REFERENCES torques(id),
+  invocation_id TEXT NOT NULL REFERENCES invocations(id),
+  agreement TEXT NOT NULL,              -- "agreeing" | "disagreeing"
+  their_torque_nm REAL,                 -- populated for disagreeing
+  PRIMARY KEY (torque_id, invocation_id)
+);
+
+-- Disputed rows (no majority during consensus)
+CREATE TABLE disputes (
+  id TEXT PRIMARY KEY,
+  manual TEXT NOT NULL,
+  page INTEGER NOT NULL,
+  assembly TEXT NOT NULL,
+  fastener_name TEXT NOT NULL,
+  thread_nominal_mm REAL,
+  thread_pitch_mm REAL,
+  candidates_json TEXT NOT NULL,        -- all candidate torque values + invocations
+  resolved INTEGER NOT NULL DEFAULT 0,
+  resolution_torque_nm REAL,            -- populated after T-424b
+  resolution_rationale TEXT
+);
+
+-- ARP aftermarket cross-references (segregated)
+CREATE TABLE arp_xrefs (
+  id TEXT PRIMARY KEY,
+  oem_thread_nominal_mm REAL NOT NULL,
+  oem_thread_pitch_mm REAL NOT NULL,
+  oem_role TEXT NOT NULL,
+  arp_part_number TEXT NOT NULL,
+  arp_torque_nm REAL,
+  arp_lubrication TEXT,
+  notes TEXT,
+  source_url TEXT
+);
+
+-- Full-text search over rendered markdown
+CREATE VIRTUAL TABLE markdown_fts USING fts5(
+  view,                                  -- "by-location" | "by-fastener"
+  section,                               -- heading path
+  body,
+  tokenize = 'porter unicode61'
+);
+
+-- Indexes
+CREATE INDEX idx_torques_assembly ON torques(assembly);
+CREATE INDEX idx_torques_role_thread ON torques(role, thread_nominal_mm, thread_pitch_mm);
+CREATE INDEX idx_torques_manual_page ON torques(manual, page);
+CREATE INDEX idx_invocations_model ON invocations(model_id);
+CREATE INDEX idx_invocations_page ON invocations(manual, page);
+```
+
+### Image layer
+
+- **Curated set**: filter to pages cited by any torque row, disputed row, or reject record. For BB6 that's ~200–300 of 1411 pages.
+- **Format**: PNG → WebP, quality 75, max-width 1200 (manuals print at 300dpi, web display doesn't need that). Typical compression: 5–10×. Estimated total commit size: 10–25 MB.
+- **Stable addressing**: `images/<manual>/p<page>.webp`. Every torque row's `source.image_path` and `pages.image_path` in SQLite resolve here.
+- **Original**: `bb6_ocr/images/*.png` (846 MB) stays gitignored as working set; never the committed source of truth.
+
+### Future-client contract
+
+Any future client implementing the torque-index interface receives ONE git clone and is guaranteed:
+- A queryable SQLite DB with stable schema.
+- A complete image set for every cited page.
+- Two human-readable markdown views.
+- The JSONL files as ultimate source-of-truth (DB rebuilds from these).
+- The full per-invocation provenance under `responses/` for any auditing.
+
+Schema migrations across versions: documented in `SCHEMA.md` with a `schema_version` field in the DB's `_meta` table.
 
 ---
 
@@ -367,16 +526,52 @@ exact model id differs, update registry. If only one Together vision model
 is available, default matrix becomes single-model with multi-run for
 corroboration via sampling variance.
 
+### T-414c — Acquire OBD1 H22A1 Honda Service Manual PDF
+
+**Description.** The repo's `1992-1996_Honda_Prelude_H22A1_Helms_Manual.pdf`
+is mislabeled — `file` reports it as HTML (60 KB), not a real PDF. To execute
+T-422 (OBD1 engine extraction), we need an actual scanned Honda factory
+service manual for the 1992-1996 Prelude.
+
+**Target sources, in priority order:**
+1. **techinfo.honda.com** (Honda's official service-information portal —
+   requires paid subscription, but the user may have/obtain access). Honda
+   Service Manual P/N 61SS010 or equivalent for 1992-1996 Prelude.
+2. **Honda Service Express** (similar OEM portal).
+3. **Enthusiast forums** (preludeonline.com, hondaprelude.com,
+   hondatech.com) — many host community scans of the original Honda
+   factory service manual.
+4. **Archive.org** — search "Honda Prelude 1992-1996 service manual".
+
+Helms Inc. is Honda's licensed reprinter — Helms-branded scans are
+acceptable, content is identical to the Honda factory document.
+
+Use `scripts/acquire-obd1-pdf.mjs` (Playwright-based): search → identify
+candidate URLs → verify file type is PDF → verify page count > 1000 →
+download to `obd1_source/honda-service-manual-1992-1996-prelude.pdf`.
+Replace the mislabeled placeholder file. Add the new PDF to `.gitignore`
+(will be large, >50 MB).
+
+**Depends on.** None.
+
+**DoD notes.** Verify with `file` that the download is genuinely PDF.
+Verify page count via `pdfinfo`. Render page 1 and a random interior page
+via `pdftoppm` and visually confirm it's a Honda service manual (not a
+sales brochure, not an owner's manual, not a wiring-diagram-only supplement).
+If acquisition fails or produces low-quality scans (OCR-resistant), mark
+**[B] blocked** and surface to user; T-422 then becomes blocked downstream.
+
 ### T-415 — Chapter → page-range map
 
 **Description.** Produce `research/raw-data/torque-specs/chapters.json`
-mapping each Helms chapter to its `{chapter_name, system, page_start, page_end}`.
-For BB6: all mechanical chapters (engine, cooling, fuel/emissions, intake/exhaust,
-ignition, starting/charging, clutch, A/T transmission, driveshafts, suspension,
-brakes, steering, body, HVAC). For OBD1: engine chapters only. Excludes
-pure-wiring chapters.
+mapping each Honda service manual chapter to its `{chapter_name, system,
+page_start, page_end}`. For BB6: all mechanical chapters (engine, cooling,
+fuel/emissions, intake/exhaust, ignition, starting/charging, clutch, A/T
+transmission, driveshafts, suspension, brakes, steering, body, HVAC). For
+OBD1: engine chapters only. Excludes pure-wiring chapters.
 
-**Depends on.** T-003 (BB6 TOC parse, already done).
+**Depends on.** T-003 (BB6 TOC parse, already done), T-414c (need real OBD1
+PDF before its TOC can be mapped).
 
 **DoD notes.** Total BB6 page count in scope: 600–800 expected. OBD1: 150–250.
 
@@ -529,14 +724,19 @@ empty OR the user explicitly waived.
 
 ### T-422 — OBD1 engine-chapter extraction
 
-**Description.** Render OBD1 PDF pages to PNG (no OCR needed — vision-direct).
-Run `extract-torques-vision.mjs --manual=OBD1 --matrix-profile=default` over
-the OBD1 engine chapters. Identify rescue candidates inline using the same
-criteria as T-420. If `ANTHROPIC_API_KEY` is set, run rescue tier on
-flagged pages within this same task (smaller corpus, ~150–250 pages × 2
-models + ~5% rescue ≈ ~$4–10 combined).
+**Description.** Render the OBD1 Honda service manual PDF (acquired in
+T-414c) pages to PNG via `pdftoppm` at 200 DPI. Run
+`extract-torques-vision.mjs --manual=OBD1 --matrix-profile=default` over
+the OBD1 engine chapters defined in `chapters.json`. Identify rescue
+candidates inline using the same criteria as T-420. If
+`ANTHROPIC_API_KEY` is set, run rescue tier on flagged pages within this
+same task (smaller corpus, ~150–250 pages × 2 models + ~5% rescue).
 
-**Depends on.** T-418, T-418b.
+**Depends on.** T-414c (real PDF must exist), T-418, T-418b.
+
+**DoD notes.** If T-414c is blocked, this task auto-blocks. Render output
+goes to `obd1_source/pages/p<NNNN>.png` (gitignored — large working set;
+the curated WebP set lands separately in T-433).
 
 ### T-423 — Validate per-invocation records → flat rows
 
@@ -664,14 +864,66 @@ Record accuracy in the task report. Any wrong row spawns a fix task.
 
 **Depends on.** T-427.
 
+### T-432 — Build SQLite query layer
+
+**Description.** Write `scripts/build-torque-db.mjs`. Reads all canonical
+JSONLs (torques, disputed, rejects, ARP), chapters.json, and the rendered
+markdown views. Emits `research/raw-data/torque-specs/h22-torques.db`
+matching the schema in "Database & image layer" section. Idempotent: running
+on identical inputs produces a byte-identical DB. Populate FTS5 virtual
+table with section/body extracted from both markdown views. Include a
+`_meta` table with `schema_version`, `built_at`, `source_jsonl_sha256`.
+
+**Depends on.** T-427 (markdown views must exist before FTS population).
+
+**DoD notes.** Smoke tests via the script's own self-test mode: query
+each table, run an FTS search, walk one torque row through its
+`torque_invocations` to verify provenance joins. Document common query
+patterns in `research/raw-data/torque-specs/QUERIES.md` (5–10 example SQL
+queries: by-assembly, by-thread+role, all single-source TTY rows, etc.).
+
+### T-433 — Curate page-image set
+
+**Description.** Write `scripts/curate-page-images.mjs`. Scans
+`h22-torques.jsonl`, `h22-torques-disputed.jsonl`, `h22-torques-rejects.jsonl`
+to collect the union of (manual, page) tuples cited by any row. For each:
+- BB6 source: `bb6_ocr/images/page-<NNNN>.png` (working set, gitignored).
+- OBD1 source: `obd1_source/pages/p<NNNN>.png` (working set, gitignored).
+Recompress each PNG to WebP via `sharp` or `cwebp` at quality=75,
+max-width=1200, output to `research/raw-data/torque-specs/images/<manual>/p<page>.webp`.
+Commit the resulting WebP set (estimated 10–25 MB total).
+
+**Depends on.** T-424 (canonical torques.jsonl must be final), T-422 (OBD1
+working-set PNGs must exist).
+
+**DoD notes.** Verify total committed size < 50 MB. If WebP unavailable on
+the system, fall back to PNG at lower DPI (resize via `convert` /
+`pdftoppm` -r 100). Curated set diff'd: any page in a row whose WebP
+doesn't exist → fail the task.
+
+### T-434 — Image-path backfill + final DB rebuild
+
+**Description.** For every torque row in `h22-torques.jsonl`, every disputed
+row in `h22-torques-disputed.jsonl`, every reject in
+`h22-torques-rejects.jsonl`, set `source.image_path` to
+`images/<manual>/p<page>.webp` (the WebP path from T-433). Same for the
+`pages.image_path` column in the SQLite DB. Re-run `build-torque-db.mjs`
+to refresh the DB with the populated paths. Verify by sampling: pick 10
+random torque rows, confirm `source.image_path` resolves to an existing
+file on disk.
+
+**Depends on.** T-432, T-433.
+
 ### T-429 — Update master-index + QWEN.md
 
 **Description.** Update `research/indexes/master-index.md` with links to
-both markdown views, the JSONL, and SCHEMA.md. Update `QWEN.md`
-§Specifications with a "Torque & Fastener Index" subsection summarizing
-coverage and pointing to the index files.
+both markdown views, the JSONL files, the SQLite DB, the curated image set,
+and SCHEMA.md + QUERIES.md. Update `QWEN.md` §Specifications with a
+"Torque & Fastener Index" subsection summarizing coverage and pointing to
+the index files (markdown views for humans, SQLite for programmatic
+clients, JSONL for source-of-truth).
 
-**Depends on.** T-427.
+**Depends on.** T-427, T-434.
 
 ### T-430 — Phase 4b checkpoint
 
@@ -698,9 +950,16 @@ until ALL of:
 - Both markdown views render cleanly from JSONL.
 - `h22-torques.jsonl` passes schema validation; every row has
   `corroboration` populated (even if single-source).
+- **SQLite DB (`h22-torques.db`) exists, passes self-tests, and at least
+  one example query from QUERIES.md returns expected results.**
+- **Every torque row's `source.image_path` resolves to a file on disk
+  under `images/<manual>/`.**
+- **Curated image set total size < 50 MB (committed to git).**
 - Cost ledger total matches sum of per-invocation records; no orphaned
   responses (every file in `responses/` referenced by exactly one ledger row
   AND either consumed by consensus or flagged as disputed).
 - All retention guarantees demonstrably enforced (T-416 contract).
+- If T-414c was blocked: phase ships BB6-only with a clear note in
+  master-index.md that OBD1 coverage is deferred.
 
 **Depends on.** T-430.
