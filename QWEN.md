@@ -636,13 +636,28 @@ VTEC (Variable Valve Timing and Lift Electronic Control) is Honda's proprietary 
 
 #### OBD1 ECUs (1992-1996)
 - **P5M:** USDM H22A1 (automatic)
-- **P51:** USDM H22A1 (manual)
-- **P13:** Early JDM/EDM variants
-- **Characteristics:**
   - 32-pin connector
-  - Socketed chips (tunable)
-  - Basic fuel/ignition maps
-  - No knock control (stock)
+  - **NOT chip-tunable** — EPROM soldered, missing 74HC373 latch circuitry
+  - To tune: swap to P28/P06/P72 + OBD1-to-OBD2 harness if needed
+- **P51:** USDM H22A1 (manual)
+  - 32-pin connector
+  - **NOT chip-tunable** — same hardware as P5M, different basemap calibration
+  - Differences from P5M: AT shift logic/torque converter lockup absent; slightly higher rev limiter (~6,500 vs ~6,200 RPM)
+- **P28:** JDM Civic Si/Ex (D16Z6) — most common chippable ECU for H22 swaps
+  - Socketed 27C256 EPROM (tunable)
+  - SOHC VTEC origin, works with H22 DOHC VTEC via wiring
+- **P06:** USDM Civic DX (D15B) — budget chippable option
+  - Socketed EPROM, non-VTEC origin, requires VTEC conversion for H22
+- **P72:** JDM Integra GSR (B18C) — premium chippable option
+  - Socketed EPROM, DOHC VTEC, includes knock sensor input
+  - Best for boosted/aggressive builds
+- **P61, P30, P75, PR4, P05:** Other chippable OBD1 ECUs (see chippable ECU reference table)
+- **Characteristics (chippable ECUs):**
+  - 32-pin connector
+  - Socketed 27C256/27C512 EPROM (tunable with aftermarket chips)
+  - Includes 74HC373 latch IC, C51/C52 capacitors, R54 resistor, J1 jumper point
+  - Full fuel/ignition map editing via tuning software
+  - No knock control on P28/P06; knock control on P72
 
 #### OBD2 ECUs (1997-2001)
 - **P13:** USDM H22A4 / 5th-gen Blacktop

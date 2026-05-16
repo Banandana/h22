@@ -184,7 +184,31 @@ Key procedures referenced:
 
 ---
 
-## 10. External Research — H22A Redtop ECU Variants
+## 10. External Research — H22A1 (USDM) ECU Variants
+
+### P5M / P51 OBD1 ECU Analysis
+
+**Source:** `research/h-series/engine-management/h22a1-ecu-p5m-p51-obd1-usdm.md`
+**Task:** T-169 [research]
+**Date:** 2026-05-15
+
+This compiled research document covers:
+- P5M ECU (USDM H22A1 automatic transmission variant)
+- P51 ECU (USDM H22A1 manual transmission variant)
+- **Critical finding:** P5M/P51 are NOT chip-tunable in stock form — they lack the 74HC373 latch circuitry present in chippable ECUs (P28, P06, P72)
+- Hardware specifications: Hitachi H8/300 CPU, 27C256 EPROM (soldered), 32-pin connector
+- Full pinout for 32-pin connector A with wire colors and functions
+- Tuning methods: ECU swap to chippable unit (recommended), piggyback controllers (Apexi SAFC, AEM FIC), standalone ECUs (Haltech, Megasquirt)
+- Hondata compatibility: S300 v3 requires chippable ECU (P28/P06/P72); FlashPro does NOT support H22; S200 discontinued Jan 2008
+- Alternative tuning software: Crome/Crome Pro, Honda Tuning Suite, Uberdata, ECUTune
+- OBD1 self-diagnostic mode procedures and common trouble codes
+- Basemap differences between P5M (automatic) and P51 (manual)
+- Chippable ECU reference table (P28, P72, P06, P61, P30, P75, PR4, P05)
+- Hondata S300 feature summary
+
+---
+
+## 11. External Research — H22A Redtop ECU Variants
 
 ### P28 / P06 / OBD2a ECU Analysis
 
