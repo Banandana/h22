@@ -103,6 +103,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Task list reference | STATE.md | T-013 task line | Listed as one of target variant codes |
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Brief entry |
 | Gap analysis | research/indexes/qwen-gap-analysis.md | Gap Analysis | Missing: European pricing, spare parts availability |
+| **Research file** | **research/h-series/specifications/h22a2-edm-origin.md** | **H22A2 EDM origin: European market introduction, emissions regulations (Euro 1/2), model years 1993–1996, chassis codes BB1/BB4, specifications (185 PS @ 6,800 RPM, 215 Nm @ 5,300 RPM, 10.0:1 CR, black valve cover, closed deck, FRM liners), vehicle performance (0–100 km/h 7.1s, 228 km/h top speed, 1,305 kg kerb weight), comparison vs H22A1 USDM and H22A Redtop JDM, European driving condition calibration, fuel quality considerations** | 2026-05-15
 
 ---
 
