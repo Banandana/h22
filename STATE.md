@@ -319,7 +319,7 @@ _(none)_
 - [x] **(M)** T-198 [research] Research H22A4 ATTS (Active Torque Transfer System): SH model exclusive, torque vectoring operation, maintenance — done 2026-05-15, sha 6e07cff — full spec: docs/plans/03-h-series-variants.md @ T-198
 - [x] **(M)** T-199 [research] Research H22A4 single runner intake: vs dual runner, plenum volume, power band characteristics -- done 2026-05-15, sha 31136a6 -- full spec: docs/plans/03-h-series-variants.md @ T-199
 - [x] **(M)** T-200 [research] Research H22A4 OBD2 diagnostics: OBDII connector, scan tool requirements, live data streams, readiness monitors -- done 2026-05-15, sha 5e72fd0 -- full spec: docs/plans/03-h-series-variants.md @ T-200
-- [ ] **(S)** T-201 [research] Research H22A4 Type-SH vs SE vs Base: trim differences, feature packages, pricing, desirability -- full spec: docs/plans/03-h-series-variants.md @ T-201
+- [x] **(S)** T-201 [research] Research H22A4 Type-SH vs SE vs Base: trim differences, feature packages, pricing, desirability -- done 2026-05-15, sha a67fe19 -- full spec: docs/plans/03-h-series-variants.md @ T-201
 - [ ] **(S)** T-202 [research] Research H22A4 5th gen Prelude redesign: styling changes, interior updates, chassis stiffening, weight changes -- full spec: docs/plans/03-h-series-variants.md @ T-202
 - [ ] **(S)** T-203 [research] Research H22A4 main journal increase: 1997 50mm to 1998+ 55mm reason, bearing part number changes, block casting -- full spec: docs/plans/03-h-series-variants.md @ T-203
 - [ ] **(S)** T-204 [research] Research H22A4 US market reception: reviews, magazine tests, owner satisfaction, depreciation curves -- full spec: docs/plans/03-h-series-variants.md @ T-204
