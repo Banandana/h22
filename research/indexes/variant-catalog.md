@@ -148,6 +148,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Index reference | research/indexes/local-manuals.md | Content Index | Referenced in engine section headers |
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Full entry with specs and features |
 | Gap analysis | research/indexes/qwen-gap-analysis.md | Gap Analysis | Missing: trim differences, main journal increase rationale |
+| **Research file** | **research/h-series/specifications/h22a4-usdm-origin.md** | **H22A4 USDM 5th gen origin: 1997 BB6 chassis introduction, open deck transition from H22A1 closed deck, 55 mm main journal increase (1998+), OBD2 P13 ECU with immobilizer, market positioning (single-engine lineup, ATTS Type SH, $23,595–$26,095 MSRP), competitive landscape (Celica GT-S, Integra GS-R, Accord Coupe), sales decline (98,627 → 58,118 units), internal cannibalization, SUV market shift, discontinuation after 2001, enthusiast legacy as last DOHC VTEC USDM Honda until 2026 revival, open deck strength debate resolution, tuning limitations (P13 locked, no S300 support)** | 2026-05-15 |
 
 ---
 
