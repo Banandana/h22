@@ -121,6 +121,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Task list reference | STATE.md | T-013 task line | Listed as one of target variant codes |
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Brief entry |
 | Gap analysis | research/indexes/qwen-gap-analysis.md | Gap Analysis | Missing: KU code applications, identification markers |
+| **Research file** | **research/h-series/variants/h22a3-rare-variant.md** | **H22A3 rare variant comprehensive research: KU regional code decoded (Malaysia + ~20 export countries including NZ, Hong Kong, South Africa, Fiji), 1996 single-year production, BB1 Prelude VTEC + CD8 Accord Coupe SiR applications, scarcity factors (~700–2,000 units est.), identification guide (block stamp unknown, VIN KU code primary method, black valve cover shared with H22A1), specs (190 PS @ 6,800 RPM, 10.6:1 CR, closed deck, 50mm mains), collector status (near-zero awareness, sleeper candidate), swap compatibility (functionally identical to H22A1), pricing estimates ($1,500–$3,500 speculative)** | 2026-05-15
 
 ---
 
