@@ -306,7 +306,7 @@ _(none)_
 
 ### H22A3 (JDM Rare 1996)
 
-- [ ] **(M)** T-190 [research] Research H22A3 specifications: 190 PS, differences from H22A1 and H22A4, production numbers -- full spec: docs/plans/03-h-series-variants.md @ T-190
+- [x] **(M)** T-190 [research] Research H22A3 specifications: 190 PS, differences from H22A1 and H22A4, production numbers — done 2026-05-15, sha TBD — full spec: docs/plans/03-h-series-variants.md @ T-190
 - [ ] **(S)** T-191 [research] Research H22A3 collector status: rarity, demand, pricing trends, identification markers -- full spec: docs/plans/03-h-series-variants.md @ T-191
 - [ ] **(S)** T-192 [checkpoint] Phase 3 checkpoint: review H22A3 research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-192
 
@@ -721,6 +721,7 @@ _(none yet)_
 - [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha 901e659 -- full spec: docs/plans/03-h-series-variants.md @ T-166
 - [x] **(M)** T-167 [research] Research H22A1 USDM origin: 1993 introduction, first DOHC VTEC in US market, regulatory drivers - done 2026-05-15, sha 39f555c - full spec: docs/plans/03-h-series-variants.md @ T-167
 - [x] **(M)** T-189 [research] Research H22A3 rare variant: 1996 production, KU code applications, scarcity factors, identification — done 2026-05-15, sha 51196e9 — full spec: docs/plans/03-h-series-variants.md @ T-189
+- [x] **(M)** T-190 [research] Research H22A3 specifications: 190 PS, differences from H22A1 and H22A4, production numbers — done 2026-05-15, sha TBD — full spec: docs/plans/03-h-series-variants.md @ T-190
 
 **Phase 0 infrastructure**
 
