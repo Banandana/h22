@@ -276,6 +276,31 @@ This compiled research document covers:
 - Injector impedance mismatch warning (OBD2 high-impedance saturated vs OBD1 low-impedance peak-and-hold)
 - Comparison matrix: P13 vs P28 vs P72 across tunability, software support, immobilizer, community support, cost
 
+## 13. External Research — H22A4 OBD2 Diagnostics
+
+### 16-Pin DLC Pinout, Scan Tool Requirements, Live Data PIDs, Readiness Monitors, DTC Set
+
+**Source:** `research/h-series/engine-management/h22a4-obd2-diagnostics.md`
+**Task:** T-200 [research]
+**Date:** 2026-05-15
+
+This compiled research document covers:
+- **16-pin J1962 DLC pinout** for H22A4: active pins (4=GND, 5=SIG GND, 7=K-Line, 9=SCS, 16=+12V BATT); pins 6/14 inactive (no CAN bus on 1997–2001)
+- **Protocol specification:** ISO 9141-2 → ISO 14230-4 / KWP2000 over K-Line at 10.4 kbps; 5-baud init sequence
+- **SCS Service Check System** on pin 9: diagnostic test mode trigger, continuation of Honda blink-code tradition
+- **Manual diagnostic mode** (no scan tool): short pins 9+4, read blink codes via MIL
+- **Scan tool requirements and recommendations:** OEM (Honda HDS, HRC PGM-FI Setting Tool), aftermarket professional (iCarsoft MHM/JP, Launch X-431), consumer (ELM327 + Torque Pro, INNOVA 3130); K-line compatibility warnings for cheap clones
+- **Standard OBD2 PID list** (Mode $01): 40+ PIDs including RPM, ECT, MAP, TPS, IAT, O2 sensor voltages, fuel trims, timing advance, vehicle speed, with normal range values specific to H22A4
+- **Honda-specific PIDs:** VTEC oil pressure switch, IACV position, A/F sensor AFR, EVAP purge flow, secondary air injection status
+- **PGM-FI Data List** parameters from factory Honda procedure
+- **I/M readiness monitors:** Misfire, Fuel System, Components, Catalyst, EGR, EVAP, Secondary Air, O2 Sensor, O2 Sensor Heater — with status meanings (Ready/Not Ready/MFA)
+- **Honda drive cycle procedure:** Cold start → idle with A/C → steady cruise → deceleration → repeat; catalyst monitor may require 5 cycles
+- **Complete DTC set:** ~80+ generic P0xxx codes (air/fuel metering, ignition/misfire, catalyst/exhaust, communication) + ~40+ Honda-specific P1xxx codes (VTEC system, sensor-specific, crank/cam sensors, idle/air management, transmission, miscellaneous)
+- **Diagnostic procedures:** Basic workflow, common H22A4 scenarios (CEL on/no drivability issues, rough idle/stalling, poor performance/hesitation)
+- **OBD1 vs OBD2 comparison table** for H-series
+
+---
+
 ## 9. Known Gaps
 
 The following items are **NOT found** in the local manual materials scanned:
