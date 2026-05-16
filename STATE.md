@@ -327,7 +327,7 @@ _(none)_
 ### H22A5-H22A8, H22Z1, H23A (European, Australian, JDM variants)
 
 - [x] **(M)** T-206 [research] Research H22A5 EDM: 1997-1998 European Prelude BB6 2.2VTi/VTi-S, 200 PS, features, market positioning -- done 2026-05-15, sha 1f3a9c2 -- full spec: docs/plans/03-h-series-variants.md @ T-206
-- [ ] **(M)** T-207 [research] Research H22A7 EDM Accord Type R CH1: 1998-2002, 212 PS redtop, single runner intake, European exclusivity -- full spec: docs/plans/03-h-series-variants.md @ T-207
+- [x] **(M)** T-207 [research] Research H22A7 EDM Accord Type R CH1: 1998-2002, 212 PS redtop, single runner intake, European exclusivity -- done 2026-05-15, sha d324c3b -- full spec: docs/plans/03-h-series-variants.md @ T-207
 - [ ] **(M)** T-208 [research] Research H22A8 EDM: 1999-2001 European Prelude, red valve cover anomaly, late-production characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-208
 - [ ] **(M)** T-209 [research] Research H22Z1 Australian VTi-R: 1999-2001, disputed 200-203 PS output, right-hand drive, ATTS compatibility -- full spec: docs/plans/03-h-series-variants.md @ T-209
 - [ ] **(M)** T-210 [research] Research H23A JDM rare blue top: 1998-2002 Accord Wagon SiR CH9, 200 PS, 2259cc, longer stroke, SOHC vs DOHC variants -- full spec: docs/plans/03-h-series-variants.md @ T-210
