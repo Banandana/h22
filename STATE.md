@@ -288,7 +288,7 @@ _(none)_
 - [x] **(S)** T-173 [research] Research H22A1 USDM detuning: what was changed vs JDM Redtop, power loss mechanisms, emissions compromises -- done 2026-05-15, sha 69a97ce -- full spec: docs/plans/03-h-series-variants.md @ T-173
 - [x] **(S)** T-174 [research] Research H22A1 alloy oil sump: OBD1-specific design, capacity, baffle pattern, aftermarket alternatives -- done 2026-05-15, sha f3d4f1a -- full spec: docs/plans/03-h-series-variants.md @ T-174
 - [x] **(S)** T-175 [research] Research H22A1 closed deck block: structural characteristics, boost potential, compared to later open deck -- done 2026-05-15, sha e0c5d92 -- full spec: docs/plans/03-h-series-variants.md @ T-175
-- [ ] **(S)** T-176 [research] Research H22A1 4WS models: which trim levels had four-wheel steering, system operation, maintenance -- full spec: docs/plans/03-h-series-variants.md @ T-176
+- [x] **(S)** T-176 [research] Research H22A1 4WS models: which trim levels had four-wheel steering, system operation, maintenance -- done 2026-05-15, sha c75779b -- full spec: docs/plans/03-h-series-variants.md @ T-176
 - [ ] **(S)** T-177 [research] Research H22A1 automatic vs manual: gear ratios, torque converter, shift quality, performance difference -- full spec: docs/plans/03-h-series-variants.md @ T-177
 - [ ] **(S)** T-178 [research] Research H22A1 US market reception: reviews, magazine tests, owner satisfaction, resale values -- full spec: docs/plans/03-h-series-variants.md @ T-178
 - [ ] **(S)** T-179 [research] Research H22A1 California vs non-California: emissions differences, power differences, ECU calibration -- full spec: docs/plans/03-h-series-variants.md @ T-179
