@@ -1,0 +1,51 @@
+INTRODUCTION [
+General Info [
+How to Use This Manual
+This manual contains information for the 1997 — 1999 PRELUDE and S ifications p
+divided into 24 sections. The first page of each section is marked pec s ecs
+with a black tab that lines up with its corresponding thumb index
+tab on this page and the back cover. You can quickly find the first
+page of each section without looking through a full table of con- . ‘- (
+tents. The symbols printed at the top corner of each page can also Maintenance oV
+be used as a quick reference system.
+Each section includes:
+1. Atable of contents, or an exploded view index showing: 5 ; By 5
+o Parts disassembly sequence. Engine Electrical .
+® Bolt torques and thread sizes.
+e Page references to descriptions in text.
+2. Disassembly/assembly procedures and tools.
+3. Inspection. L
+4. Testing/troubleshooting.
+5. Repair.
+6. Adjustments.
+Special Information COOI | ng *
+Indicates a strong possibility of severe personal injury
+or loss of life if instructions are not followed. F I d g
+nd Emission ‘
+CAUTION: Indicates a possibility of personal injury or equipment uela 1ons o' )
+damage if instructions are not followed.
+[NOTICE|
+The purpose of these messages it to help prevent damage to the *Transaxle
+vehicle, other property, or the environment.
+NOTE: Gives helpful information.
+CAUTION: Detailed descriptions of standard workshop procedures, . Stee ring
+safety principles and service operations are not included. Please
+note that this manual contains warnings and cautions against
+some specific service methods which could cause PERSONAL ey
+INJURY, damage a vehicle or make it unsafe. Please understand 2 ’h
+that these warnings cannot cover all conceivable ways in which Su spension -
+service, whether or not recommended by HONDA, might be done, d
+or of the possible hazardous consequences of every conceivable
+way, nor could HONDA investigate all such ways. Anyone using *
+service procedures or tools, whether or not recommended by Brakes ‘o
+HONDA, must satisfy himself thoroughly that neither personal safety - %
+nor vehicle safety will be jeopardized. ( | ncI Ud n g ABS ) ABS
+*
+Body S
+*
+Heater and t [ '
+Air Conditioning
+* ; i
+Body Electrical Bo5Y
+% )
+Restraints g
