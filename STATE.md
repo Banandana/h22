@@ -322,7 +322,7 @@ _(none)_
 - [x] **(S)** T-201 [research] Research H22A4 Type-SH vs SE vs Base: trim differences, feature packages, pricing, desirability -- done 2026-05-15, sha a67fe19 -- full spec: docs/plans/03-h-series-variants.md @ T-201
 - [x] **(S)** T-202 [research] Research H22A4 5th gen Prelude redesign: styling changes, interior updates, chassis stiffening, weight changes -- done 2026-05-15, sha 4fc9127 -- full spec: docs/plans/03-h-series-variants.md @ T-202
 - [x] **(S)** T-203 [research] Research H22A4 main journal increase: 1997 50mm to 1998+ 55mm reason, bearing part number changes, block casting -- done 2026-05-15, sha 5db8506 -- full spec: docs/plans/03-h-series-variants.md @ T-203
-- [ ] **(S)** T-204 [research] Research H22A4 US market reception: reviews, magazine tests, owner satisfaction, depreciation curves -- full spec: docs/plans/03-h-series-variants.md @ T-204
+- [x] **(S)** T-204 [research] Research H22A4 US market reception: reviews, magazine tests, owner satisfaction, depreciation curves — done 2026-05-15, sha baebe2f — full spec: docs/plans/03-h-series-variants.md @ T-204
 - [ ] **(S)** T-205 [checkpoint] Phase 3 checkpoint: review H22A4 research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-205
 
 ### H22A5-H22A8, H22Z1, H23A (European, Australian, JDM variants)
