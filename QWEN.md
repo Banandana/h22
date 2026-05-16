@@ -293,6 +293,20 @@ The H22 was discontinued in 2001 and replaced by the K20A and K24A engines as Ho
   - 55mm main journals (1998+)
   - ATTS (Active Torque Transfer System) on SH model
   - Single runner intake manifold
+- **ATTS Details (Type-SH only):**
+  - MCU replaces intermediate shaft between differential and driveshafts
+  - Triple-pinion planetary gear assembly (16 gears total observed in teardown)
+  - Two hydraulic multi-disc wet clutches (3 clutches + 4 friction plates total)
+  - Internal oil pump driven by input shaft
+  - Max torque bias ratio: 80:20 (outer:inner wheel)
+  - Outer wheel overdrive: ~15%
+  - Fluid: Honda Genuine ATF, 1 US quart capacity, 30,000 mi interval
+  - DTC codes 61–66 (oil pressure, pressure switch, temperature, control unit)
+  - OEM part number: 41200-P6K-010 (superseded by 41200-P6K-020)
+  - Weight: ~40 lbs (18 kg)
+  - Sensors: TPS, steering angle, yaw rate, wheel speed (x4), lateral G-force
+  - Control unit communicates with P13 ECU via serial data link
+  - No individual components sold separately — entire MCU must be replaced if failed
 
 #### H22A5 (European)
 - **Valve Cover:** Black
