@@ -271,7 +271,7 @@ _(none)_
 - [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
 - [x] **(M)** T-157 [research] Research H22A Blacktop applications: Prelude SiR, Accord SiR, Torneo — model years, chassis codes, features -- done 2026-05-15, sha 2764b69 -- full spec: docs/plans/03-h-series-variants.md @ T-157
 
-- [ ] **(S)** T-161 [research] Research H22A Blacktop vs Redtop comparison: power difference, torque curve, character, which is better and why -- full spec: docs/plans/03-h-series-variants.md @ T-161
+- [x] **(S)** T-161 [research] Research H22A Blacktop vs Redtop comparison: power difference, torque curve, character, which is better and why -- done 2026-05-15, sha 8e3e65f -- full spec: docs/plans/03-h-series-variants.md @ T-161
 - [ ] **(S)** T-162 [research] Research H22A Blacktop streetability: low-RPM torque, drivability, fuel economy, daily use characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-162
 - [ ] **(S)** T-163 [research] Research H22A Blacktop modification potential: bolt-on gains, cam upgrade path, head work recommendations -- full spec: docs/plans/03-h-series-variants.md @ T-163
 - [ ] **(S)** T-164 [research] Research H22A Blacktop reliability record: compared to Redtop, known issues, longevity data -- full spec: docs/plans/03-h-series-variants.md @ T-164
