@@ -253,6 +253,29 @@ This compiled research document covers:
 
 ---
 
+## 12. External Research — H22A4 P13 ECU (OBD2)
+
+### P13-A12 / P13-A13 Immobilizer, Tuning, Hondata Compatibility
+
+**Source:** `research/h-series/engine-management/h22a4-p13-ecu-immobilizer-tuning.md`
+**Task:** T-195 [research]
+**Date:** 2026-05-15
+
+This compiled research document covers:
+- P13 variants: P13-A12 (1996 OBD2A, no immobilizer, extremely rare) vs P13-A13/Bxx (1997–2001 OBD2B, immobilizer-integrated)
+- Immobilizer system details: rectangular EEPROM chip, key transponder matching, dealer programming requirement
+- Immobilizer bypass methods: P13-A12 sourcing, chip swap (F23→P13), dealer programming, OBD2B-to-OBD2A conversion harness (~$100–$150)
+- OBD2A vs OBD2B wiring differences (D connector pinout, harness compatibility)
+- Full P13 ECM Connector A (32-pin) pinout with wire colors and functions
+- Why P13 fuel maps are NOT modifiable (no bin readers exist, K-series-like memory architecture)
+- Custom pre-programmed chips: Spoon (5000 VTEC/8500 redline), KS-ROM (5500 VTEC/9000 redline), Mugen (5500 VTEC/9200 redline), Stock JDM (5200 VTEC/7700 redline)
+- Speed limiter: JDM P13s = 118 mph electronic governor; USDM status inconclusive
+- Hondata S300: INCOMPATIBLE with P13 — requires chippable OBD1 ECU (P28/P06/P72) + harness converter + TD-60U distributor
+- Hondata FlashPro: Does NOT support H22 P13 family — supports K-series/newer RSX/Civic Si/CR-Z/TL/Integra only
+- Recommended tuning paths: Path A (P28 + S300, recommended), Path B (custom P13 chip, limited), Path C (standalone ECU, maximum flexibility)
+- Injector impedance mismatch warning (OBD2 high-impedance saturated vs OBD1 low-impedance peak-and-hold)
+- Comparison matrix: P13 vs P28 vs P72 across tunability, software support, immobilizer, community support, cost
+
 ## 9. Known Gaps
 
 The following items are **NOT found** in the local manual materials scanned:

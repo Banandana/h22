@@ -121,3 +121,15 @@ This plan doc contains the authoritative specs for Phase 3 tasks covering detail
 **Spawns:** None directly; follow-on tasks T-195 through T-205 cover ECU, applications, block architecture, ATTS, intake, OBD2 diagnostics, trim levels, chassis redesign, main journal change, market reception, and checkpoint.
 
 **DoD notes:** This is a pure research task — no code changes. Focus on accuracy of numbers, proper source attribution, and noting any conflicts between sources (e.g., VTEC engagement RPM varies across sources, exact compression ratio may differ slightly between 1997 and 1998+ blocks due to main journal change). The research file should be written to `research/h-series/specifications/h22a4-specifications.md` following the template in `research/template.md`. Cross-reference against Wikipedia, Honda-Tech, mywikimotors, local BB6 Helms Manual OCR, and QWEN.md.
+
+---
+
+### T-195
+
+**Description:** Research H22A4 ECU: P13 OBD2, immobilizer integration, tuning methods, Hondata FlashPro compatibility. Compile comprehensive documentation covering the P13 ECU family used in USDM H22A4 engines (1996–2001). Cover: (1) P13 variants — P13-A12 (1996 OBD2A, no immobilizer, extremely rare) vs P13-A13/P13-Bxx (1997–2001 OBD2B, immobilizer-integrated); (2) Immobilizer system — how it works (rectangular EEPROM chip matching coded keys), dealer key programming requirement, immobilizer swap trick (de-solder F23 IMM chip into 97–01 H22 ECU), Rywire OBD2B-to-OBD2A conversion harness (~$100–$150); (3) Tuning methods — P13 fuel maps are NOT modifiable (no software can open/read P13 bins), custom chips exist (Spoon: 5000 VTEC/8500 redline, KS-ROM: 5500 VTEC/9000 redline, Mugen: 5500 VTEC/9200 redline, stock JDM: 5200 VTEC/7700 redline), speed limiter (JDM P13s: 118 mph electronic governor), recommended path: convert to P28 (OBD1) via harness converter + TD-60U distributor; (4) Hondata compatibility — S300 requires chippable OBD1 ECU (P28/P06/P72), FlashPro does NOT support H22 P13 family, FlashPro supports K-series/newer RSX/Civic Si/CR-Z/TL/Integra only. Cross-reference against Honda-Tech forums, PreludePower forums, Hondata official forums, eBay listings, Module Mechanics, AutoECMs, QWEN.md, and local BB6 Helms Manual OCR.
+
+**Depends on:** T-194 (H22A4 specifications)
+
+**Spawns:** None directly; follow-on tasks T-196 through T-205 cover applications, block architecture, ATTS, intake, OBD2 diagnostics, trim levels, chassis redesign, main journal change, market reception, and checkpoint.
+
+**DoD notes:** This is a pure research task — no code changes. Focus on accuracy of ECU variant codes, immobilizer chip descriptions, and Hondata compatibility statements. Note conflicts between sources (e.g., whether USDM P13s have speed limiters vs JDM P13s; exact redline/VTEC values for custom chips). The research file should be written to `research/h-series/engine-management/h22a4-p13-ecu-immobilizer-tuning.md` following the template in `research/template.md`. Cross-reference against Honda-Tech, PreludePower, Hondata forums, eBay, Module Mechanics, AutoECMs, QWEN.md, and local BB6 Helms Manual OCR.
