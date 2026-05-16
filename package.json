@@ -1,19 +1,32 @@
 {
   "name": "h22",
   "version": "1.0.0",
-  "description": "",
+  "description": "Honda H/F-Series engine research project",
   "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "consensus": "tsx src/torque-runner/run-consensus.ts"
   },
-  "keywords": [],
+  "keywords": [
+    "honda",
+    "h22",
+    "engine",
+    "torque",
+    "fastener"
+  ],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0"
+  },
   "dependencies": {
-    "playwright": "^1.60.0"
+    "playwright": "^1.60.0",
+    "zod": "^3.25.76"
   }
 }
