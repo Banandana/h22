@@ -330,7 +330,7 @@ _(none)_
 - [x] **(M)** T-207 [research] Research H22A7 EDM Accord Type R CH1: 1998-2002, 212 PS redtop, single runner intake, European exclusivity -- done 2026-05-15, sha d324c3b -- full spec: docs/plans/03-h-series-variants.md @ T-207
 - [x] **(M)** T-208 [research] Research H22A8 EDM: 1999-2001 European Prelude, red valve cover anomaly, late-production characteristics -- done 2026-05-15, sha c37449d -- full spec: docs/plans/03-h-series-variants.md @ T-208
 - [x] **(M)** T-209 [research] Research H22Z1 Australian VTi-R: 1999-2001, disputed 200-203 PS output, right-hand drive, ATTS compatibility -- done 2026-05-15, sha cac7155 -- full spec: docs/plans/03-h-series-variants.md @ T-209
-- [ ] **(M)** T-210 [research] Research H23A JDM rare blue top: 1998-2002 Accord Wagon SiR CH9, 200 PS, 2259cc, longer stroke, SOHC vs DOHC variants -- full spec: docs/plans/03-h-series-variants.md @ T-210
+- [x] **(M)** T-210 [research] Research H23A JDM rare blue top: 1998-2002 Accord Wagon SiR CH9, 200 PS, 2259cc, longer stroke, SOHC vs DOHC variants -- done 2026-05-15, sha c945cc4 -- full spec: docs/plans/03-h-series-variants.md @ T-210
 - [ ] **(S)** T-211 [research] Research H23A internal oil passage for VTEC solenoid: unique to H23A, pressure requirements, failure modes -- full spec: docs/plans/03-h-series-variants.md @ T-211
 - [ ] **(S)** T-212 [research] Research H23A oil squirters: provisions exist but not installed, block drilling requirements, aftermarket kits -- full spec: docs/plans/03-h-series-variants.md @ T-212
 - [ ] **(S)** T-213 [research] Research H23A lower redline: 7200 RPM vs H22's 7200-8200 RPM, longer stroke impact, piston speed calculations -- full spec: docs/plans/03-h-series-variants.md @ T-213
