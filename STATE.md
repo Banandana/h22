@@ -710,7 +710,7 @@ _(none yet)_
 
 **Phase 3: H-Series Engine Variants Detailed Research**
 
-- [x] **(S)** T-205 [checkpoint] Phase 3 checkpoint: review H22A4 research, identify gaps, spawn new tasks if needed — done 2026-05-15, sha <PENDING> — full spec: docs/plans/03-h-series-variants.md @ T-205
+- [x] **(S)** T-205 [checkpoint] Phase 3 checkpoint: review H22A4 research, identify gaps, spawn new tasks if needed — done 2026-05-15, sha 6225ea5 — full spec: docs/plans/03-h-series-variants.md @ T-205
 
 - [x] **(M)** T-151 [research] Research H22A Blacktop JDM origin: when introduced, which models received it, production years, market exclusivity -- full spec: docs/plans/03-h-series-variants.md @ T-151 - done 2026-05-15, sha fc1ac8a
 - [x] **(M)** T-152 [research] Research H22A Blacktop specifications: 200 PS @ 7000 RPM, 219 Nm @ 5500 RPM, 10.6:1 compression, flat-top pistons -- full spec: docs/plans/03-h-series-variants.md @ T-152 - done 2026-05-15, sha 8fc8666
