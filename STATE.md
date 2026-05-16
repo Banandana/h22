@@ -710,7 +710,7 @@ _(none yet)_
 - [x] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- done 2026-05-15, sha 1330e29 -- full spec: docs/plans/03-h-series-variants.md @ T-155
 - [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
 - [x] **(M)** T-160 [research] Research H22A Blacktop closed deck vs open deck: 1992-1996 closed deck, 1997-2001 open deck differences -- done 2026-05-15, sha 55373ea -- full spec: docs/plans/03-h-series-variants.md @ T-160
-- [x] **(S)** T-164 [research] Research H22A Blacktop reliability record: compared to Redtop, known issues, longevity data -- done 2026-05-15, sha PENDING -- full spec: docs/plans/03-h-series-variants.md @ T-164
+- [x] **(S)** T-164 [research] Research H22A Blacktop reliability record: compared to Redtop, known issues, longevity data -- done 2026-05-15, sha 7eb2ce1 -- full spec: docs/plans/03-h-series-variants.md @ T-164
 
 **Phase 0 infrastructure**
 
