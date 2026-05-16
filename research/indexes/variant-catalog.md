@@ -78,6 +78,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Gap analysis | research/indexes/qwen-gap-analysis.md | Gap Analysis | Missing: swap legality, California vs non-CA details |
 | **Research file** | **research/h-series/specifications/h22a1-specifications.md** | **Full spec sheet** | **Power, torque, compression, internal components, cam profiles, induction/exhaust, ECU, emissions, fluids, torque specs, casting numbers, C&D test results, Redtop comparison** | 2026-05-15
 | **Research file** | **research/h-series/specifications/h22a1-applications.md** | **Applications across markets** | **USDM VTEC (BB1), Canada SR-V (BB1), Australia VTi-R (BB1) — model year evolution, features, pricing, trim differentiation, cross-market comparison** | 2026-05-15
+| **Research file** | **research/h-series/specifications/h22a1-usdm-detuning.md** | **Detuning analysis vs JDM Redtop** | **Five detuning measures (CR 11.0→10.0, Blacktop cams, single runner + 60mm TB, 51mm exhaust, emissions package, ECU calibration); quantitative power loss attribution (30 PS total, ~14% deficit); emissions compliance analysis; power band shift; community consensus from PreludePower/Honda-Tech/mywikimotors** | 2026-05-15
 
 ---
 
