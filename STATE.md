@@ -275,7 +275,7 @@ _(none)_
 - [x] **(S)** T-162 [research] Research H22A Blacktop streetability: low-RPM torque, drivability, fuel economy, daily use characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-162 — done 2026-05-15, sha 9310c42
 - [x] **(S)** T-163 [research] Research H22A Blacktop modification potential: bolt-on gains, cam upgrade path, head work recommendations -- done 2026-05-15, sha fd5479c -- full spec: docs/plans/03-h-series-variants.md @ T-163
 
-- [ ] **(S)** T-165 [research] Research H22A Blacktop value proposition: used prices, cost of ownership, modification investment returns -- full spec: docs/plans/03-h-series-variants.md @ T-165
+
 - [ ] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-166
 
 ### H22A1 (USDM 1993-1996)
@@ -671,6 +671,8 @@ _(none yet)_
 - [x] **(S)** T-096 [research] Research H-series intake manifold designs: dual runner vs single runner, plenum volume, runner length — done 2026-05-15, sha 3e3a0c0 — full spec: docs/plans/02-h-series-specs.md @ T-096
 
 **Phase 3: H-Series Engine Variants Detailed Research**
+
+- [x] **(S)** T-165 [research] Research H22A Blacktop value proposition: used prices, cost of ownership, modification investment returns — done 2026-05-15, sha ba9ef8c — full spec: docs/plans/03-h-series-variants.md @ T-165
 
 - [x] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type — done 2026-05-15, sha 8a0f02b — full spec: docs/plans/03-h-series-variants.md @ T-129
 
