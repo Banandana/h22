@@ -290,7 +290,6 @@ _(none)_
 - [x] **(S)** T-175 [research] Research H22A1 closed deck block: structural characteristics, boost potential, compared to later open deck -- done 2026-05-15, sha e0c5d92 -- full spec: docs/plans/03-h-series-variants.md @ T-175
 - [x] **(S)** T-176 [research] Research H22A1 4WS models: which trim levels had four-wheel steering, system operation, maintenance -- done 2026-05-15, sha c75779b -- full spec: docs/plans/03-h-series-variants.md @ T-176
 - [x] **(S)** T-177 [research] Research H22A1 automatic vs manual: gear ratios, torque converter, shift quality, performance difference -- done 2026-05-15, sha f32137e -- full spec: docs/plans/03-h-series-variants.md @ T-177
-- [ ] **(S)** T-178 [research] Research H22A1 US market reception: reviews, magazine tests, owner satisfaction, resale values -- full spec: docs/plans/03-h-series-variants.md @ T-178
 - [ ] **(S)** T-179 [research] Research H22A1 California vs non-California: emissions differences, power differences, ECU calibration -- full spec: docs/plans/03-h-series-variants.md @ T-179
 - [ ] **(S)** T-180 [research] Research H22A1 swap legality: CARB EO numbers, EPA compliance, state-by-state legality analysis -- full spec: docs/plans/03-h-series-variants.md @ T-180
 - [ ] **(S)** T-181 [checkpoint] Phase 3 checkpoint: review H22A1 research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-181
@@ -672,6 +671,8 @@ _(none yet)_
 **Phase 3: H-Series Engine Variants Detailed Research**
 
 - [x] **(M)** T-172 [research] Research H22A1 OBD1 diagnostics: connector pinout, test mode, live data, trouble code retrieval procedures -- done 2026-05-15, sha abab27f — full spec: docs/plans/03-h-series-variants.md @ T-172
+
+- [x] **(S)** T-178 [research] Research H22A1 US market reception: reviews, magazine tests, owner satisfaction, resale values -- done 2026-05-15, sha PENDING — full spec: docs/plans/03-h-series-variants.md @ T-178
 
 - [x] **(M)** T-170 [research] Research H22A1 applications: 1993–1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features — done 2026-05-15, sha baa8953 — full spec: docs/plans/03-h-series-variants.md @ T-170
 
