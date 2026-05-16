@@ -172,6 +172,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Features | QWEN.md | Engine Variants section | European emissions, similar to H22A4 |
 | Task list reference | STATE.md | T-013 task line | Listed as one of target variant codes |
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Brief entry |
+| **Research file** | **research/h-series/specifications/h22a5-edm-specifications.md** | **Full EDM variant research** | **Specifications, power output controversy (185 PS vs 200 PS), ECU details (OBD1, single O2, no knock sensor), throttle body (60mm), exhaust/downpipe differences vs H22A8, market positioning, insurance strategy, modification potential, swap compatibility, collectibility, used market estimates, H22A5 vs H22A8/H22A4 comparison tables** | 2026-05-15
 
 ---
 
