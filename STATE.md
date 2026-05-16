@@ -714,6 +714,7 @@ _(none yet)_
 - [x] **(M)** T-160 [research] Research H22A Blacktop closed deck vs open deck: 1992-1996 closed deck, 1997-2001 open deck differences -- done 2026-05-15, sha 55373ea -- full spec: docs/plans/03-h-series-variants.md @ T-160
 - [x] **(S)** T-164 [research] Research H22A Blacktop reliability record: compared to Redtop, known issues, longevity data -- done 2026-05-15, sha 7eb2ce1 -- full spec: docs/plans/03-h-series-variants.md @ T-164
 - [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha 901e659 -- full spec: docs/plans/03-h-series-variants.md @ T-166
+- [x] **(M)** T-167 [research] Research H22A1 USDM origin: 1993 introduction, first DOHC VTEC in US market, regulatory drivers — done 2026-05-15, sha 39f555c — full spec: docs/plans/03-h-series-variants.md @ T-167
 
 **Phase 0 infrastructure**
 
