@@ -1,0 +1,125 @@
+{
+  "BB6": [
+    {
+      "id": "bb6.engine-electrical",
+      "chapter_name": "Engine Electrical",
+      "system": "engine",
+      "page_start": 55,
+      "page_end": 135
+    },
+    {
+      "id": "bb6.cylinder-head",
+      "chapter_name": "Cylinder Head/Valve Train",
+      "system": "engine",
+      "page_start": 136,
+      "page_end": 160
+    },
+    {
+      "id": "bb6.engine-block",
+      "chapter_name": "Engine Block",
+      "system": "engine",
+      "page_start": 161,
+      "page_end": 194
+    },
+    {
+      "id": "bb6.engine-lubrication",
+      "chapter_name": "Engine Lubrication",
+      "system": "engine",
+      "page_start": 195,
+      "page_end": 493
+    },
+    {
+      "id": "bb6.clutch",
+      "chapter_name": "Clutch",
+      "system": "drivetrain",
+      "page_start": 657,
+      "page_end": 701
+    },
+    {
+      "id": "bb6.transmission",
+      "chapter_name": "Manual/Automatic Transmission",
+      "system": "drivetrain",
+      "page_start": 494,
+      "page_end": 656
+    },
+    {
+      "id": "bb6.atts",
+      "chapter_name": "Active Torque Transfer System (ATTS)",
+      "system": "drivetrain",
+      "page_start": 702,
+      "page_end": 764
+    },
+    {
+      "id": "bb6.driveshafts",
+      "chapter_name": "Driveshafts",
+      "system": "drivetrain",
+      "page_start": 779,
+      "page_end": 799
+    },
+    {
+      "id": "bb6.steering",
+      "chapter_name": "Steering",
+      "system": "chassis",
+      "page_start": 765,
+      "page_end": 778
+    },
+    {
+      "id": "bb6.power-steering",
+      "chapter_name": "Power Steering",
+      "system": "chassis",
+      "page_start": 800,
+      "page_end": 852
+    },
+    {
+      "id": "bb6.suspension",
+      "chapter_name": "Suspension",
+      "system": "chassis",
+      "page_start": 853,
+      "page_end": 884
+    },
+    {
+      "id": "bb6.brakes",
+      "chapter_name": "Brakes",
+      "system": "chassis",
+      "page_start": 885,
+      "page_end": 1044
+    },
+    {
+      "id": "bb6.air-conditioning",
+      "chapter_name": "Air Conditioning",
+      "system": "body",
+      "page_start": 1045,
+      "page_end": 1165
+    },
+    {
+      "id": "bb6.body-electrical",
+      "chapter_name": "Body Electrical",
+      "system": "body",
+      "page_start": 1166,
+      "page_end": 1376
+    }
+  ],
+  "OBD1": [
+    {
+      "id": "obd1.engine",
+      "chapter_name": "Engine",
+      "system": "engine",
+      "page_start": 40,
+      "page_end": 237
+    },
+    {
+      "id": "obd1.cooling",
+      "chapter_name": "Cooling",
+      "system": "engine",
+      "page_start": 238,
+      "page_end": 249
+    },
+    {
+      "id": "obd1.fuel-emissions",
+      "chapter_name": "Fuel and Emissions",
+      "system": "engine",
+      "page_start": 250,
+      "page_end": 372
+    }
+  ]
+}
