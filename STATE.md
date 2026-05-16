@@ -300,7 +300,7 @@ _(none)_
 - [x] **(M)** T-183 [research] Research H22A2 specifications: 185 PS @ 6800 RPM, 10.0:1 compression, European emissions standards — done 2026-05-15, sha 5a44583 — full spec: docs/plans/03-h-series-variants.md @ T-183
 - [x] **(M)** T-184 [research] Research H22A2 European Prelude BB1: model years, trim levels, feature packages, pricing in Europe — done 2026-05-15, sha 451daef — full spec: docs/plans/03-h-series-variants.md @ T-184
 - [x] **(M)** T-185 [research] Research H22A2 vs H22A1 differences: detuning measures, emissions equipment, parts interchangeability — done 2026-05-15, sha e9d9fb6 — full spec: docs/plans/03-h-series-variants.md @ T-185
-- [x] **(S)** T-186 [research] Research H22A2 European driving conditions: high-speed Autobahn durability, mountain road cooling, fuel quality — done 2026-05-15, sha pending — full spec: docs/plans/03-h-series-variants.md @ T-186
+- [x] **(S)** T-186 [research] Research H22A2 European driving conditions: high-speed Autobahn durability, mountain road cooling, fuel quality — done 2026-05-15, sha 0c16501 — full spec: docs/plans/03-h-series-variants.md @ T-186
 - [ ] **(S)** T-187 [research] Research H22A2 European spare parts: availability, dealer networks, independent supplier ecosystem -- full spec: docs/plans/03-h-series-variants.md @ T-187
 - [ ] **(S)** T-188 [checkpoint] Phase 3 checkpoint: review H22A2 research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-188
 
