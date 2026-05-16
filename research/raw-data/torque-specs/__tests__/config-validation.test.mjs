@@ -111,10 +111,11 @@ describe("models.json — valid structure", () => {
     assert.strictEqual(m.tier, "primary-cheap");
   });
 
-  it("has correct provider+tier for qwen3-vl-235b", () => {
+  it("has correct provider+tier for qwen3-vl-235b (unavailable)", () => {
     const m = models["together.qwen3-vl-235b"];
     assert.strictEqual(m.provider, "together");
-    assert.strictEqual(m.tier, "primary-cheap");
+    // Dropped from default matrix in T-418b: non-serverless on Together AI
+    assert.strictEqual(m.tier, "unavailable");
   });
 
   it("has correct provider+tier for claude-sonnet-4-6", () => {
@@ -142,20 +143,30 @@ describe("models.json — valid structure", () => {
   });
 
   it("pricing: together models cheaper than anthropic", () => {
-    const togetherModels = Object.entries(models).filter(([_, m]) => m.provider === "together");
-    const anthropicModels = Object.entries(models).filter(([_, m]) => m.provider === "anthropic");
+    const togetherModels = Object.entries(models).filter(
+      ([_, m]) => m.provider === "together",
+    );
+    const anthropicModels = Object.entries(models).filter(
+      ([_, m]) => m.provider === "anthropic",
+    );
     for (const [, t] of togetherModels) {
       for (const [, a] of anthropicModels) {
-        assert.ok(t.input_per_M_usd <= a.input_per_M_usd, `${t.model} input ≤ ${a.model} input`);
-        assert.ok(t.output_per_M_usd <= a.output_per_M_usd, `${t.model} output ≤ ${a.model} output`);
+        assert.ok(
+          t.input_per_M_usd <= a.input_per_M_usd,
+          `${t.model} input ≤ ${a.model} input`,
+        );
+        assert.ok(
+          t.output_per_M_usd <= a.output_per_M_usd,
+          `${t.model} output ≤ ${a.model} output`,
+        );
       }
     }
   });
 
   it("Kimi K2.6 pricing matches Together API docs ($1.20/$4.50)", () => {
     const kimi = models["together.kimi-k2-6-fp4"];
-    assert.strictEqual(kimi.input_per_M_usd, 1.20);
-    assert.strictEqual(kimi.output_per_M_usd, 4.50);
+    assert.strictEqual(kimi.input_per_M_usd, 1.2);
+    assert.strictEqual(kimi.output_per_M_usd, 4.5);
   });
 
   it("Together model strings match Together API docs", () => {
@@ -166,8 +177,13 @@ describe("models.json — valid structure", () => {
 
   it("Anthropic rescue tier has requires_key in extraction-matrix", () => {
     const matrix = loadJSON("extraction-matrix.json");
-    const rescueEntry = matrix.rescue_tier.find((r) => r.model_id === "anthropic.claude-opus-4-7");
-    assert.ok(rescueEntry, "rescue tier should contain anthropic.claude-opus-4-7");
+    const rescueEntry = matrix.rescue_tier.find(
+      (r) => r.model_id === "anthropic.claude-opus-4-7",
+    );
+    assert.ok(
+      rescueEntry,
+      "rescue tier should contain anthropic.claude-opus-4-7",
+    );
     assert.strictEqual(rescueEntry.requires_key, "ANTHROPIC_API_KEY");
   });
 
@@ -175,7 +191,8 @@ describe("models.json — valid structure", () => {
     const qwen = models["together.qwen3-vl-235b"];
     assert.ok(qwen.note, "Qwen3-VL entry should have a note field");
     assert.ok(
-      qwen.note.toLowerCase().includes("serverless") || qwen.note.toLowerCase().includes("dedicated"),
+      qwen.note.toLowerCase().includes("serverless") ||
+        qwen.note.toLowerCase().includes("dedicated"),
       "note should mention serverless or dedicated endpoint",
     );
   });
@@ -190,19 +207,28 @@ describe("extraction-matrix.json — valid structure", () => {
 
   it("has required top-level keys", () => {
     assert.ok(matrix.default, "should have 'default' key");
-    assert.ok(matrix.high_stakes_chapters, "should have 'high_stakes_chapters' key");
-    assert.ok(matrix.high_stakes_overrides, "should have 'high_stakes_overrides' key");
+    assert.ok(
+      matrix.high_stakes_chapters,
+      "should have 'high_stakes_chapters' key",
+    );
+    assert.ok(
+      matrix.high_stakes_overrides,
+      "should have 'high_stakes_overrides' key",
+    );
     assert.ok(matrix.rescue_tier, "should have 'rescue_tier' key");
   });
 
-  it("default profile has exactly 2 model entries", () => {
-    assert.strictEqual(matrix.default.length, 2);
+  it("default profile has exactly 1 model entry (kimi only, qwen dropped in T-418b)", () => {
+    assert.strictEqual(matrix.default.length, 1);
   });
 
-  it("default profile contains kimi and qwen model_ids", () => {
+  it("default profile contains kimi model_id (qwen3-vl dropped as unavailable)", () => {
     const ids = matrix.default.map((e) => e.model_id);
     assert.ok(ids.includes("together.kimi-k2-6-fp4"));
-    assert.ok(ids.includes("together.qwen3-vl-235b"));
+    assert.ok(
+      !ids.includes("together.qwen3-vl-235b"),
+      "qwen3-vl should NOT be in default (non-serverless)",
+    );
   });
 
   it("default profile entries have runs=1 and temperature=0", () => {
@@ -225,12 +251,15 @@ describe("extraction-matrix.json — valid structure", () => {
       "flywheel-clutch",
     ];
     for (const ch of expected) {
-      assert.ok(matrix.high_stakes_chapters.includes(ch), `missing chapter: ${ch}`);
+      assert.ok(
+        matrix.high_stakes_chapters.includes(ch),
+        `missing chapter: ${ch}`,
+      );
     }
   });
 
-  it("high_stakes_overrides has exactly 2 entries", () => {
-    assert.strictEqual(matrix.high_stakes_overrides.length, 2);
+  it("high_stakes_overrides has exactly 1 entry (kimi only)", () => {
+    assert.strictEqual(matrix.high_stakes_overrides.length, 1);
   });
 
   it("high_stakes_overrides: kimi has runs=3 temp=0.3 seed_base=1000", () => {
@@ -241,16 +270,6 @@ describe("extraction-matrix.json — valid structure", () => {
     assert.strictEqual(kimi.runs, 3);
     assert.strictEqual(kimi.temperature, 0.3);
     assert.strictEqual(kimi.seed_base, 1000);
-  });
-
-  it("high_stakes_overrides: qwen has runs=2 temp=0.2 seed_base=2000", () => {
-    const qwen = matrix.high_stakes_overrides.find(
-      (o) => o.model_id === "together.qwen3-vl-235b",
-    );
-    assert.ok(qwen, "qwen override should exist");
-    assert.strictEqual(qwen.runs, 2);
-    assert.strictEqual(qwen.temperature, 0.2);
-    assert.strictEqual(qwen.seed_base, 2000);
   });
 
   it("rescue_tier has exactly 1 entry", () => {
@@ -371,12 +390,18 @@ describe("models.json — schema validation", () => {
 function validateModelEntry(entry) {
   if (!entry.provider) throw new Error("missing provider");
   if (!entry.model) throw new Error("missing model");
-  if (typeof entry.vision !== "boolean") throw new Error("vision must be boolean");
-  if (typeof entry.default_temp !== "number") throw new Error("default_temp must be number");
+  if (typeof entry.vision !== "boolean")
+    throw new Error("vision must be boolean");
+  if (typeof entry.default_temp !== "number")
+    throw new Error("default_temp must be number");
   if (typeof entry.input_per_M_usd !== "number" || entry.input_per_M_usd < 0)
     throw new Error("invalid input_per_M_usd");
   if (typeof entry.output_per_M_usd !== "number" || entry.output_per_M_usd < 0)
     throw new Error("invalid output_per_M_usd");
-  if (!["primary-cheap", "primary-high", "rescue"].includes(entry.tier))
+  if (
+    !["primary-cheap", "primary-high", "rescue", "unavailable"].includes(
+      entry.tier,
+    )
+  )
     throw new Error("invalid tier");
 }

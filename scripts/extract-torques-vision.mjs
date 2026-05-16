@@ -11,10 +11,7 @@
  *   node scripts/extract-torques-vision.mjs --manual=BB6 --model-id=together.kimi-k2-6-fp4 --runs=3 --temperature=0.3 --seed-base=1000
  */
 
-import {
-  createHash,
-  randomUUID,
-} from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import {
   readFileSync,
   writeFileSync,
@@ -169,7 +166,10 @@ class TogetherProvider extends ProviderClient {
 
     const base64Image = imageToBase64Temp(pageBytes);
     const userContent = [
-      { type: "image_url", image_url: { url: `data:image/png;base64,${base64Image}` } },
+      {
+        type: "image_url",
+        image_url: { url: `data:image/png;base64,${base64Image}` },
+      },
       { type: "text", text: prompt.user },
     ];
 
@@ -203,7 +203,9 @@ class TogetherProvider extends ProviderClient {
           lastError = new Error(`HTTP ${res.status}: ${res.statusText}`);
           if (attempt < MAX_RETRIES) {
             const delay = BASE_DELAY_MS * Math.pow(2, attempt);
-            console.log(`  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} after ${delay}ms`);
+            console.log(
+              `  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} after ${delay}ms`,
+            );
             await sleep(delay);
             continue;
           }
@@ -217,8 +219,7 @@ class TogetherProvider extends ProviderClient {
         const data = await res.json();
         const latencyMs = Date.now() - startTime;
 
-        const content =
-          data.choices?.[0]?.message?.content ?? "";
+        const content = data.choices?.[0]?.message?.content ?? "";
         const usage = data.usage || {};
 
         return {
@@ -231,7 +232,9 @@ class TogetherProvider extends ProviderClient {
         lastError = err;
         if (attempt < MAX_RETRIES) {
           const delay = BASE_DELAY_MS * Math.pow(2, attempt);
-          console.log(`  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} error: ${err.message} after ${delay}ms`);
+          console.log(
+            `  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} error: ${err.message} after ${delay}ms`,
+          );
           await sleep(delay);
         }
       }
@@ -313,7 +316,9 @@ class AnthropicProvider extends ProviderClient {
           lastError = new Error(`HTTP ${res.status}: ${res.statusText}`);
           if (attempt < MAX_RETRIES) {
             const delay = BASE_DELAY_MS * Math.pow(2, attempt);
-            console.log(`  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} after ${delay}ms`);
+            console.log(
+              `  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} after ${delay}ms`,
+            );
             await sleep(delay);
             continue;
           }
@@ -341,7 +346,9 @@ class AnthropicProvider extends ProviderClient {
         lastError = err;
         if (attempt < MAX_RETRIES) {
           const delay = BASE_DELAY_MS * Math.pow(2, attempt);
-          console.log(`  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} error: ${err.message} after ${delay}ms`);
+          console.log(
+            `  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} error: ${err.message} after ${delay}ms`,
+          );
           await sleep(delay);
         }
       }
@@ -395,16 +402,29 @@ export function buildPrompt(promptText, pageNum) {
  * @param {number} pageNum - Page number
  * @returns {{ path: string, relative: string } | null}
  */
-function findPageImage(manual, pageNum) {
+export function findPageImage(manual, pageNum) {
   const imagesDir = join(ROOT, "bb6_ocr", "images");
   const obd1Dir = join(ROOT, "obd1_source", "pages");
 
-  // BB6: p{page}-*.png pattern from bb6_ocr
+  // BB6: page-{page}.png pattern (single-page renders — real manual pages)
+  // Priority over p{page}-*.png because the latter are often tiny nav-link placeholders
+  // from the OCR pipeline. Real manual pages are 100KB+; nav links are <2KB.
   if (manual === "BB6") {
-    const entries = existsSync(imagesDir)
-      ? readdirSync(imagesDir)
-      : [];
-    const match = entries.find((f) => f.startsWith(`p${pageNum}-`) && f.endsWith(".png"));
+    const singlePage = join(imagesDir, `page-${pageNum}.png`);
+    if (existsSync(singlePage)) {
+      const size = readFileSync(singlePage).length;
+      if (size >= 50000) {
+        return {
+          path: singlePage,
+          relative: `bb6_ocr/images/page-${pageNum}.png`,
+        };
+      }
+    }
+    // Fallback: p{page}-*.png pattern from bb6_ocr (multi-page OCR renders)
+    const entries = existsSync(imagesDir) ? readdirSync(imagesDir) : [];
+    const match = entries.find(
+      (f) => f.startsWith(`p${pageNum}-`) && f.endsWith(".png"),
+    );
     if (match) {
       return {
         path: join(imagesDir, match),
@@ -420,7 +440,9 @@ function findPageImage(manual, pageNum) {
       return { path: candidate, relative: `obd1_source/pages/p${pageNum}.png` };
     }
     const entries = existsSync(obd1Dir) ? readdirSync(obd1Dir) : [];
-    const match = entries.find((f) => f.startsWith(`p${pageNum}-`) && f.endsWith(".png"));
+    const match = entries.find(
+      (f) => f.startsWith(`p${pageNum}-`) && f.endsWith(".png"),
+    );
     if (match) {
       return {
         path: join(obd1Dir, match),
@@ -431,8 +453,6 @@ function findPageImage(manual, pageNum) {
 
   return null;
 }
-
-
 
 /**
  * Convert a PNG file to base64 string.
@@ -566,7 +586,14 @@ export function getResponsePath(manual, pageNum, provider, modelId, run) {
   // Return a relative path from ROOT so checkCache can join it correctly.
   // path.join on POSIX treats absolute second args as literal segments,
   // so we must store relative paths in the cache.
-  const relDir = join("research", "raw-data", "torque-specs", "responses", manual.toLowerCase(), String(pageNum));
+  const relDir = join(
+    "research",
+    "raw-data",
+    "torque-specs",
+    "responses",
+    manual.toLowerCase(),
+    String(pageNum),
+  );
   return join(relDir, fileName);
 }
 
@@ -670,7 +697,10 @@ export function parseResponse(rawContent) {
         // fall through
       }
     }
-    return { rows: [], parseError: `Failed to parse JSON: ${rawContent.slice(0, 200)}` };
+    return {
+      rows: [],
+      parseError: `Failed to parse JSON: ${rawContent.slice(0, 200)}`,
+    };
   }
 }
 
@@ -738,7 +768,10 @@ export async function extractPage(
       );
       // Enrich cached rows with invocation_id
       const invocationId = cached.record.invocation_id;
-      if (cached.record.response_parsed && Array.isArray(cached.record.response_parsed)) {
+      if (
+        cached.record.response_parsed &&
+        Array.isArray(cached.record.response_parsed)
+      ) {
         for (const row of cached.record.response_parsed) {
           allRows.push({ ...row, invocation_id: invocationId });
         }
@@ -782,9 +815,7 @@ export async function extractPage(
 
     // Compute hashes
     const imageHash = createHash("sha256").update(pageBytes).digest("hex");
-    const promptHash = createHash("sha256")
-      .update(promptText)
-      .digest("hex");
+    const promptHash = createHash("sha256").update(promptText).digest("hex");
 
     const invocationRecord = {
       invocation_id: invocationId,
@@ -1010,7 +1041,9 @@ export async function main() {
   }
   writeFileSync(
     outputPath,
-    allRows.length > 0 ? allRows.map((r) => JSON.stringify(r)).join("\n") + "\n" : "",
+    allRows.length > 0
+      ? allRows.map((r) => JSON.stringify(r)).join("\n") + "\n"
+      : "",
   );
 
   saveCache();

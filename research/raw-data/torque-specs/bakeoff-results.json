@@ -1,0 +1,227 @@
+{
+  "timestamp": "2026-05-16T09:32:55.977Z",
+  "pages": [
+    166,
+    493,
+    495,
+    677,
+    707,
+    769,
+    781,
+    816,
+    866,
+    896
+  ],
+  "models": [
+    "together.kimi-k2-6-fp4",
+    "together.qwen3-vl-235b"
+  ],
+  "modelStatuses": {
+    "together.kimi-k2-6-fp4": {
+      "available": true
+    },
+    "together.qwen3-vl-235b": {
+      "available": false,
+      "reason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    }
+  },
+  "results": [
+    {
+      "pageNum": 166,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 23159,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.0079329,
+      "inputTokens": 3862,
+      "outputTokens": 733,
+      "rawContent": "{\n  \"schema_version\": \"1.0\",\n  \"extractions\": [\n    {\n      \"id\": \"flywheel-bolt-mt\",\n      \"source\": {\n        \"manual\": \"BB6\",\n        \"page\": \"7-7\",\n        \"figure\": \"RING GEAR HOLDER 07LAB-PV00100\"\n      },\n      \"applies_to\": {\n        \"trans\": \"M/T\",\n        \"trim\": null,\n        \"my\": null,\n        \"engine_codes\": []\n      },\n      \"system\": \"engine\",\n      \"assembly\": \"flywheel\",\n      \"fastener_name\": \"flywheel bolts\",\n      \"thread\": {\n        \"nominal_mm\": 12,\n        \"pitch_mm\": 1.0"
+    },
+    {
+      "pageNum": 166,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 493,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 3074,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.0048594,
+      "inputTokens": 3862,
+      "outputTokens": 50,
+      "rawContent": "{\n  \"note\": \"This page is a table of contents/index for the Automatic Transmission section. It contains no torque specifications, fastener data, or technical specifications. Only section headings and page references are present.\",\n  \"data\": []\n}"
+    },
+    {
+      "pageNum": 493,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 495,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 6764,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.005151899999999999,
+      "inputTokens": 3862,
+      "outputTokens": 115,
+      "rawContent": "{\n  \"analysis\": \"This page (14-3) contains only descriptive text about the automatic transmission system. There are no torque specification tables, no bolt/nut callouts with torque values, no thread size annotations, no illustrations with fastener labels, and no multi-step torque sequences. The page describes: torque converter construction, gear and clutch arrangements, electronic control system (TCM), hydraulic control valve bodies, shift control mechanism, and lock-up mechanism. No service pro"
+    },
+    {
+      "pageNum": 495,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 677,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 6126,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.0086304,
+      "inputTokens": 3862,
+      "outputTokens": 888,
+      "rawContent": "{\n  \"fasteners\": [\n    {\n      \"id\": \"lock-bolt-shift-fork-001\",\n      \"source\": {\n        \"manual\": \"BB6\",\n        \"page\": \"14-185\",\n        \"figure\": \"SHIFT FORK / COUNTERSHAFT ASSEMBLY\"\n      },\n      \"applies_to\": {\n        \"trans\": \"M/T\",\n        \"trim\": null,\n        \"my\": \"all\",\n        \"engine_codes\": []\n      },\n      \"system\": \"drivetrain\",\n      \"assembly\": \"transmission\",\n      \"fastener_name\": \"LOCK BOLT\",\n      \"thread\": {\n        \"nominal_mm\": 6,\n        \"pitch_mm\": 1.0,\n        \""
+    },
+    {
+      "pageNum": 677,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 707,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 6560,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.005228399999999999,
+      "inputTokens": 3862,
+      "outputTokens": 132,
+      "rawContent": "{\n  \"analysis\": \"This page (15-7) contains descriptive text and diagrams of the Honda ATTS (Active Torque Transfer System) unit. It describes the 3-series planetary gear, right/left clutches, oil pump, linear solenoid valve, right/left shift solenoid valves, right/left oil pressure sensors, and oil temperature sensor. There are NO torque specification tables, no bolt/nut torque callouts, no thread size annotations, and no fastener-specific information on this page. It is purely an overview/expla"
+    },
+    {
+      "pageNum": 707,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 769,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 1156,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.004670399999999999,
+      "inputTokens": 3862,
+      "outputTokens": 8,
+      "rawContent": "{\"torque_specs\": []}"
+    },
+    {
+      "pageNum": 769,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 781,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 45247,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.010911899999999999,
+      "inputTokens": 3862,
+      "outputTokens": 1395,
+      "rawContent": "{\n  \"analysis\": \"This page (16-4) covers driveshaft removal procedures. It contains several fastener size annotations but NO torque specification values. The page shows thread sizes for castle nuts, flange bolts, and self-locking nuts, along with replacement notes and special tool references, but no tightening torque values are provided on this page.\",\n  \"fasteners\": [\n    {\n      \"id\": \"16-4-001\",\n      \"source\": {\n        \"manual\": \"BB6\",\n        \"page\": \"16-4\",\n        \"figure\": \"RADIUS ROD B"
+    },
+    {
+      "pageNum": 781,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 816,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 5930,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.009444899999999999,
+      "inputTokens": 3862,
+      "outputTokens": 1069,
+      "rawContent": "{\n  \"fasteners\": [\n    {\n      \"id\": \"17-17-001\",\n      \"source\": {\n        \"manual\": \"BB6\",\n        \"page\": \"17-17\",\n        \"figure\": null\n      },\n      \"applies_to\": {\n        \"trans\": null,\n        \"trim\": null,\n        \"my\": null,\n        \"engine_codes\": []\n      },\n      \"system\": \"chassis\",\n      \"assembly\": \"power-steering-pump-pressure-check\",\n      \"fastener_name\": \"6 mm NUT (part of tool)\",\n      \"thread\": {\n        \"nominal_mm\": 6,\n        \"pitch_mm\": null,\n        \"length_mm\": null"
+    },
+    {
+      "pageNum": 816,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 866,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 12406,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.013926899999999999,
+      "inputTokens": 3862,
+      "outputTokens": 2065,
+      "rawContent": "{\n  \"fasteners\": [\n    {\n      \"id\": \"f1\",\n      \"source\": {\n        \"manual\": \"BB6\",\n        \"page\": \"18-15\",\n        \"figure\": null\n      },\n      \"applies_to\": {\n        \"trans\": null,\n        \"trim\": null,\n        \"my\": null,\n        \"engine_codes\": []\n      },\n      \"system\": \"chassis\",\n      \"assembly\": \"ball-joint-removal\",\n      \"fastener_name\": \"CASTLE NUT\",\n      \"thread\": {\n        \"nominal_mm\": null,\n        \"pitch_mm\": null,\n        \"length_mm\": null,\n        \"grade\": null\n      },\n"
+    },
+    {
+      "pageNum": 866,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    },
+    {
+      "pageNum": 896,
+      "modelId": "together.kimi-k2-6-fp4",
+      "error": null,
+      "latencyMs": 38162,
+      "rows": 1,
+      "parseOk": true,
+      "parseError": null,
+      "costUsd": 0.0100119,
+      "inputTokens": 3862,
+      "outputTokens": 1195,
+      "rawContent": "{\n  \"fasteners\": [\n    {\n      \"id\": \"f1\",\n      \"source\": {\n        \"manual\": \"BB6\",\n        \"page\": \"19-13\",\n        \"figure\": null\n      },\n      \"applies_to\": {\n        \"trans\": \"both\",\n        \"trim\": null,\n        \"my\": null,\n        \"engine_codes\": []\n      },\n      \"system\": \"chassis\",\n      \"assembly\": \"master-cylinder-brake-booster\",\n      \"fastener_name\": \"PUSHROD LOCKNUT\",\n      \"thread\": {\n        \"nominal_mm\": null,\n        \"pitch_mm\": null,\n        \"length_mm\": null,\n        \"grad"
+    },
+    {
+      "pageNum": 896,
+      "modelId": "together.qwen3-vl-235b",
+      "skipped": true,
+      "skipReason": "HTTP 400: {\n  \"id\": \"ojJQc6p-2kFHot-9fc95d201b5fde1d\",\n  \"error\": {\n    \"message\": \"Unable to access non-serverless model Qwen/Qwen3-VL-235B-A22B-Instruct. Please visit https://api.together.ai/models/Qwen/Qwen3"
+    }
+  ],
+  "summary": {
+    "totalPages": 10,
+    "totalRows": 10,
+    "totalLatency": 148584,
+    "totalCost": 0.080769,
+    "withinSpendCap": true
+  }
+}

@@ -12,7 +12,13 @@
  */
 
 import { strict as assert } from "node:assert";
-import { readFileSync, writeFileSync, existsSync, readdirSync, rmSync } from "node:fs";
+import {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  readdirSync,
+  rmSync,
+} from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, before, after } from "node:test";
@@ -53,7 +59,10 @@ const PREFLIGHT_PAGES = [55, 161, 219]; // engine-electrical, engine-block, engi
 
 // Cache and ledger paths
 const cachePath = join(ROOT, "research/raw-data/torque-specs/cache/index.json");
-const ledgerPath = join(ROOT, "research/raw-data/torque-specs/cost-ledger.jsonl");
+const ledgerPath = join(
+  ROOT,
+  "research/raw-data/torque-specs/cost-ledger.jsonl",
+);
 
 // Response dirs used during tests
 const RESPONSE_BASE = join(ROOT, "research/raw-data/torque-specs", "responses");
@@ -62,7 +71,9 @@ const RESPONSE_BASE = join(ROOT, "research/raw-data/torque-specs", "responses");
 let originalLedgerContent = "";
 try {
   originalLedgerContent = readFileSync(ledgerPath, "utf-8");
-} catch { /* ignore */ }
+} catch {
+  /* ignore */
+}
 
 /**
  * Reset cache to clean state.
@@ -71,7 +82,10 @@ try {
  */
 function resetCache() {
   // First, clear the file
-  writeFileSync(cachePath, JSON.stringify({ version: 1, description: "", entries: {} }, null, 2));
+  writeFileSync(
+    cachePath,
+    JSON.stringify({ version: 1, description: "", entries: {} }, null, 2),
+  );
   // Then reload — this reassigns the module-level cache to an empty object
   loadCache();
 }
@@ -80,7 +94,9 @@ function resetCache() {
  * Clear ledger (keep only comment lines).
  */
 function resetLedger() {
-  const headerLines = originalLedgerContent.split("\n").filter((l) => l.startsWith("#"));
+  const headerLines = originalLedgerContent
+    .split("\n")
+    .filter((l) => l.startsWith("#"));
   writeFileSync(ledgerPath, headerLines.join("\n") + "\n");
 }
 
@@ -111,7 +127,9 @@ function rmdirRecursive(dir, maxDepth = 5) {
         rmdirRecursive(parent, maxDepth - 1);
       }
     }
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
 }
 
 // ─── Helper: simulate a full invocation cycle ──────────────────────────────
@@ -120,10 +138,24 @@ function rmdirRecursive(dir, maxDepth = 5) {
  * Simulate what extractPage does for a single (model, run) on a page.
  * Returns the invocation record for verification.
  */
-function simulateInvocation(manual, pageNum, modelConfig, providerName, pngBytes) {
-  const models = JSON.parse(readFileSync(join(ROOT, "research/raw-data/torque-specs/models.json"), "utf-8"));
+function simulateInvocation(
+  manual,
+  pageNum,
+  modelConfig,
+  providerName,
+  pngBytes,
+) {
+  const models = JSON.parse(
+    readFileSync(
+      join(ROOT, "research/raw-data/torque-specs/models.json"),
+      "utf-8",
+    ),
+  );
   const modelInfo = models[modelConfig.model_id];
-  assert.ok(modelInfo, `Model ${modelConfig.model_id} should exist in models.json`);
+  assert.ok(
+    modelInfo,
+    `Model ${modelConfig.model_id} should exist in models.json`,
+  );
 
   const runs = modelConfig.runs || 1;
   const seedBase = modelConfig.seed_base ?? 0;
@@ -136,7 +168,14 @@ function simulateInvocation(manual, pageNum, modelConfig, providerName, pngBytes
     const seed = seedBase + runIdx;
 
     // Compute cache key using page-specific PNG bytes
-    const cacheKey = getCacheKey(pngBytes, modelInfo.provider, modelConfig.model_id, temperature, seed, "v1");
+    const cacheKey = getCacheKey(
+      pngBytes,
+      modelInfo.provider,
+      modelConfig.model_id,
+      temperature,
+      seed,
+      "v1",
+    );
 
     // Check cache — on first call it may or may not miss depending on whether
     // loadCache was called between module import and this check. The important
@@ -148,7 +187,13 @@ function simulateInvocation(manual, pageNum, modelConfig, providerName, pngBytes
     }
 
     // Generate response path
-    const responsePath = getResponsePath(manual, pageNum, modelInfo.provider, modelConfig.model_id, runLabel);
+    const responsePath = getResponsePath(
+      manual,
+      pageNum,
+      modelInfo.provider,
+      modelConfig.model_id,
+      runLabel,
+    );
 
     // Build a minimal valid invocation record
     const invocationId = `${modelInfo.provider}.${modelConfig.model_id}.${runLabel}.2026-05-16T12-00-00Z`;
@@ -172,21 +217,77 @@ function simulateInvocation(manual, pageNum, modelConfig, providerName, pngBytes
       tokens: { input: 1000, output: 500 },
       cost_usd: 0.003, // ~$0.003 per invocation for Together
       request: {},
-      response_raw: JSON.stringify([{ id: "test-row", source: { manual, page: pageNum }, system: "engine", assembly: "test", fastener_name: "Test bolt", thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: null }, qty: 1, role: "cap-screw", torque: { steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }] }, lubrication: "dry", reusable: true, oem: true }]),
-      response_parsed: [{ id: "test-row", source: { manual, page: pageNum }, system: "engine", assembly: "test", fastener_name: "Test bolt", thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: null }, qty: 1, role: "cap-screw", torque: { steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }] }, lubrication: "dry", reusable: true, oem: true }],
+      response_raw: JSON.stringify([
+        {
+          id: "test-row",
+          source: { manual, page: pageNum },
+          system: "engine",
+          assembly: "test",
+          fastener_name: "Test bolt",
+          thread: {
+            nominal_mm: 10,
+            pitch_mm: 1.25,
+            length_mm: null,
+            grade: null,
+          },
+          qty: 1,
+          role: "cap-screw",
+          torque: {
+            steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }],
+          },
+          lubrication: "dry",
+          reusable: true,
+          oem: true,
+        },
+      ]),
+      response_parsed: [
+        {
+          id: "test-row",
+          source: { manual, page: pageNum },
+          system: "engine",
+          assembly: "test",
+          fastener_name: "Test bolt",
+          thread: {
+            nominal_mm: 10,
+            pitch_mm: 1.25,
+            length_mm: null,
+            grade: null,
+          },
+          qty: 1,
+          role: "cap-screw",
+          torque: {
+            steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }],
+          },
+          lubrication: "dry",
+          reusable: true,
+          oem: true,
+        },
+      ],
       parse_error: null,
       response_path: responsePath,
     };
 
     // Write record to disk
     writeInvocationRecord(record);
-    assert.ok(existsSync(responsePath), `Response file should exist: ${responsePath}`);
+    assert.ok(
+      existsSync(responsePath),
+      `Response file should exist: ${responsePath}`,
+    );
 
     // Append ledger
     appendLedger(
-      invocationId, manual, pageNum, modelInfo.provider,
-      modelConfig.model_id, runLabel, temperature, seed,
-      1000, 500, 0.003, 2000,
+      invocationId,
+      manual,
+      pageNum,
+      modelInfo.provider,
+      modelConfig.model_id,
+      runLabel,
+      temperature,
+      seed,
+      1000,
+      500,
+      0.003,
+      2000,
     );
 
     // Update cache + persist to disk
@@ -208,7 +309,11 @@ describe("T-418 Preflight: env key verification", () => {
 
     const provider = createProvider("together");
     const status = provider.preflight();
-    assert.strictEqual(status.available, true, "Together provider should be available");
+    assert.strictEqual(
+      status.available,
+      true,
+      "Together provider should be available",
+    );
   });
 
   it("Anthropic provider reports unavailable (ANTHROPIC_API_KEY not set)", () => {
@@ -217,8 +322,15 @@ describe("T-418 Preflight: env key verification", () => {
 
     const provider = createProvider("anthropic");
     const status = provider.preflight();
-    assert.strictEqual(status.available, false, "Anthropic should be unavailable without key");
-    assert.ok(status.reason.includes("ANTHROPIC_API_KEY"), "Reason should mention ANTHROPIC_API_KEY");
+    assert.strictEqual(
+      status.available,
+      false,
+      "Anthropic should be unavailable without key",
+    );
+    assert.ok(
+      status.reason.includes("ANTHROPIC_API_KEY"),
+      "Reason should mention ANTHROPIC_API_KEY",
+    );
 
     // Restore
     if (hadKey) process.env.ANTHROPIC_API_KEY = hadKey;
@@ -227,9 +339,18 @@ describe("T-418 Preflight: env key verification", () => {
   it("Default matrix only contains Together models (no Anthropic rescue tier)", () => {
     const matrix = loadMatrixProfile("default");
     for (const mc of matrix) {
-      const models = JSON.parse(readFileSync(join(ROOT, "research/raw-data/torque-specs/models.json"), "utf-8"));
+      const models = JSON.parse(
+        readFileSync(
+          join(ROOT, "research/raw-data/torque-specs/models.json"),
+          "utf-8",
+        ),
+      );
       const modelInfo = models[mc.model_id];
-      assert.strictEqual(modelInfo.provider, "together", `${mc.model_id} should use together provider in default matrix`);
+      assert.strictEqual(
+        modelInfo.provider,
+        "together",
+        `${mc.model_id} should use together provider in default matrix`,
+      );
     }
   });
 });
@@ -243,13 +364,24 @@ describe("T-418 Preflight: dry-run on 3 pages × default matrix", () => {
     resetCache();
     const matrix = loadMatrixProfile("default");
     assert.ok(Array.isArray(matrix), "Default matrix should be an array");
-    assert.ok(matrix.length >= 2, "Default matrix should have at least 2 models");
+    // After T-418b: only kimi-k2-6-fp4 in default (qwen3-vl dropped as unavailable)
+    assert.strictEqual(
+      matrix.length,
+      1,
+      "Default matrix should have exactly 1 model after T-418b",
+    );
 
     // Verify each model config has required fields
     for (const mc of matrix) {
       assert.ok(mc.model_id, "Each model config needs model_id");
-      assert.ok(typeof mc.runs === "number", "Each model config needs runs count");
-      assert.ok(typeof mc.temperature === "number", "Each model config needs temperature");
+      assert.ok(
+        typeof mc.runs === "number",
+        "Each model config needs runs count",
+      );
+      assert.ok(
+        typeof mc.temperature === "number",
+        "Each model config needs temperature",
+      );
     }
   });
 
@@ -257,13 +389,22 @@ describe("T-418 Preflight: dry-run on 3 pages × default matrix", () => {
     // The main() function iterates the matrix and calls preflight() on each.
     // For the default matrix (Together-only), all should be available.
     const matrix = loadMatrixProfile("default");
-    const models = JSON.parse(readFileSync(join(ROOT, "research/raw-data/torque-specs/models.json"), "utf-8"));
+    const models = JSON.parse(
+      readFileSync(
+        join(ROOT, "research/raw-data/torque-specs/models.json"),
+        "utf-8",
+      ),
+    );
 
     for (const mc of matrix) {
       const modelInfo = models[mc.model_id];
       const provider = createProvider(modelInfo.provider);
       const status = provider.preflight();
-      assert.strictEqual(status.available, true, `${mc.model_id} preflight should pass`);
+      assert.strictEqual(
+        status.available,
+        true,
+        `${mc.model_id} preflight should pass`,
+      );
     }
   });
 });
@@ -289,33 +430,54 @@ describe("T-418 Preflight: per-invocation records + cache + ledger", () => {
 
   it("writes per-invocation records for each (page, model, run)", () => {
     const matrix = loadMatrixProfile("default");
-    assert.ok(matrix.length >= 2, "Need at least 2 models for multi-model verification");
+    // After T-418b: only kimi-k2-6-fp4 in default
+    assert.strictEqual(
+      matrix.length,
+      1,
+      "Default matrix should have exactly 1 model after T-418b",
+    );
 
     let totalRecords = 0;
 
     for (const page of PREFLIGHT_PAGES) {
       for (const mc of matrix) {
         const pngBytes = makeTestPagePng(page);
-        const records = simulateInvocation(TEST_MANUAL, page, mc, "together", pngBytes);
+        const records = simulateInvocation(
+          TEST_MANUAL,
+          page,
+          mc,
+          "together",
+          pngBytes,
+        );
         totalRecords += records.length;
       }
     }
 
-    // Expected: 3 pages × 2 models × 1 run = 6 records
-    assert.strictEqual(totalRecords, 6, `Expected 6 invocation records (3 pages × 2 models × 1 run), got ${totalRecords}`);
+    // Expected: 3 pages × 1 model × 1 run = 3 records
+    assert.strictEqual(
+      totalRecords,
+      3,
+      `Expected 3 invocation records (3 pages × 1 model × 1 run), got ${totalRecords}`,
+    );
 
     // Verify each record file exists
     for (const page of PREFLIGHT_PAGES) {
       const dir = join(RESPONSE_BASE, "bb6", String(page));
       assert.ok(existsSync(dir), `Response dir should exist: ${dir}`);
       const files = readdirSync(dir);
-      assert.strictEqual(files.length, 2, `Page ${page} should have 2 response files (one per model), got ${files.length}`);
+      assert.strictEqual(
+        files.length,
+        1,
+        `Page ${page} should have 1 response file (kimi only), got ${files.length}`,
+      );
     }
   });
 
   it("ledger has one row per (page × model × run)", () => {
     const ledgerContent = readFileSync(ledgerPath, "utf-8");
-    const dataLines = ledgerContent.split("\n").filter((l) => !l.startsWith("#") && l.trim().length > 0);
+    const dataLines = ledgerContent
+      .split("\n")
+      .filter((l) => !l.startsWith("#") && l.trim().length > 0);
     // Count unique (page, model_id, run) tuples
     const seen = new Set();
     for (const line of dataLines) {
@@ -323,15 +485,21 @@ describe("T-418 Preflight: per-invocation records + cache + ledger", () => {
       const key = `${row.page}-${row.model_id}-${row.run}`;
       seen.add(key);
     }
-    // We expect at least 6 unique rows (some may have been written by prior runs)
-    assert.ok(seen.size >= 6, `Ledger should have ≥6 unique (page,model,run) rows, got ${seen.size}`);
+    // After T-418b: 3 pages × 1 model × 1 run = 3 expected rows
+    assert.ok(
+      seen.size >= 3,
+      `Ledger should have ≥3 unique (page,model,run) rows, got ${seen.size}`,
+    );
 
     // Verify uniqueness of ledger rows
     const ledgerRows = dataLines.map((line) => JSON.parse(line));
     const seenLedger = new Set();
     for (const row of ledgerRows) {
       const key = `${row.manual}-${row.page}-${row.model_id}-${row.run}`;
-      assert.ok(!seenLedger.has(key), `Ledger should have unique row per (page, model, run): ${key}`);
+      assert.ok(
+        !seenLedger.has(key),
+        `Ledger should have unique row per (page, model, run): ${key}`,
+      );
       seenLedger.add(key);
     }
   });
@@ -344,37 +512,65 @@ describe("T-418 Preflight: per-invocation records + cache + ledger", () => {
     // modifies it directly, checkCache should find the entry without reloading.
 
     const matrix = loadMatrixProfile("default");
-    const models = JSON.parse(readFileSync(join(ROOT, "research/raw-data/torque-specs/models.json"), "utf-8"));
+    const models = JSON.parse(
+      readFileSync(
+        join(ROOT, "research/raw-data/torque-specs/models.json"),
+        "utf-8",
+      ),
+    );
 
     // Pick the first page and first model
     const page = PREFLIGHT_PAGES[0];
     const mc = matrix[0];
     const modelInfo = models[mc.model_id];
 
-    const cacheKey = getCacheKey(makeTestPagePng(PREFLIGHT_PAGES[0]), modelInfo.provider, mc.model_id, mc.temperature, 0, "v1");
+    const cacheKey = getCacheKey(
+      makeTestPagePng(PREFLIGHT_PAGES[0]),
+      modelInfo.provider,
+      mc.model_id,
+      mc.temperature,
+      0,
+      "v1",
+    );
 
     // checkCache reads the shared module-level cache. Since simulateInvocation
     // called setCache() which modified the same cache object, the entry should be there.
     const cached = checkCache(cacheKey);
     if (!cached.hit) {
       // Debug: check if the file exists on disk
-      const diskPath = join(ROOT, "research/raw-data/torque-specs/responses/bb6/", String(page));
+      const diskPath = join(
+        ROOT,
+        "research/raw-data/torque-specs/responses/bb6/",
+        String(page),
+      );
       console.log(`DEBUG: disk path exists: ${existsSync(diskPath)}`);
       if (existsSync(diskPath)) {
         console.log(`DEBUG: files:`, readdirSync(diskPath).slice(0, 3));
       }
       console.log(`DEBUG: cache key: ${cacheKey.slice(0, 40)}...`);
     }
-    assert.strictEqual(cached.hit, true, `Cache should hit for ${mc.model_id} on page ${page}`);
+    assert.strictEqual(
+      cached.hit,
+      true,
+      `Cache should hit for ${mc.model_id} on page ${page}`,
+    );
     assert.ok(cached.record, "Cached record should be non-null");
-    assert.strictEqual(cached.record.page, page, "Cached record should match page");
+    assert.strictEqual(
+      cached.record.page,
+      page,
+      "Cached record should match page",
+    );
   });
 
   it("schema validator parses each response_parsed without rejects", async () => {
     // Use the schema validator to validate all response_parsed arrays
-    const schemaValidator = await import("../../../../research/raw-data/torque-specs/schema-validator.mjs");
+    const schemaValidator =
+      await import("../../../../research/raw-data/torque-specs/schema-validator.mjs");
     const validateRow = schemaValidator.validateCanonicalRow;
-    assert.ok(typeof validateRow === "function", "validateCanonicalRow should be exported");
+    assert.ok(
+      typeof validateRow === "function",
+      "validateCanonicalRow should be exported",
+    );
 
     for (const page of PREFLIGHT_PAGES) {
       const dir = join(RESPONSE_BASE, "bb6", String(page));
@@ -389,7 +585,11 @@ describe("T-418 Preflight: per-invocation records + cache + ledger", () => {
         if (record.response_parsed && Array.isArray(record.response_parsed)) {
           for (const row of record.response_parsed) {
             const result = validateRow(row);
-            assert.strictEqual(result.success, true, `Row should validate: ${file}: ${result.error}`);
+            assert.strictEqual(
+              result.success,
+              true,
+              `Row should validate: ${file}: ${result.error}`,
+            );
           }
         }
       }
@@ -398,11 +598,19 @@ describe("T-418 Preflight: per-invocation records + cache + ledger", () => {
 
   it("total spend recorded ≤ $0.50", () => {
     const ledgerContent = readFileSync(ledgerPath, "utf-8");
-    const dataLines = ledgerContent.split("\n").filter((l) => !l.startsWith("#") && l.trim().length > 0);
+    const dataLines = ledgerContent
+      .split("\n")
+      .filter((l) => !l.startsWith("#") && l.trim().length > 0);
     const ledgerRows = dataLines.map((line) => JSON.parse(line));
 
-    const totalCost = ledgerRows.reduce((sum, row) => sum + (row.cost_usd || 0), 0);
-    assert.ok(totalCost <= 0.50, `Total spend $${totalCost.toFixed(4)} should be ≤ $0.50, got $${totalCost.toFixed(4)}`);
+    const totalCost = ledgerRows.reduce(
+      (sum, row) => sum + (row.cost_usd || 0),
+      0,
+    );
+    assert.ok(
+      totalCost <= 0.5,
+      `Total spend $${totalCost.toFixed(4)} should be ≤ $0.50, got $${totalCost.toFixed(4)}`,
+    );
   });
 });
 
@@ -420,35 +628,86 @@ describe("T-418 Preflight: retention guarantees", () => {
     const record = JSON.parse(readFileSync(recordPath, "utf-8"));
 
     assert.ok(record.response_raw != null, "response_raw should be populated");
-    assert.ok(record.response_path != null, "response_path should be populated");
-    assert.ok(existsSync(record.response_path), "response file should exist on disk");
+    assert.ok(
+      record.response_path != null,
+      "response_path should be populated",
+    );
+    assert.ok(
+      existsSync(record.response_path),
+      "response file should exist on disk",
+    );
   });
 
   it("cache key includes temperature and seed (retention guarantee #2)", () => {
-    const key1 = getCacheKey(makeTestPagePng(55), "together", "model-a", 0, 42, "v1");
-    const key2 = getCacheKey(makeTestPagePng(55), "together", "model-a", 0.3, 42, "v1");
-    const key3 = getCacheKey(makeTestPagePng(55), "together", "model-a", 0, 43, "v1");
+    const key1 = getCacheKey(
+      makeTestPagePng(55),
+      "together",
+      "model-a",
+      0,
+      42,
+      "v1",
+    );
+    const key2 = getCacheKey(
+      makeTestPagePng(55),
+      "together",
+      "model-a",
+      0.3,
+      42,
+      "v1",
+    );
+    const key3 = getCacheKey(
+      makeTestPagePng(55),
+      "together",
+      "model-a",
+      0,
+      43,
+      "v1",
+    );
 
-    assert.notStrictEqual(key1, key2, "Different temperature → different cache key");
+    assert.notStrictEqual(
+      key1,
+      key2,
+      "Different temperature → different cache key",
+    );
     assert.notStrictEqual(key1, key3, "Different seed → different cache key");
   });
 
   it("cost ledger is append-only (retention guarantee #9)", () => {
     const ledgerBefore = readFileSync(ledgerPath, "utf-8");
-    const linesBefore = ledgerBefore.split("\n").filter((l) => !l.startsWith("#") && l.trim().length > 0).length;
+    const linesBefore = ledgerBefore
+      .split("\n")
+      .filter((l) => !l.startsWith("#") && l.trim().length > 0).length;
 
     // Append one more row
     appendLedger(
-      "t-418-retention-test", "BB6", 999, "together",
-      "together.kimi-k2-6-fp4", "r1", 0, 0,
-      100, 100, 0.001, 100,
+      "t-418-retention-test",
+      "BB6",
+      999,
+      "together",
+      "together.kimi-k2-6-fp4",
+      "r1",
+      0,
+      0,
+      100,
+      100,
+      0.001,
+      100,
     );
 
     const ledgerAfter = readFileSync(ledgerPath, "utf-8");
-    const linesAfter = ledgerAfter.split("\n").filter((l) => !l.startsWith("#") && l.trim().length > 0).length;
-    assert.strictEqual(linesAfter, linesBefore + 1, "Ledger should grow by exactly 1");
+    const linesAfter = ledgerAfter
+      .split("\n")
+      .filter((l) => !l.startsWith("#") && l.trim().length > 0).length;
+    assert.strictEqual(
+      linesAfter,
+      linesBefore + 1,
+      "Ledger should grow by exactly 1",
+    );
 
     // Old rows should still be present
-    assert.ok(ledgerAfter.includes("t-418-retention-test"), "New row should be appended, not replacing old ones");
+    assert.ok(
+      ledgerAfter.includes("t-418-retention-test"),
+      "New row should be appended, not replacing old ones",
+    );
   });
 });

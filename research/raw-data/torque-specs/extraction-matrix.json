@@ -4,11 +4,6 @@
       "model_id": "together.kimi-k2-6-fp4",
       "runs": 1,
       "temperature": 0
-    },
-    {
-      "model_id": "together.qwen3-vl-235b",
-      "runs": 1,
-      "temperature": 0
     }
   ],
   "high_stakes_chapters": [
@@ -24,12 +19,6 @@
       "runs": 3,
       "temperature": 0.3,
       "seed_base": 1000
-    },
-    {
-      "model_id": "together.qwen3-vl-235b",
-      "runs": 2,
-      "temperature": 0.2,
-      "seed_base": 2000
     }
   ],
   "rescue_tier": [
