@@ -228,7 +228,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 
 ---
 
-### H23A (DOHC VTEC)
+### H23A (DOHC VTEC — Blue Top)
 
 | Context | Source | Location | Notes |
 |---------|--------|----------|-------|
@@ -250,6 +250,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Index reference | research/indexes/local-manuals.md | Content Index | Referenced in engine section headers |
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Full entry with specs and features |
 | Gap analysis | research/indexes/qwen-gap-analysis.md | Gap Analysis | Missing: lower redline impact, piston speed calculations |
+| **Research file** | **research/h-series/specifications/h23a-jdm-rare-blue-top.md** | **Full H23A VTEC comprehensive research** | **Specifications (200 PS @ 6,800 RPM FWD / 190 PS AWD, 221 Nm @ 5,300 RPM, 10.6:1 CR, 87×95mm, 2,259cc), PDE-type head analysis, internal oil passage for VTEC solenoid, oil squirter provisions without installation, block architecture, applications (Accord Wagon SiR CH9 FWD / CL2 AWD), rarity (~5,000–10,000 units), identification guide (blue valve cover, CH9/CL2 chassis codes), SOHC vs DOHC clarification, H23A VTEC vs H22A comparison tables, tuning potential (NA +250+ HP, turbo 350–450+ HP), swap compatibility, common issues (oil consumption, valve adjustment interval 25–30K mi), maintenance schedule, sources cross-referenced against Wikipedia, mywikimotors, Goo-net Exchange, Honda-Tech, PreludePower, CivicForums, and local service manuals** | 2026-05-15
 
 ---
 
