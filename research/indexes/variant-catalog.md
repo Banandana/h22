@@ -208,6 +208,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Development timeline | QWEN.md | Development History | "1998: H22A8 released in European Prelude 2.2VTi/VTi-S" |
 | Task list reference | STATE.md | T-013 task line | Listed as one of target variant codes |
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Brief entry |
+| **Research file** | **research/h-series/specifications/h22a8-edm-late-prelude-redtop.md** | **H22A8 comprehensive research: specifications (200 PS @ 7,100 RPM, 212 Nm @ 5,250 RPM, 10.6–11.0:1 CR), red valve cover anomaly resolved (intentional high-performance designation matching JDM Type-S), H22A8 vs H22A5 comparison (+15 PS via higher compression), H22A8 vs JDM Type-S comparison (same cams/compression but different manifolds), ATTS incompatibility confirmed, late-production characteristics (1999 mid-cycle refresh), rarity assessment (extremely rare in LHD markets, Honda dealers denied existence), dyno evidence (198 whp bone-stock), valve cover physical differences vs blue top, identification checklist** | 2026-05-15
 
 ---
 
