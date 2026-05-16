@@ -302,7 +302,7 @@ _(none)_
 - [x] **(M)** T-185 [research] Research H22A2 vs H22A1 differences: detuning measures, emissions equipment, parts interchangeability — done 2026-05-15, sha e9d9fb6 — full spec: docs/plans/03-h-series-variants.md @ T-185
 - [x] **(S)** T-186 [research] Research H22A2 European driving conditions: high-speed Autobahn durability, mountain road cooling, fuel quality — done 2026-05-15, sha 0c16501 — full spec: docs/plans/03-h-series-variants.md @ T-186
 - [x] **(S)** T-187 [research] Research H22A2 European spare parts: availability, dealer networks, independent supplier ecosystem — done 2026-05-15, sha 7708243 — full spec: docs/plans/03-h-series-variants.md @ T-187
-- [x] **(S)** T-188 [checkpoint] Phase 3 checkpoint: review H22A2 research, identify gaps, spawn new tasks if needed — pending commit — full spec: docs/plans/03-h-series-variants.md @ T-188
+- [x] **(S)** T-188 [checkpoint] Phase 3 checkpoint: review H22A2 research, identify gaps, spawn new tasks if needed — done 2026-05-15, sha d529c22 — full spec: docs/plans/03-h-series-variants.md @ T-188
 
 ### H22A3 (JDM Rare 1996)
 
