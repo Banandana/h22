@@ -296,6 +296,7 @@ All files written following `research/template.md` format. Cross-referenced agai
 | [`h22a-redtop-4ws-integration.md`](../h-series/specifications/h22a-redtop-4ws-integration.md) | T-129? | H22A Redtop 4WS integration details | 2026-05-15 |
 | [`h22a-blacktop-intake-system.md`](../h-series/specifications/h22a-blacktop-intake-system.md) | T-154 | H22A Blacktop intake system: single runner manifold, 60 mm TB, plenum design, runner length, IAB butterfly, EGR circuit, aftermarket options | 2026-05-15 |
 | [`h22a-blacktop-streetability.md`](../h-series/specifications/h22a-blacktop-streetability.md) | T-162 | H22A Blacktop streetability assessment: low-RPM torque, drivability, fuel economy, daily use characteristics, swap viability, maintenance schedule | 2026-05-15 |
+| [`h22a-blacktop-modification-potential.md`](../h-series/tuning/h22a-blacktop-modification-potential.md) | T-163 | H22A Blacktop modification potential: bolt-on gains (+15–25 WHP Stage 1), cam upgrade path (Brian Crower Stage 2 NA/FI, JUN, Skunk2, Toda Racing specs), head work recommendations (mild P&P +8–15 HP to CNC up to 360 CFM by 4 Piston Racing), ECU/tuning platform comparison, fuel system considerations, budget build paths, realistic all-motor targets 190–260 WHP | 2026-05-15 |
 
 ## Coverage Assessment
 

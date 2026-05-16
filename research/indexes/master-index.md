@@ -291,7 +291,11 @@ Each subdirectory below will contain one or more research markdown files followi
 
 | Subdirectory | Purpose | Files |
 |--------------|---------|-------|
-| `../h-series/tuning/` | Performance modification and tuning research | ⬜ Placeholder |
+| `../h-series/tuning/` | Performance modification and tuning research | ✅ Active (T-163) |
+
+| File | Description | Status |
+|------|-------------|--------|
+| [`h22a-blacktop-modification-potential.md`](../h-series/tuning/h22a-blacktop-modification-potential.md) | H22A Blacktop modification potential: bolt-on gains (CAI + header + exhaust + tune = +15–25 WHP), cam upgrade path (Brian Crower Stage 2 NA/FI, JUN, Skunk2, Toda Racing with specs and selection guide), head work recommendations (mild P&P +8–15 HP to CNC porting up to 360 CFM by 4 Piston Racing), ECU/tuning platform comparison (Hondata S300/FlashPro, Crome, Neptune RTP), fuel system considerations, budget build path ($500–$10,000+), realistic all-motor targets 190–260 WHP | ✅ T-163 (2026-05-15) |
 
 ### Reliability
 
