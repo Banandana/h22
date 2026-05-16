@@ -296,7 +296,7 @@ _(none)_
 
 ### H22A2 (EDM 1992-1996)
 
-- [ ] **(M)** T-182 [research] Research H22A2 EDM origin: European market introduction, emissions regulations, model years, chassis codes -- full spec: docs/plans/03-h-series-variants.md @ T-182
+- [x] **(M)** T-182 [research] Research H22A2 EDM origin: European market introduction, emissions regulations, model years, chassis codes — done 2026-05-15, sha 6ab8848 — full spec: docs/plans/03-h-series-variants.md @ T-182
 - [ ] **(M)** T-183 [research] Research H22A2 specifications: 185 PS @ 6800 RPM, 10.0:1 compression, European emissions standards -- full spec: docs/plans/03-h-series-variants.md @ T-183
 - [ ] **(M)** T-184 [research] Research H22A2 European Prelude BB1: model years, trim levels, feature packages, pricing in Europe -- full spec: docs/plans/03-h-series-variants.md @ T-184
 - [ ] **(M)** T-185 [research] Research H22A2 vs H22A1 differences: detuning measures, emissions equipment, parts interchangeability -- full spec: docs/plans/03-h-series-variants.md @ T-185
@@ -687,6 +687,8 @@ _(none yet)_
 - [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability - done 2026-05-15, sha 213c79c - full spec: docs/plans/03-h-series-variants.md @ T-146
 - [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options - done 2026-05-15, sha 7a0e927 - full spec: docs/plans/03-h-series-variants.md @ T-147
 - [x] **(S)** T-148 [research] Research H22A Redtop daily usability: NVH levels, visibility, seat comfort, storage space, climate control - done 2026-05-15, sha d20bc28 - full spec: docs/plans/03-h-series-variants.md @ T-148
+
+- [x] **(M)** T-182 [research] Research H22A2 EDM origin: European market introduction, emissions regulations, model years, chassis codes — done 2026-05-15, sha 6ab8848 — full spec: docs/plans/03-h-series-variants.md @ T-182
 - [x] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility - done 2026-05-15, sha 9b71865 - full spec: docs/plans/03-h-series-variants.md @ T-149
 - [x] **(M)** T-158 [research] Research H22A Blacktop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures - done 2026-05-15, sha 325df27 - full spec: docs/plans/03-h-series-variants.md @ T-158
 - [x] **(M)** T-159 [research] Research H22A Blacktop transmission pairing: gear ratios, final drive, differential type, limited-slip availability - done 2026-05-15, sha d602523 - full spec: docs/plans/03-h-series-variants.md @ T-159
