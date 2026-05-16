@@ -345,7 +345,7 @@ Each subdirectory below will contain one or more research markdown files followi
 
 | Subdirectory | Purpose | Files |
 |--------------|---------|-------|
-| `../h-series/comparisons/` | Intra-H-series and H-series vs other engine comparisons | ⬜ Placeholder |
+| `../h-series/comparisons/` | Intra-H-series and H-series vs other engine comparisons | ✅ [h22a-blacktop-vs-redtop-comparison.md](../h-series/comparisons/h22a-blacktop-vs-redtop-comparison.md) (T-161) |
 
 ### Maintenance
 
