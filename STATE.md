@@ -368,7 +368,7 @@ OBD1 source: the repo's "OBD1 PDF" is actually mislabeled HTML; T-414c
 acquires a real Honda service manual PDF (Helms reprint acceptable) via
 Playwright before OBD1 extraction can run.
 
-- [ ] **(S)** T-414 [infra] Write SCHEMA.md: canonical row (incl. corroboration block) + per-invocation record schema + role taxonomy + consensus algorithm + gitignore policy -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414
+- [x] **(S)** T-414 [infra] Write SCHEMA.md: canonical row (incl. corroboration block) + per-invocation record schema + role taxonomy + consensus algorithm + gitignore policy -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414 - done 2026-05-15, sha 5d099658
 - [ ] **(S)** T-414b [infra] Write models.json (provider/model registry) + extraction-matrix.json (default Together-only + high-stakes overrides + rescue tier); verify Together model ids -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414b
 - [ ] **(M)** T-414c [infra] Acquire real OBD1 Honda service manual PDF via Playwright (techinfo.honda.com / Honda Service Express / enthusiast forums / archive.org); replace mislabeled HTML placeholder; verify with file/pdfinfo/pdftoppm sample render -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414c
 - [ ] **(S)** T-415 [infra] Build chapters.json mapping each manual chapter to {system, page_start, page_end} for BB6 whole-vehicle + OBD1 engine-only -- full spec: docs/plans/04b-torque-fastener-index.md @ T-415
