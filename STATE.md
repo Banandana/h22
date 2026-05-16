@@ -672,7 +672,7 @@ _(none yet)_
 
 - [x] **(M)** T-172 [research] Research H22A1 OBD1 diagnostics: connector pinout, test mode, live data, trouble code retrieval procedures -- done 2026-05-15, sha abab27f — full spec: docs/plans/03-h-series-variants.md @ T-172
 
-- [x] **(S)** T-178 [research] Research H22A1 US market reception: reviews, magazine tests, owner satisfaction, resale values -- done 2026-05-15, sha PENDING — full spec: docs/plans/03-h-series-variants.md @ T-178
+- [x] **(S)** T-178 [research] Research H22A1 US market reception: reviews, magazine tests, owner satisfaction, resale values -- done 2026-05-15, sha 641126d — full spec: docs/plans/03-h-series-variants.md @ T-178
 
 - [x] **(M)** T-170 [research] Research H22A1 applications: 1993–1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features — done 2026-05-15, sha baa8953 — full spec: docs/plans/03-h-series-variants.md @ T-170
 
