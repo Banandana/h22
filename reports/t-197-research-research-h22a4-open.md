@@ -63,7 +63,7 @@ N/A — no measurable coverage delta applicable (documentation-only task). New r
 
 ## Commit SHA(s)
 
-Pending commit (will be recorded after push to origin/main).
+`5679440` — `docs: T-197 Research H22A4 open deck block architecture — 55mm main journal upgrade, bearing selection, structural implications`
 
 ## DoD Checklist
 

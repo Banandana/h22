@@ -722,7 +722,7 @@ _(none yet)_
 - [x] **(M)** T-189 [research] Research H22A3 rare variant: 1996 production, KU code applications, scarcity factors, identification — done 2026-05-15, sha 51196e9 — full spec: docs/plans/03-h-series-variants.md @ T-189
 - [x] **(M)** T-190 [research] Research H22A3 specifications: 190 PS, differences from H22A1 and H22A4, production numbers — done 2026-05-15, sha 5c931ca — full spec: docs/plans/03-h-series-variants.md @ T-190
 
-- [x] **(M)** T-197 [research] Research H22A4 open deck block: 1997-2001 design, 55mm main journals (1998+), structural implications — done 2026-05-15, sha PENDING — full spec: docs/plans/03-h-series-variants.md @ T-197
+- [x] **(M)** T-197 [research] Research H22A4 open deck block: 1997-2001 design, 55mm main journals (1998+), structural implications — done 2026-05-15, sha 5679440 — full spec: docs/plans/03-h-series-variants.md @ T-197
 
 **Phase 0 infrastructure**
 
