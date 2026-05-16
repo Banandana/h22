@@ -16,3 +16,6 @@ bb6_ocr/
 
 # Source PDF too large for git (170M, exceeds GitHub 100MB limit)
 1997-2001_Honda_Prelude_BB6_Helms_Manual.pdf
+
+# OBD1 source PDF (~40M, Helms reprint of 1992-1996 Prelude service manual)
+1992-1996_Honda_Prelude_H22A1_Helms_Manual.pdf
