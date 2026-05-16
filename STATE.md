@@ -307,7 +307,7 @@ _(none)_
 ### H22A3 (JDM Rare 1996)
 
 - [x] **(M)** T-190 [research] Research H22A3 specifications: 190 PS, differences from H22A1 and H22A4, production numbers — done 2026-05-15, sha 5c931ca — full spec: docs/plans/03-h-series-variants.md @ T-190
-- [ ] **(S)** T-191 [research] Research H22A3 collector status: rarity, demand, pricing trends, identification markers -- full spec: docs/plans/03-h-series-variants.md @ T-191
+- [x] **(S)** T-191 [research] Research H22A3 collector status: rarity, demand, pricing trends, identification markers -- done 2026-05-15, sha b807da3 -- full spec: docs/plans/03-h-series-variants.md @ T-191
 - [ ] **(S)** T-192 [checkpoint] Phase 3 checkpoint: review H22A3 research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-192
 
 ### H22A4 (USDM/5th Gen 1997-2001)
