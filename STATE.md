@@ -316,7 +316,6 @@ _(none)_
 - [x] **(M)** T-194 [research] Research H22A4 specifications: 200 PS @ 7000 RPM, 212 Nm @ 5250 RPM, 10.0:1 compression, OBD2 -- done 2026-05-15, sha 32d97f7 -- full spec: docs/plans/03-h-series-variants.md @ T-194
 - [x] **(M)** T-195 [research] Research H22A4 ECU: P13 OBD2, immobilizer integration, tuning methods, Hondata FlashPro compatibility — done 2026-05-15, sha fc79270 — full spec: docs/plans/03-h-series-variants.md @ T-195
 - [x] **(M)** T-196 [research] Research H22A4 applications: 1997-2001 Prelude Base, Type-SH, SE - chassis codes, features, model years -- done 2026-05-15, sha ebdd3c1 -- full spec: docs/plans/03-h-series-variants.md @ T-196
-- [ ] **(M)** T-197 [research] Research H22A4 open deck block: 1997-2001 design, 55mm main journals (1998+), structural implications -- full spec: docs/plans/03-h-series-variants.md @ T-197
 - [ ] **(M)** T-198 [research] Research H22A4 ATTS (Active Torque Transfer System): SH model exclusive, torque vectoring operation, maintenance -- full spec: docs/plans/03-h-series-variants.md @ T-198
 - [ ] **(M)** T-199 [research] Research H22A4 single runner intake: vs dual runner, plenum volume, power band characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-199
 - [ ] **(M)** T-200 [research] Research H22A4 OBD2 diagnostics: OBDII connector, scan tool requirements, live data streams, readiness monitors -- full spec: docs/plans/03-h-series-variants.md @ T-200
@@ -722,6 +721,8 @@ _(none yet)_
 - [x] **(M)** T-167 [research] Research H22A1 USDM origin: 1993 introduction, first DOHC VTEC in US market, regulatory drivers - done 2026-05-15, sha 39f555c - full spec: docs/plans/03-h-series-variants.md @ T-167
 - [x] **(M)** T-189 [research] Research H22A3 rare variant: 1996 production, KU code applications, scarcity factors, identification — done 2026-05-15, sha 51196e9 — full spec: docs/plans/03-h-series-variants.md @ T-189
 - [x] **(M)** T-190 [research] Research H22A3 specifications: 190 PS, differences from H22A1 and H22A4, production numbers — done 2026-05-15, sha 5c931ca — full spec: docs/plans/03-h-series-variants.md @ T-190
+
+- [x] **(M)** T-197 [research] Research H22A4 open deck block: 1997-2001 design, 55mm main journals (1998+), structural implications — done 2026-05-15, sha PENDING — full spec: docs/plans/03-h-series-variants.md @ T-197
 
 **Phase 0 infrastructure**
 
