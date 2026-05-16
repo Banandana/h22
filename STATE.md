@@ -1,11 +1,11 @@
-# STATE.md — Honda H/F-Series Engine Research Project
+# STATE.md - Honda H/F-Series Engine Research Project
 
 Live task tracker. The autonomous runner (`scripts/run-all.sh` -> `scripts/run-task.sh` -> `pi` on
 the 35B toaster profile) reads this file, picks the first open `- [ ]` task top-to-bottom, and
 drives it to Done.
 
 **Detailed specs live in `docs/plans/<phase>.md`.** Every task line below ends
-with `@ T-NNN` — that is the pointer to its authoritative spec section (`### T-NNN`) in the
+with `@ T-NNN` - that is the pointer to its authoritative spec section (`### T-NNN`) in the
 plan doc. The plan doc is the source of truth for *how*; this file is the source of truth for
 *what is open and in what order*.
 
@@ -19,7 +19,7 @@ Agents picking up work: **start here**, then read `CLAUDE.md`, `README.md`, and 
 - Task line format (pure ASCII; the runner's `make_slug` depends on the `**(S)**` prefix):
   `- [ ] **(S)** T-NNN [type] <title> -- full spec: docs/plans/<phase>.md @ T-NNN`
 - `[type]` is one of: `[research]` (normal research task), `[audit]` (enumeration sweep),
-  `[fix]` (one remediation spawned by an audit), `[checkpoint]` (every ~20 tasks — re-checks
+  `[fix]` (one remediation spawned by an audit), `[checkpoint]` (every ~20 tasks - re-checks
   drift, identifies gaps, spawns new tasks), `[gate]` (phase boundary), `[infra]` (infrastructure).
 - Markers: `[ ]` = open (pickable), `[x]` = done, `[~]` = in progress / blocked, `[B]` = blocked
   or not-actionable. Only `[ ]` is picked by the runner.
@@ -29,24 +29,24 @@ Agents picking up work: **start here**, then read `CLAUDE.md`, `README.md`, and 
 ## Format conventions
 
 - `[ ]` = not started, `[~]` = in progress / blocked, `[x]` = done, `[B]` = blocked / cancelled.
-- Tasks are self-contained via their plan doc section — an agent with no prior session memory
+- Tasks are self-contained via their plan doc section - an agent with no prior session memory
   reads that section and can execute.
 - Scope tag: **(S)** small (< 1 hr), **(M)** medium (1-4 hr), **(L)** large (> 4 hr).
 - Dependencies are listed per-task in the plan doc (`Depends on:`).
-- Do not add `### ` subsections inside a `## Backlog` heading — keep task lists flat so the runner
+- Do not add `### ` subsections inside a `## Backlog` heading - keep task lists flat so the runner
   hands the phase heading to `pi` as context.
 
-## Definition of Done — applies to **every** task
+## Definition of Done - applies to **every** task
 
 A task is not `[x] done` until **all** of the following are true. No exceptions, no "ship it and
 circle back":
 
-1. **Researched** — information gathered from online sources (tavily search/extract), local manuals,
+1. **Researched** - information gathered from online sources (tavily search/extract), local manuals,
    or both. All claims cited with source URLs and retrieval timestamps.
-2. **Written** — findings saved to the appropriate markdown file under `research/<series>/`.
+2. **Written** - findings saved to the appropriate markdown file under `research/<series>/`.
    File follows the template in `docs/plans/TEMPLATE.md`.
-3. **Indexed** — the relevant index file under `research/indexes/` is updated with links to new content.
-4. **Verified** — cross-checked against at least 2 independent sources where possible. Conflicts noted.
+3. **Indexed** - the relevant index file under `research/indexes/` is updated with links to new content.
+4. **Verified** - cross-checked against at least 2 independent sources where possible. Conflicts noted.
 5. **No swallowed errors.** Every `catch {}` block either re-throws, logs, or has a justification.
 6. **Documentation in sync.** If the task changes behavior, flags, file layout, or conventions:
    update `README.md` (user-visible) and/or `CLAUDE.md` (agent-visible) in the **same commit**.
@@ -93,23 +93,23 @@ _(none)_
 
 ---
 
-## Backlog — Phase 0: Infrastructure & Tooling
+## Backlog - Phase 0: Infrastructure & Tooling
 
 ### Indexing & Local Data
 
 
-- [x] **(M)** T-003 [infra] Parse 1997-2001 Helms Manual BB6 PDF metadata and table of contents — done 2026-05-14, sha 277ba50 -- full spec: docs/plans/00-infrastructure.md @ T-003
-- [x] **(M)** T-005 [infra] Analyze bb6_ocr extracted text: page count, word count, section coverage — done 2026-05-14, sha 8363ccf -- full spec: docs/plans/00-infrastructure.md @ T-005
-- [x] **(M)** T-006 [infra] Map OCR output directory: enumerate all 4128 page files, categorize by type (.txt, .json, .tsv) — done 2026-05-14, sha e373667 -- full spec: docs/plans/00-infrastructure.md @ T-006
-- [x] **(S)** T-007 [infra] Sample OCR page files: read 5 representative pages to assess quality — done 2026-05-14, sha f3212d5 — full spec: docs/plans/00-infrastructure.md @ T-007
-- [x] **(S)** T-008 [infra] Check bb6_ocr_samples: examine PNG screenshots and sample text output — done 2026-05-14, sha d0fbb43 — full spec: docs/plans/00-infrastructure.md @ T-008
-- [x] **(S)** T-009 [infra] Check bb6_ocr/pages_needing_review.txt for flagged pages — done 2026-05-14, sha af73643 -- full spec: docs/plans/00-infrastructure.md @ T-009
+- [x] **(M)** T-003 [infra] Parse 1997-2001 Helms Manual BB6 PDF metadata and table of contents - done 2026-05-14, sha 277ba50 -- full spec: docs/plans/00-infrastructure.md @ T-003
+- [x] **(M)** T-005 [infra] Analyze bb6_ocr extracted text: page count, word count, section coverage - done 2026-05-14, sha 8363ccf -- full spec: docs/plans/00-infrastructure.md @ T-005
+- [x] **(M)** T-006 [infra] Map OCR output directory: enumerate all 4128 page files, categorize by type (.txt, .json, .tsv) - done 2026-05-14, sha e373667 -- full spec: docs/plans/00-infrastructure.md @ T-006
+- [x] **(S)** T-007 [infra] Sample OCR page files: read 5 representative pages to assess quality - done 2026-05-14, sha f3212d5 - full spec: docs/plans/00-infrastructure.md @ T-007
+- [x] **(S)** T-008 [infra] Check bb6_ocr_samples: examine PNG screenshots and sample text output - done 2026-05-14, sha d0fbb43 - full spec: docs/plans/00-infrastructure.md @ T-008
+- [x] **(S)** T-009 [infra] Check bb6_ocr/pages_needing_review.txt for flagged pages - done 2026-05-14, sha af73643 -- full spec: docs/plans/00-infrastructure.md @ T-009
 - [x] **(M)** T-010 [infra] Build index of local manual content: create research/indexes/local-manuals.md mapping topics to source files and page ranges -- done 2026-05-14, sha 926bbbe -- full spec: docs/plans/00-infrastructure.md @ T-010
 - [x] **(M)** T-011 [infra] Create QWEN.md content inventory: extract all topics, subtopics, and references from existing document -- done 2026-05-14, sha 5b674f0 -- full spec: docs/plans/00-infrastructure.md @ T-011
 - [x] **(S)** T-012 [infra] Identify gaps in QWEN.md: compare against comprehensive H/F-series topic list, flag missing areas -- done 2026-05-14, sha 3b4d3ca -- full spec: docs/plans/00-infrastructure.md @ T-012
 - [x] **(S)** T-013 [infra] Catalog all H-series variant codes mentioned in local materials: H22A, H22A1-H22A8, H22Z1, H23A -- done 2026-05-15, sha 43e187e -- full spec: docs/plans/00-infrastructure.md @ T-013
-- [x] **(S)** T-014 [infra] Catalog all F-series variant codes mentioned in local materials: F20B, F20C, F22R, etc. — done 2026-05-15, sha 89281b7 -- full spec: docs/plans/00-infrastructure.md @ T-014
-- [x] **(S)** T-015 [infra] Extract all ECU part numbers and pinout references from local manuals — done 2026-05-14, sha 45ff173 -- full spec: docs/plans/00-infrastructure.md @ T-015
+- [x] **(S)** T-014 [infra] Catalog all F-series variant codes mentioned in local materials: F20B, F20C, F22R, etc. - done 2026-05-15, sha 89281b7 -- full spec: docs/plans/00-infrastructure.md @ T-014
+- [x] **(S)** T-015 [infra] Extract all ECU part numbers and pinout references from local manuals - done 2026-05-14, sha 45ff173 -- full spec: docs/plans/00-infrastructure.md @ T-015
 
 ### Directory Structure & Output Organization
 
@@ -134,56 +134,56 @@ _(none)_
 
 ---
 
-## Backlog — Phase 1: H-Series Development History & Timeline
+## Backlog - Phase 1: H-Series Development History & Timeline
 
 ### Origins & Architecture
 
 
 
-- [x] **(S)** T-035 [research] Research Honda's DOHC VTEC philosophy in the early 1990s: market positioning, technology race -- full spec: docs/plans/01-h-series-development.md @ T-035 — 2026-05-15
-- [x] **(S)** T-037 [research] Research H-series aluminum block casting process and materials science: alloy composition, manufacturing — done 2026-05-15, sha 3d2a467 — full spec: docs/plans/01-h-series-development.md @ T-037
+- [x] **(S)** T-035 [research] Research Honda's DOHC VTEC philosophy in the early 1990s: market positioning, technology race -- full spec: docs/plans/01-h-series-development.md @ T-035 - 2026-05-15
+- [x] **(S)** T-037 [research] Research H-series aluminum block casting process and materials science: alloy composition, manufacturing - done 2026-05-15, sha 3d2a467 - full spec: docs/plans/01-h-series-development.md @ T-037
 - [x] **(M)** T-038 [research] Research H-series engineering targets: power density, reliability, emissions, cost constraints -- done 2026-05-15, sha 80a9634 -- full spec: docs/plans/01-h-series-development.md @ T-038
-- [x] **(S)** T-039 [research] Research H-series vs competitor engines in early 1990s: Toyota 3S-GE, Mazda 13B-MSP rotary, Subaru EJ22 -- full spec: docs/plans/01-h-series-development.md @ T-039 — 2026-05-15, sha f9e544e
-- [x] **(S)** T-040 [research] Research Honda's four-wheel steering (4WS) integration with H-series: why paired, performance impact -- full spec: docs/plans/01-h-series-development.md @ T-040 — 2026-05-15, sha 8e2d1a2
+- [x] **(S)** T-039 [research] Research H-series vs competitor engines in early 1990s: Toyota 3S-GE, Mazda 13B-MSP rotary, Subaru EJ22 -- full spec: docs/plans/01-h-series-development.md @ T-039 - 2026-05-15, sha f9e544e
+- [x] **(S)** T-040 [research] Research Honda's four-wheel steering (4WS) integration with H-series: why paired, performance impact -- full spec: docs/plans/01-h-series-development.md @ T-040 - 2026-05-15, sha 8e2d1a2
 
 ### Production & Market Introduction
 
 - [x] **(M)** T-041 [research] Research H-series production timeline: start date, production volumes, end of production -- done 2026-05-15, sha cbc89d0 -- full spec: docs/plans/01-h-series-development.md @ T-041
 - [x] **(M)** T-042 [research] Research 1991 4th gen Prelude launch: H22/H23 introduction, market reception, pricing -- done 2026-05-15, sha 995fb09 -- full spec: docs/plans/01-h-series-development.md @ T-042
 - [x] **(M)** T-043 [research] Research H-series North American introduction: 1993 USDM Prelude VTEC, marketing, dealer training -- done 2026-05-15, sha c9d5045 -- full spec: docs/plans/01-h-series-development.md @ T-043
-- [x] **(M)** T-044 [research] Research H-series European market introduction: UK/European Prelude, Accord Euro R -- full spec: docs/plans/01-h-series-development.md @ T-044 — done 2026-05-15, sha 4ca28a0
+- [x] **(M)** T-044 [research] Research H-series European market introduction: UK/European Prelude, Accord Euro R -- full spec: docs/plans/01-h-series-development.md @ T-044 - done 2026-05-15, sha 4ca28a0
 - [x] **(M)** T-045 [research] Research H-series Japanese domestic market strategy: SiR models, Type S, premium positioning -- done 2026-05-15, sha d389b7c -- full spec: docs/plans/01-h-series-development.md @ T-045
 - [x] **(S)** T-046 [research] Research H-series production locations: Japan plants, any overseas production -- done 2026-05-15, sha 7fd900c -- full spec: docs/plans/01-h-series-development.md @ T-046
-- [x] **(S)** T-047 [research] Research H-series supply chain: component suppliers, castings, machining partners -- full spec: docs/plans/01-h-series-development.md @ T-047 — done 2026-05-15, sha b4526f2
+- [x] **(S)** T-047 [research] Research H-series supply chain: component suppliers, castings, machining partners -- full spec: docs/plans/01-h-series-development.md @ T-047 - done 2026-05-15, sha b4526f2
 - [x] **(S)** T-048 [research] Research H-series cost analysis: BOM estimate, pricing vs B-series, margin strategy -- done 2026-05-15, sha 5bf1496 -- full spec: docs/plans/01-h-series-development.md @ T-048
-- [x] **(S)** T-049 [research] Research H-series discontinuation: why replaced by K-series, market shifts, emissions pressures -- done 2026-05-15, sha 1bdf7ef — full spec: docs/plans/01-h-series-development.md @ T-049
+- [x] **(S)** T-049 [research] Research H-series discontinuation: why replaced by K-series, market shifts, emissions pressures -- done 2026-05-15, sha 1bdf7ef - full spec: docs/plans/01-h-series-development.md @ T-049
 - [x] **(S)** T-050 [research] Research H-series legacy: transition to K20/K24, technology carryover, enthusiast retention -- done 2026-05-15, sha 8400996 -- full spec: docs/plans/01-h-series-development.md @ T-050
 - [x] **(S)** T-051 [research] Research H-series production numbers by variant and year: available sales data, registration stats -- done 2026-05-15, sha 94d6884 -- full spec: docs/plans/01-h-series-development.md @ T-051
-- [x] **(S)** T-052 [research] Research H-series recall history: any manufacturer recalls, safety campaigns -- full spec: docs/plans/01-h-series-development.md @ T-052 — done 2026-05-15, sha a5ee81f
-- [x] **(S)** T-053 [research] Research H-series warranty periods and common warranty claims: industry data, forum reports -- full spec: docs/plans/01-h-series-development.md @ T-053 — done 2026-05-15
+- [x] **(S)** T-052 [research] Research H-series recall history: any manufacturer recalls, safety campaigns -- full spec: docs/plans/01-h-series-development.md @ T-052 - done 2026-05-15, sha a5ee81f
+- [x] **(S)** T-053 [research] Research H-series warranty periods and common warranty claims: industry data, forum reports -- full spec: docs/plans/01-h-series-development.md @ T-053 - done 2026-05-15
 - [x] **(S)** T-054 [research] Research H-series environmental compliance: emissions standards met, catalytic converter tech -- done 2026-05-15, sha 66199b1 -- full spec: docs/plans/01-h-series-development.md @ T-054
 - [x] **(S)** T-055 [research] Research H-series fuel economy ratings by market and transmission: EPA, JC08, WLTP data -- done 2026-05-15, sha 07029b5 -- full spec: docs/plans/01-h-series-development.md @ T-055
 - [x] **(S)** T-059 [research] Research H-series altitude performance: naturally aspirated power loss, ECU adaptation -- done 2026-05-15 -- full spec: docs/plans/01-h-series-development.md @ T-059
-- [x] **(S)** T-060 [research] Research H-series fuel compatibility: octane requirements, ethanol tolerance, premium vs regular -- full spec: docs/plans/01-h-series-development.md @ T-060 — 2026-05-15
-- [x] **(S)** T-062 [research] Research H-series patents and intellectual property: filed patents, proprietary technologies -- full spec: docs/plans/01-h-series-development.md @ T-062 — 2026-05-15, sha 0bd235d
-- [x] **(S)** T-063 [research] Research H-series homologation requirements: racing series eligibility, special edition approvals -- full spec: docs/plans/01-h-series-development.md @ T-063 — done 2026-05-15, sha 942e807
+- [x] **(S)** T-060 [research] Research H-series fuel compatibility: octane requirements, ethanol tolerance, premium vs regular -- full spec: docs/plans/01-h-series-development.md @ T-060 - 2026-05-15
+- [x] **(S)** T-062 [research] Research H-series patents and intellectual property: filed patents, proprietary technologies -- full spec: docs/plans/01-h-series-development.md @ T-062 - 2026-05-15, sha 0bd235d
+- [x] **(S)** T-063 [research] Research H-series homologation requirements: racing series eligibility, special edition approvals -- full spec: docs/plans/01-h-series-development.md @ T-063 - done 2026-05-15, sha 942e807
 - [x] **(S)** T-064 [research] Research H-series crash safety integration: engine mounting, collapse zones, pedestrian safety -- done 2026-05-15, sha a912369 -- full spec: docs/plans/01-h-series-development.md @ T-064
 - [x] **(S)** T-065 [research] Research H-series service interval evolution: how maintenance schedules changed across production years -- done 2026-05-15, sha 1a100d9 -- full spec: docs/plans/01-h-series-development.md @ T-065
 - [x] **(S)** T-066 [research] Research H-series tooling and factory equipment: special tools required, dealership updates -- done 2026-05-15, sha b037780 -- full spec: docs/plans/01-h-series-development.md @ T-066
 - [x] **(S)** T-067 [research] Research H-series technician training: Honda training programs, certification requirements -- done 2026-05-15, sha e7284e3 -- full spec: docs/plans/01-h-series-development.md @ T-067
-- [x] **(S)** T-068 [research] Research H-series diagnostic equipment: scan tools, oscilloscope patterns, factory procedures -- full spec: docs/plans/01-h-series-development.md @ T-068 — 2026-05-15, sha 15efc0c
-- [x] **(S)** T-070 [checkpoint] Phase 1 checkpoint: review H-series development research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/01-h-series-development.md @ T-070 — 2026-05-15, sha d95fe1c
+- [x] **(S)** T-068 [research] Research H-series diagnostic equipment: scan tools, oscilloscope patterns, factory procedures -- full spec: docs/plans/01-h-series-development.md @ T-068 - 2026-05-15, sha 15efc0c
+- [x] **(S)** T-070 [checkpoint] Phase 1 checkpoint: review H-series development research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/01-h-series-development.md @ T-070 - 2026-05-15, sha d95fe1c
 
 ---
 
-## Backlog — Phase 2: H-Series Technical Specifications Deep-Dive
+## Backlog - Phase 2: H-Series Technical Specifications Deep-Dive
 
 ### Block & Architecture
 
-- [x] **(M)** T-071 [research] Research H-series block dimensions: deck height, bore spacing, cylinder center-to-center distances -- full spec: docs/plans/02-h-series-specs.md @ T-071 — 2026-05-15
-- [x] **(M)** T-072 [research] Research H-series block materials: aluminum alloy grade, FRM liner composition, casting process -- full spec: docs/plans/02-h-series-specs.md @ T-072 — 2026-05-15, sha 0627884
+- [x] **(M)** T-071 [research] Research H-series block dimensions: deck height, bore spacing, cylinder center-to-center distances -- full spec: docs/plans/02-h-series-specs.md @ T-071 - 2026-05-15
+- [x] **(M)** T-072 [research] Research H-series block materials: aluminum alloy grade, FRM liner composition, casting process -- full spec: docs/plans/02-h-series-specs.md @ T-072 - 2026-05-15, sha 0627884
 - [x] **(M)** T-073 [research] Research H-series closed deck vs open deck designs: 1992-1996 vs 1997-2001 differences, structural analysis -- done 2026-05-15, sha 77dea2b -- full spec: docs/plans/02-h-series-specs.md @ T-073
-- [x] **(M)** T-074 [research] Research H-series main bearing support: 5-bolt cap design, journal diameter changes (50mm to 55mm), stiffness — done 2026-05-15, sha 378ca57 — full spec: docs/plans/02-h-series-specs.md @ T-074
+- [x] **(M)** T-074 [research] Research H-series main bearing support: 5-bolt cap design, journal diameter changes (50mm to 55mm), stiffness - done 2026-05-15, sha 378ca57 - full spec: docs/plans/02-h-series-specs.md @ T-074
 - [x] **(M)** T-075 [research] Research H-series cylinder bore dimensions: 87.0mm bore, hone pattern, surface finish specifications -- done 2026-05-15, sha 2c2b2cd -- full spec: docs/plans/02-h-series-specs.md @ T-075
 - [x] **(M)** T-076 [research] Research H-series stroke dimensions: 90.7mm stroke, rod ratio (1.58:1), piston velocity calculations -- done 2026-05-15, sha aff8d80 -- full spec: docs/plans/02-h-series-specs.md @ T-076
 - [x] **(M)** T-077 [research] Research H-series displacement calculation: 2157cc derivation, tolerance bands, actual measured volumes -- done 2026-05-15, sha 60fe877 -- full spec: docs/plans/02-h-series-specs.md @ T-077
@@ -192,59 +192,59 @@ _(none)_
 - [x] **(M)** T-082 [research] Research H-series water jacket design: coolant flow paths, heating/cooling zones, hot spot management -- done 2026-05-15, sha 03f1da0 -- full spec: docs/plans/02-h-series-specs.md @ T-082
 - [x] **(M)** T-083 [research] Research H-series head bolt specifications: torque sequence, stretch limits, yield point calculations -- done 2026-05-15, sha 24ff654 -- full spec: docs/plans/02-h-series-specs.md @ T-083
 - [x] **(M)** T-084 [research] Research H-series engine weight: dry weight, fluid-filled weight, weight distribution, mounting points -- done 2026-05-15, sha 8773a62 -- full spec: docs/plans/02-h-series-specs.md @ T-084
-- [x] **(M)** T-085 [research] Research H-series external dimensions: length, width, height, accessory packaging -- full spec: docs/plans/02-h-series-specs.md @ T-085 — done 2026-05-15, sha bf4f65d
+- [x] **(M)** T-085 [research] Research H-series external dimensions: length, width, height, accessory packaging -- full spec: docs/plans/02-h-series-specs.md @ T-085 - done 2026-05-15, sha bf4f65d
 - [x] **(M)** T-087 [research] Research H-series specific output by variant: HP/liter for Redtop, Blacktop, USDM, EDM variants -- done 2026-05-15, sha fddc238 (research file from T-086) -- full spec: docs/plans/02-h-series-specs.md @ T-087
 - [x] **(S)** T-088 [research] Research H-series thermal efficiency: brake thermal efficiency figures, heat rejection percentages -- done 2026-05-15, sha 1fc68dd -- full spec: docs/plans/02-h-series-specs.md @ T-088
-- [x] **(S)** T-089 [research] Research H-series friction losses: piston ring friction, bearing friction, windage losses, total pumping -- full spec: docs/plans/02-h-series-specs.md @ T-089 — done 2026-05-15, sha 59939a2
+- [x] **(S)** T-089 [research] Research H-series friction losses: piston ring friction, bearing friction, windage losses, total pumping -- full spec: docs/plans/02-h-series-specs.md @ T-089 - done 2026-05-15, sha 59939a2
 - [x] **(S)** T-090 [research] Research H-series compression ratio variations: 10.0:1, 10.6:1, 11.0:1 variants, piston crown shapes -- done 2026-05-15, sha 468f3d1 -- full spec: docs/plans/02-h-series-specs.md @ T-090
-- [x] **(S)** T-091 [research] Research H-series combustion chamber design: pent-roof shape, valve angles, swirl ratio, tumble generation — done 2026-05-15, sha 432950f -- full spec: docs/plans/02-h-series-specs.md @ T-091
+- [x] **(S)** T-091 [research] Research H-series combustion chamber design: pent-roof shape, valve angles, swirl ratio, tumble generation - done 2026-05-15, sha 432950f -- full spec: docs/plans/02-h-series-specs.md @ T-091
 - [x] **(S)** T-092 [research] Research H-series intake port design: runner length, cross-section, flow coefficients, velocity profiles -- done 2026-05-15, sha 027d708 -- full spec: docs/plans/02-h-series-specs.md @ T-092
 - [x] **(S)** T-093 [research] Research H-series exhaust port design: runner length, cross-section, flow coefficients, heat management -- done 2026-05-15, sha 806f531 -- full spec: docs/plans/02-h-series-specs.md @ T-093
 - [x] **(S)** T-094 [research] Research H-series throttle body sizes: 57mm, 60mm, 62.5mm variants, airflow calculations -- done 2026-05-15, sha f744ab6 -- full spec: docs/plans/02-h-series-specs.md @ T-094
 - [x] **(S)** T-095 [research] Research H-series exhaust system diameters: 51mm vs 57mm, backpressure calculations, muffler design -- done 2026-05-15, sha f7ac226 -- full spec: docs/plans/02-h-series-specs.md @ T-095
 
 - [x] **(S)** T-097 [research] Research H-series flywheel and clutch specifications: diameter, weight, material, engagement characteristics -- done 2026-05-15, sha b15c005 -- full spec: docs/plans/02-h-series-specs.md @ T-097
-- [x] **(S)** T-098 [research] Research H-series alternator and starter motor specs: amperage, torque, mounting, gear ratios -- full spec: docs/plans/02-h-series-specs.md @ T-098 — done 2026-05-15, sha e7709e0
+- [x] **(S)** T-098 [research] Research H-series alternator and starter motor specs: amperage, torque, mounting, gear ratios -- full spec: docs/plans/02-h-series-specs.md @ T-098 - done 2026-05-15, sha e7709e0
 - [x] **(S)** T-099 [research] Research H-series accessory drive: power steering pump, A/C compressor, bracket design, belt routing -- done 2026-05-15, sha 7acb268 -- full spec: docs/plans/02-h-series-specs.md @ T-099
 - [x] **(S)** T-100 [research] Research H-series sensor complement: all sensors listed with part numbers, signal types, operating ranges -- done 2026-05-15, sha 4e4f941 -- full spec: docs/plans/02-h-series-specs.md @ T-100
 
 - [x] **(S)** T-102 [research] Research H-series timing marks and alignment: cam timing, crank timing, tensioner reference positions -- done 2026-05-15, sha 0e77511 -- full spec: docs/plans/02-h-series-specs.md @ T-102
-- [x] **(S)** T-103 [research] Research H-series oil specification: viscosity grades, capacity by variant, filter part numbers — done 2026-05-15, sha 4c922fe — full spec: docs/plans/02-h-series-specs.md @ T-103
-- [x] **(S)** T-109 [research] Research H-series camshaft bearing dimensions: bore size, journal diameter, oil clearance specifications — done 2026-05-15, sha 93edd35 — full spec: docs/plans/02-h-series-specs.md @ T-109
-- [x] **(S)** T-104 [research] Research H-series coolant specification: type, capacity, mixture ratio, thermostat opening temp — done 2026-05-15, sha 66b422f — full spec: docs/plans/02-h-series-specs.md @ T-104
-- [x] **(S)** T-105 [research] Research H-series spark plug specifications: gap, heat range, thread size, torque, replacement interval — done 2026-05-15, sha 3f97799 — full spec: docs/plans/02-h-series-specs.md @ T-105
-- [x] **(S)** T-106 [research] Research H-series valve spring specifications: open pressure, closed pressure, coil bind, surge frequency — done 2026-05-15, sha 7471998 — full spec: docs/plans/02-h-series-specs.md @ T-106
+- [x] **(S)** T-103 [research] Research H-series oil specification: viscosity grades, capacity by variant, filter part numbers - done 2026-05-15, sha 4c922fe - full spec: docs/plans/02-h-series-specs.md @ T-103
+- [x] **(S)** T-109 [research] Research H-series camshaft bearing dimensions: bore size, journal diameter, oil clearance specifications - done 2026-05-15, sha 93edd35 - full spec: docs/plans/02-h-series-specs.md @ T-109
+- [x] **(S)** T-104 [research] Research H-series coolant specification: type, capacity, mixture ratio, thermostat opening temp - done 2026-05-15, sha 66b422f - full spec: docs/plans/02-h-series-specs.md @ T-104
+- [x] **(S)** T-105 [research] Research H-series spark plug specifications: gap, heat range, thread size, torque, replacement interval - done 2026-05-15, sha 3f97799 - full spec: docs/plans/02-h-series-specs.md @ T-105
+- [x] **(S)** T-106 [research] Research H-series valve spring specifications: open pressure, closed pressure, coil bind, surge frequency - done 2026-05-15, sha 7471998 - full spec: docs/plans/02-h-series-specs.md @ T-106
 - [x] **(S)** T-107 [research] Research H-series bearing clearances: main bearing clearance, rod bearing clearance, thrust clearance specs -- done 2026-05-15, sha c38c09f -- full spec: docs/plans/02-h-series-specs.md @ T-107
 - [x] **(S)** T-108 [research] Research H-series piston-to-wall clearance: skirt clearance, ring gap, crown-to-piston distance -- done 2026-05-15, sha 731c47b -- full spec: docs/plans/02-h-series-specs.md @ T-108
-- [x] **(S)** T-110 [research] Research H-series oil pump specifications: gear type, rotor design, flow rate at various RPMs, pressure relief — done 2026-05-15, sha 25dfee1 -- full spec: docs/plans/02-h-series-specs.md @ T-110
+- [x] **(S)** T-110 [research] Research H-series oil pump specifications: gear type, rotor design, flow rate at various RPMs, pressure relief - done 2026-05-15, sha 25dfee1 -- full spec: docs/plans/02-h-series-specs.md @ T-110
 - [x] **(S)** T-111 [research] Research H-series water pump specifications: impeller diameter, flow rate, bearing life, drive method -- done 2026-05-15, sha a2851e0 -- full spec: docs/plans/02-h-series-specs.md @ T-111
-- [x] **(S)** T-112 [research] Research H-series timing belt specifications: tooth count, width, material, tensioner type, replacement interval — done 2026-05-15, sha cf7a151 — full spec: docs/plans/02-h-series-specs.md @ T-112
+- [x] **(S)** T-112 [research] Research H-series timing belt specifications: tooth count, width, material, tensioner type, replacement interval - done 2026-05-15, sha cf7a151 - full spec: docs/plans/02-h-series-specs.md @ T-112
 - [x] **(S)** T-113 [research] Research H-series fuel system specifications: rail pressure, injector flow rates, pump capacity, regulator type -- done 2026-05-15, sha 27549bb -- full spec: docs/plans/02-h-series-specs.md @ T-113
 - [x] **(S)** T-114 [research] Research H-series ignition system specifications: coil type, spark energy, dwell time, distributor vs coil-on-plug -- done 2026-05-15, sha 29d24f2 -- full spec: docs/plans/02-h-series-specs.md @ T-114
-- [x] **(S)** T-115 [research] Research H-series idle speed specifications: RPM targets by variant, IACV control range, learning procedures — done 2026-05-15, sha 681fe8f -- full spec: docs/plans/02-h-series-specs.md @ T-115
-- [x] **(S)** T-116 [research] Research H-series redline specifications: rev limiter strategy, shift window, overrev protection — done 2026-05-15, sha 7600adf — full spec: docs/plans/02-h-series-specs.md @ T-116
-- [x] **(S)** T-117 [research] Research H-series VTEC engagement parameters: RPM threshold, oil pressure minimum, speed interlock, throttle position -- full spec: docs/plans/02-h-series-specs.md @ T-117 — done 2026-05-15, sha 5af83a2
+- [x] **(S)** T-115 [research] Research H-series idle speed specifications: RPM targets by variant, IACV control range, learning procedures - done 2026-05-15, sha 681fe8f -- full spec: docs/plans/02-h-series-specs.md @ T-115
+- [x] **(S)** T-116 [research] Research H-series redline specifications: rev limiter strategy, shift window, overrev protection - done 2026-05-15, sha 7600adf - full spec: docs/plans/02-h-series-specs.md @ T-116
+- [x] **(S)** T-117 [research] Research H-series VTEC engagement parameters: RPM threshold, oil pressure minimum, speed interlock, throttle position -- full spec: docs/plans/02-h-series-specs.md @ T-117 - done 2026-05-15, sha 5af83a2
 - [x] **(S)** T-118 [research] Research H-series ECU processor and memory: CPU type, RAM size, ROM capacity, lookup table resolution -- done 2026-05-15, sha 1a194f5 -- full spec: docs/plans/02-h-series-specs.md @ T-118
 - [x] **(S)** T-119 [research] Research H-series OBD version differences: OBD1 vs OBD2 diagnostic capabilities, connector pinouts, trouble code sets -- done 2026-05-15, sha 03d20c0 -- full spec: docs/plans/02-h-series-specs.md @ T-119
-- [x] **(S)** T-120 [checkpoint] Phase 2 checkpoint: review H-series specifications research, identify gaps, spawn new tasks if needed — done 2026-05-15 (no git repo yet) — full spec: docs/plans/02-h-series-specs.md @ T-120
+- [x] **(S)** T-120 [checkpoint] Phase 2 checkpoint: review H-series specifications research, identify gaps, spawn new tasks if needed - done 2026-05-15 (no git repo yet) - full spec: docs/plans/02-h-series-specs.md @ T-120
 
 ---
 
-## Backlog — Phase 3: H-Series Engine Variants Detailed Research
+## Backlog - Phase 3: H-Series Engine Variants Detailed Research
 
 ### H22A Redtop (JDM 1992-1996)
 
-- [x] **(M)** T-121 [research] Research H22A Redtop JDM origin: when introduced, which models received it, production years, market exclusivity — done 2026-05-15, sha 24cf548 — full spec: docs/plans/03-h-series-variants.md @ T-121
+- [x] **(M)** T-121 [research] Research H22A Redtop JDM origin: when introduced, which models received it, production years, market exclusivity - done 2026-05-15, sha 24cf548 - full spec: docs/plans/03-h-series-variants.md @ T-121
 - [x] **(M)** T-122 [research] Research H22A Redtop specifications: 220 PS @ 7200 RPM, 221 Nm @ 6500 RPM, 11.0:1 compression, dome pistons -- done 2026-05-15, sha d24758d -- full spec: docs/plans/03-h-series-variants.md @ T-122
 - [x] **(M)** T-123 [research] Research H22A Redtop camshaft profiles: 306° intake duration, 310° exhaust duration, lift values, overlap -- done 2026-05-15, sha c3f29d0 -- full spec: docs/plans/03-h-series-variants.md @ T-123
 - [x] **(M)** T-124 [research] Research H22A Redtop intake system: dual runner manifold, 62.5mm throttle body, plenum design, runner length -- done 2026-05-15, sha 57369f2 -- full spec: docs/plans/03-h-series-variants.md @ T-124
-- [x] **(M)** T-125 [research] Research H22A Redtop exhaust system: 57mm exhaust diameter, header design, catalytic converter placement — done 2026-05-15, sha 75b8d1f — full spec: docs/plans/03-h-series-variants.md @ T-125
+- [x] **(M)** T-125 [research] Research H22A Redtop exhaust system: 57mm exhaust diameter, header design, catalytic converter placement - done 2026-05-15, sha 75b8d1f - full spec: docs/plans/03-h-series-variants.md @ T-125
 - [x] **(M)** T-126 [research] Research H22A Redtop factory head porting: flow numbers, port shape, valve job angle, surface finish -- done 2026-05-15, sha f44c23e -- full spec: docs/plans/03-h-series-variants.md @ T-126
-- [x] **(M)** T-127 [research] Research H22A Redtop applications: Prelude SiR, Prelude Type S, Accord SiR — model years, chassis codes, features -- full spec: docs/plans/03-h-series-variants.md @ T-127 — done 2026-05-15, sha e880bdf
-- [x] **(M)** T-128 [research] Research H22A Redtop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures — done 2026-05-15, sha 2fb8d2d — full spec: docs/plans/03-h-series-variants.md @ T-128
+- [x] **(M)** T-127 [research] Research H22A Redtop applications: Prelude SiR, Prelude Type S, Accord SiR - model years, chassis codes, features -- full spec: docs/plans/03-h-series-variants.md @ T-127 - done 2026-05-15, sha e880bdf
+- [x] **(M)** T-128 [research] Research H22A Redtop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures - done 2026-05-15, sha 2fb8d2d - full spec: docs/plans/03-h-series-variants.md @ T-128
 
-- [x] **(S)** T-131 [research] Research H22A Redtop ATTS (Active Torque Transfer System): SH model application, clutch pack, bias ratio -- full spec: docs/plans/03-h-series-variants.md @ T-131 — done 2026-05-15, sha f5e9146
-- [x] **(S)** T-132 [research] Research H22A Redtop suspension: strut design, spring rates, anti-roll bar sizes, damper valving -- full spec: docs/plans/03-h-series-variants.md @ T-132 — 2026-05-15, sha eed1efb
+- [x] **(S)** T-131 [research] Research H22A Redtop ATTS (Active Torque Transfer System): SH model application, clutch pack, bias ratio -- full spec: docs/plans/03-h-series-variants.md @ T-131 - done 2026-05-15, sha f5e9146
+- [x] **(S)** T-132 [research] Research H22A Redtop suspension: strut design, spring rates, anti-roll bar sizes, damper valving -- full spec: docs/plans/03-h-series-variants.md @ T-132 - 2026-05-15, sha eed1efb
 - [x] **(S)** T-133 [research] Research H22A Redtop braking: caliper size, rotor diameter, pad compound, ABS tuning -- done 2026-05-15, sha dfcc85f -- full spec: docs/plans/03-h-series-variants.md @ T-133
 - [x] **(S)** T-134 [research] Research H22A Redtop wheel and tire specs: rim size, width, offset, tire size, load index -- done 2026-05-15, sha 9730f8b -- full spec: docs/plans/03-h-series-variants.md @ T-134
 - [x] **(S)** T-135 [research] Research H22A Redtop weight and balance: curb weight, weight distribution, center of gravity height -- done 2026-05-15, sha cba69a0 -- full spec: docs/plans/03-h-series-variants.md @ T-135
@@ -253,15 +253,15 @@ _(none)_
 - [x] **(S)** T-138 [research] Research H22A Redtop emissions ratings: NOx, CO, HC, particulate levels, certification standards -- done 2026-05-15, sha 79bd826 -- full spec: docs/plans/03-h-series-variants.md @ T-138
 - [x] **(S)** T-139 [research] Research H22A Redtop sound character: exhaust note, intake roar, VTEC kick description, dB levels -- done 2026-05-15, sha 46ad895 -- full spec: docs/plans/03-h-series-variants.md @ T-139
 - [x] **(S)** T-140 [research] Research H22A Redtop collectibility: current used prices, rarity factors, condition premiums, trend analysis -- done 2026-05-15, sha 717a090 -- full spec: docs/plans/03-h-series-variants.md @ T-140
-- [x] **(S)** T-141 [research] Research H22A Redtop common issues: known failure modes, age-related wear, corrosion patterns — done 2026-05-15, sha 51f868e — full spec: docs/plans/03-h-series-variants.md @ T-141
+- [x] **(S)** T-141 [research] Research H22A Redtop common issues: known failure modes, age-related wear, corrosion patterns - done 2026-05-15, sha 51f868e - full spec: docs/plans/03-h-series-variants.md @ T-141
 - [x] **(S)** T-142 [research] Research H22A Redtop restoration guides: nut-and-bolt examples, frame-off rebuild costs, parts availability -- done 2026-05-15, sha 7806247 -- full spec: docs/plans/03-h-series-variants.md @ T-142
 - [x] **(S)** T-143 [research] Research H22A Redtop track day viability: reliability on track, cooling capacity, tire wear, brake fade -- done 2026-05-15, sha 6a7e9c0 -- full spec: docs/plans/03-h-series-variants.md @ T-143
-- [x] **(S)** T-144 [research] Research H22A Redtop drag racing potential: 60-foot times, trap speed, launch technique, traction limits — done 2026-05-15, sha 878afc6 -- full spec: docs/plans/03-h-series-variants.md @ T-144
+- [x] **(S)** T-144 [research] Research H22A Redtop drag racing potential: 60-foot times, trap speed, launch technique, traction limits - done 2026-05-15, sha 878afc6 -- full spec: docs/plans/03-h-series-variants.md @ T-144
 - [x] **(S)** T-145 [research] Research H22A Redtop autocross capability: grip levels, turn-in response, mid-corner stability, driver feedback -- done 2026-05-15, sha b8d27f1 -- full spec: docs/plans/03-h-series-variants.md @ T-145
-- [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability — done 2026-05-15, sha 213c79c — full spec: docs/plans/03-h-series-variants.md @ T-146
+- [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability - done 2026-05-15, sha 213c79c - full spec: docs/plans/03-h-series-variants.md @ T-146
 - [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options -- done 2026-05-15, sha 7a0e927 -- full spec: docs/plans/03-h-series-variants.md @ T-147
-- [x] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility — done 2026-05-15, sha 9b71865 — full spec: docs/plans/03-h-series-variants.md @ T-149
-- [x] **(S)** T-150 [checkpoint] Phase 3 checkpoint: review H22A Redtop research, identify gaps, spawn new tasks if needed — done 2026-05-15, sha 9e58b96 -- full spec: docs/plans/03-h-series-variants.md @ T-150
+- [x] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility - done 2026-05-15, sha 9b71865 - full spec: docs/plans/03-h-series-variants.md @ T-149
+- [x] **(S)** T-150 [checkpoint] Phase 3 checkpoint: review H22A Redtop research, identify gaps, spawn new tasks if needed - done 2026-05-15, sha 9e58b96 -- full spec: docs/plans/03-h-series-variants.md @ T-150
 
 ### H22A Blacktop (JDM 1992-2001)
 
@@ -269,23 +269,22 @@ _(none)_
 
 - [x] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- done 2026-05-15, sha 1330e29 -- full spec: docs/plans/03-h-series-variants.md @ T-155
 - [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
-- [x] **(M)** T-157 [research] Research H22A Blacktop applications: Prelude SiR, Accord SiR, Torneo — model years, chassis codes, features -- done 2026-05-15, sha 2764b69 -- full spec: docs/plans/03-h-series-variants.md @ T-157
+- [x] **(M)** T-157 [research] Research H22A Blacktop applications: Prelude SiR, Accord SiR, Torneo - model years, chassis codes, features -- done 2026-05-15, sha 2764b69 -- full spec: docs/plans/03-h-series-variants.md @ T-157
 
 - [x] **(S)** T-161 [research] Research H22A Blacktop vs Redtop comparison: power difference, torque curve, character, which is better and why -- done 2026-05-15, sha 8e3e65f -- full spec: docs/plans/03-h-series-variants.md @ T-161
-- [x] **(S)** T-162 [research] Research H22A Blacktop streetability: low-RPM torque, drivability, fuel economy, daily use characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-162 — done 2026-05-15, sha 9310c42
+- [x] **(S)** T-162 [research] Research H22A Blacktop streetability: low-RPM torque, drivability, fuel economy, daily use characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-162 - done 2026-05-15, sha 9310c42
 - [x] **(S)** T-163 [research] Research H22A Blacktop modification potential: bolt-on gains, cam upgrade path, head work recommendations -- done 2026-05-15, sha fd5479c -- full spec: docs/plans/03-h-series-variants.md @ T-163
 
 
-- [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha 901e659 — full spec: docs/plans/03-h-series-variants.md @ T-166
+- [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha 901e659 - full spec: docs/plans/03-h-series-variants.md @ T-166
 
 ### H22A1 (USDM 1993-1996)
 
-- [x] **(M)** T-167 [research] Research H22A1 USDM origin: 1993 introduction, first DOHC VTEC in US market, regulatory drivers — done 2026-05-15, sha 39f555c — full spec: docs/plans/03-h-series-variants.md @ T-167
-- [x] **(M)** T-168 [research] Research H22A1 specifications: 190 PS @ 6800 RPM, 207 Nm @ 5500 RPM, 10.0:1 compression, OBD1 — done 2026-05-15, sha 1b26fd5 — full spec: docs/plans/03-h-series-variants.md @ T-168
-- [x] **(M)** T-169 [research] Research H22A1 ECU: P5M (automatic), P51 (manual), socketed chips, tuning methods, Hondata compatibility — done 2026-05-15, sha 8811daf -- full spec: docs/plans/03-h-series-variants.md @ T-169
-- [x] **(M)** T-170 [research] Research H22A1 applications: 1993-1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features — done 2026-05-15, sha baa8953 — full spec: docs/plans/03-h-series-variants.md @ T-170
+- [x] **(M)** T-167 [research] Research H22A1 USDM origin: 1993 introduction, first DOHC VTEC in US market, regulatory drivers - done 2026-05-15, sha 39f555c - full spec: docs/plans/03-h-series-variants.md @ T-167
+- [x] **(M)** T-168 [research] Research H22A1 specifications: 190 PS @ 6800 RPM, 207 Nm @ 5500 RPM, 10.0:1 compression, OBD1 - done 2026-05-15, sha 1b26fd5 - full spec: docs/plans/03-h-series-variants.md @ T-168
+- [x] **(M)** T-169 [research] Research H22A1 ECU: P5M (automatic), P51 (manual), socketed chips, tuning methods, Hondata compatibility - done 2026-05-15, sha 8811daf -- full spec: docs/plans/03-h-series-variants.md @ T-169
+- [x] **(M)** T-170 [research] Research H22A1 applications: 1993-1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features - done 2026-05-15, sha baa8953 - full spec: docs/plans/03-h-series-variants.md @ T-170
 - [x] **(M)** T-171 [research] Research H22A1 emissions equipment: EGR, PCV, secondary air injection, evaporative system, catalytic converter -- done 2026-05-15, sha 0e00f52 -- full spec: docs/plans/03-h-series-variants.md @ T-171
-- [ ] **(M)** T-172 [research] Research H22A1 OBD1 diagnostics: connector pinout, test mode, live data, trouble code retrieval procedures -- full spec: docs/plans/03-h-series-variants.md @ T-172
 - [ ] **(S)** T-173 [research] Research H22A1 USDM detuning: what was changed vs JDM Redtop, power loss mechanisms, emissions compromises -- full spec: docs/plans/03-h-series-variants.md @ T-173
 - [ ] **(S)** T-174 [research] Research H22A1 alloy oil sump: OBD1-specific design, capacity, baffle pattern, aftermarket alternatives -- full spec: docs/plans/03-h-series-variants.md @ T-174
 - [ ] **(S)** T-175 [research] Research H22A1 closed deck block: structural characteristics, boost potential, compared to later open deck -- full spec: docs/plans/03-h-series-variants.md @ T-175
@@ -318,7 +317,7 @@ _(none)_
 - [ ] **(M)** T-193 [research] Research H22A4 USDM 5th gen origin: 1997 BB6 chassis introduction, open deck transition, market positioning -- full spec: docs/plans/03-h-series-variants.md @ T-193
 - [ ] **(M)** T-194 [research] Research H22A4 specifications: 200 PS @ 7000 RPM, 212 Nm @ 5250 RPM, 10.0:1 compression, OBD2 -- full spec: docs/plans/03-h-series-variants.md @ T-194
 - [ ] **(M)** T-195 [research] Research H22A4 ECU: P13 OBD2, immobilizer integration, tuning methods, Hondata FlashPro compatibility -- full spec: docs/plans/03-h-series-variants.md @ T-195
-- [ ] **(M)** T-196 [research] Research H22A4 applications: 1997-2001 Prelude Base, Type-SH, SE — chassis codes, features, model years -- full spec: docs/plans/03-h-series-variants.md @ T-196
+- [ ] **(M)** T-196 [research] Research H22A4 applications: 1997-2001 Prelude Base, Type-SH, SE - chassis codes, features, model years -- full spec: docs/plans/03-h-series-variants.md @ T-196
 - [ ] **(M)** T-197 [research] Research H22A4 open deck block: 1997-2001 design, 55mm main journals (1998+), structural implications -- full spec: docs/plans/03-h-series-variants.md @ T-197
 - [ ] **(M)** T-198 [research] Research H22A4 ATTS (Active Torque Transfer System): SH model exclusive, torque vectoring operation, maintenance -- full spec: docs/plans/03-h-series-variants.md @ T-198
 - [ ] **(M)** T-199 [research] Research H22A4 single runner intake: vs dual runner, plenum volume, power band characteristics -- full spec: docs/plans/03-h-series-variants.md @ T-199
@@ -343,7 +342,7 @@ _(none)_
 
 ---
 
-## Backlog — Phase 4: H-Series Mechanical Design & Internals
+## Backlog - Phase 4: H-Series Mechanical Design & Internals
 
 ### Cylinder Block & Bottom End
 
@@ -397,7 +396,7 @@ _(none)_
 
 ---
 
-## Backlog — Phase 5: H-Series VTEC, Engine Management, Tuning & Reliability
+## Backlog - Phase 5: H-Series VTEC, Engine Management, Tuning & Reliability
 
 ### VTEC System Operation
 
@@ -416,10 +415,10 @@ _(none)_
 - [ ] **(M)** T-265 [research] Research H-series OBD1 ECUs: P5M (auto), P51 (manual), 32-pin connector, socketed chips, basic fuel/ignition maps -- full spec: docs/plans/05-h-series-systems.md @ T-265
 - [ ] **(M)** T-266 [research] Research H-series OBD2 ECUs: P13 (USDM), P28 (JDM OBD2a), P72 (JDM OBD2b), 32-pin + 2-pin connectors -- full spec: docs/plans/05-h-series-systems.md @ T-266
 - [ ] **(M)** T-267 [research] Research H-series ECU pinouts: complete pinout tables for P5M/P51 and P13, wire colors, function descriptions -- full spec: docs/plans/05-h-series-systems.md @ T-267
-- [ ] **(M)** T-268 [research] Research H-series aftermarket ECUs: Hondata S300, FlashPro, Neptune RTP, Megasquirt, Link ECU, AEM EMS — compatibility -- full spec: docs/plans/05-h-series-systems.md @ T-268
+- [ ] **(M)** T-268 [research] Research H-series aftermarket ECUs: Hondata S300, FlashPro, Neptune RTP, Megasquirt, Link ECU, AEM EMS - compatibility -- full spec: docs/plans/05-h-series-systems.md @ T-268
 - [ ] **(M)** T-269 [research] Research H-series Hondata S300: required ECU (P28/P06), OBD1 to OBD2 harness needs, fuel/ignition control, VTEC crossover -- full spec: docs/plans/05-h-series-systems.md @ T-269
 - [ ] **(M)** T-270 [research] Research H-series boost control solenoid wiring: US ECU Pin A11 vs JDM ECU Pin A17, power/ground schemes -- full spec: docs/plans/05-h-series-systems.md @ T-270
-- [ ] **(S)** T-271 [research] Research H-series sensor specifications: MAP, TPS, IAT, ECT, O2, CKP, VTEC pressure switch — ranges and signals -- full spec: docs/plans/05-h-series-systems.md @ T-271
+- [ ] **(S)** T-271 [research] Research H-series sensor specifications: MAP, TPS, IAT, ECT, O2, CKP, VTEC pressure switch - ranges and signals -- full spec: docs/plans/05-h-series-systems.md @ T-271
 - [ ] **(S)** T-272 [checkpoint] Phase 5 checkpoint: review H-series engine management research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/05-h-series-systems.md @ T-272
 
 ### Tuning & Performance Modifications
@@ -431,7 +430,7 @@ _(none)_
 - [ ] **(M)** T-277 [research] Research H-series Stage 2 expected gains: 40-60 HP total, 220-240 HP achievable, cost estimates, reliability -- full spec: docs/plans/05-h-series-systems.md @ T-277
 - [ ] **(M)** T-278 [research] Research H-series Stage 3 competition mods: forged pistons, forged rods, balancing, high-compression, full porting -- full spec: docs/plans/05-h-series-systems.md @ T-278
 - [ ] **(M)** T-279 [research] Research H-series turbocharging: stock bottom end limit 250-280 HP @ 6-8 psi, built bottom 350-450+ HP @ 12-18 psi -- full spec: docs/plans/05-h-series-systems.md @ T-279
-- [ ] **(M)** T-280 [research] Research H-series supercharging: Jackson Racing, Superchips, Vortech, Paxton — kits, pulleys, power levels -- full spec: docs/plans/05-h-series-systems.md @ T-280
+- [ ] **(M)** T-280 [research] Research H-series supercharging: Jackson Racing, Superchips, Vortech, Paxton - kits, pulleys, power levels -- full spec: docs/plans/05-h-series-systems.md @ T-280
 - [ ] **(M)** T-281 [research] Research H-series real-world turbo builds: Maxpeedingrods 286 whp case, JE pistons 360 HP case, GT30 450-500 HP case -- full spec: docs/plans/05-h-series-systems.md @ T-281
 - [ ] **(S)** T-282 [research] Research H-series ITB (Individual Throttle Body) conversions: adapter plates, manifold design, ECU integration -- full spec: docs/plans/05-h-series-systems.md @ T-282
 - [ ] **(S)** T-283 [checkpoint] Phase 5 checkpoint: review H-series tuning research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/05-h-series-systems.md @ T-283
@@ -450,7 +449,7 @@ _(none)_
 
 ---
 
-## Backlog — Phase 6: H-Series Swaps, Motorsport, Aftermarket & Maintenance
+## Backlog - Phase 6: H-Series Swaps, Motorsport, Aftermarket & Maintenance
 
 ### Engine Swaps & Applications
 
@@ -460,7 +459,7 @@ _(none)_
 - [ ] **(M)** T-296 [research] Research H-series swap into Integra DA/DC: difficulty moderate, DA more forgiving than DC, hood clearance on DC2 -- full spec: docs/plans/06-h-series-swaps.md @ T-296
 - [ ] **(M)** T-297 [research] Research H-series swap into Miata NA/NB: difficulty moderate, weight distribution, custom mounts, crossmember -- full spec: docs/plans/06-h-series-swaps.md @ T-297
 - [ ] **(M)** T-298 [research] Research H-series swap into S13/S14 Silvia: difficulty moderate-difficult, bay clearance, RWD conversion -- full spec: docs/plans/06-h-series-swaps.md @ T-298
-- [ ] **(M)** T-299 [research] Research H2B swap (H-series + B-series transmission): PLM kits $300-500, Burton Racing, 1320 Performance — components -- full spec: docs/plans/06-h-series-swaps.md @ T-299
+- [ ] **(M)** T-299 [research] Research H2B swap (H-series + B-series transmission): PLM kits $300-500, Burton Racing, 1320 Performance - components -- full spec: docs/plans/06-h-series-swaps.md @ T-299
 - [ ] **(M)** T-300 [research] Research H2B transmission compatibility: Y8, P7, P8, Z6, B16/B18 ratios, suitability for street vs drag -- full spec: docs/plans/06-h-series-swaps.md @ T-300
 - [ ] **(S)** T-301 [checkpoint] Phase 6 checkpoint: review H-series swap research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/06-h-series-swaps.md @ T-301
 
@@ -481,7 +480,7 @@ _(none)_
 - [ ] **(M)** T-311 [research] Research H-series pistons and rods aftermarket: Wiseco forged ($600-800), JE Pistons, KS Tuned rods ($450), Manley, Arias -- full spec: docs/plans/06-h-series-swaps.md @ T-311
 - [ ] **(M)** T-312 [research] Research H-series intake and exhaust aftermarket: Skunk2 manifolds/headers, DC Sport, GReddy, HKS, RC Engineering ITBs -- full spec: docs/plans/06-h-series-swaps.md @ T-312
 - [ ] **(M)** T-313 [research] Research H-series forced induction aftermarket: Garrett (GT28/GT30), Turbobanks, Jackson Racing, Vortech, Maxpeedingrods -- full spec: docs/plans/06-h-series-swaps.md @ T-313
-- [ ] **(M)** T-314 [research] Research H-series ECU aftermarket: Hondata S300/FlashPro, Neptune RTP, Megasquirt, Link ECU, AEM EMS — pros/cons -- full spec: docs/plans/06-h-series-swaps.md @ T-314
+- [ ] **(M)** T-314 [research] Research H-series ECU aftermarket: Hondata S300/FlashPro, Neptune RTP, Megasquirt, Link ECU, AEM EMS - pros/cons -- full spec: docs/plans/06-h-series-swaps.md @ T-314
 - [ ] **(M)** T-315 [research] Research H-series internal components aftermarket: ARP studs/bolts, Cometic MLS gaskets, King bearings, Ferrea valves, Parker springs -- full spec: docs/plans/06-h-series-swaps.md @ T-315
 - [ ] **(M)** T-316 [research] Research H-series cooling and lubrication aftermarket: Aisin/GMB pumps, Mishimoto radiators/oil coolers, Samco hoses, KS Tuned tensioners -- full spec: docs/plans/06-h-series-swaps.md @ T-316
 - [ ] **(S)** T-317 [checkpoint] Phase 6 checkpoint: review H-series aftermarket research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/06-h-series-swaps.md @ T-317
@@ -498,7 +497,7 @@ _(none)_
 
 ---
 
-## Backlog — Phase 7: F-Series Development History & Timeline
+## Backlog - Phase 7: F-Series Development History & Timeline
 
 ### Origins & Architecture
 
@@ -526,7 +525,7 @@ _(none)_
 
 ---
 
-## Backlog — Phase 8: F-Series Engine Variants Detailed Research
+## Backlog - Phase 8: F-Series Engine Variants Detailed Research
 
 ### F20B (Integra GS-R / Legend)
 
@@ -567,7 +566,7 @@ _(none)_
 
 ---
 
-## Backlog — Phase 9: F-Series Mechanical, Systems, Tuning & Reliability
+## Backlog - Phase 9: F-Series Mechanical, Systems, Tuning & Reliability
 
 ### Mechanical Design & Internals
 
@@ -585,7 +584,7 @@ _(none)_
 - [ ] **(M)** T-379 [research] Research F-series SOHC VTEC: single cam operation, engagement parameters, lift profiles, applications -- full spec: docs/plans/09-f-series-mechanical.md @ T-379
 - [ ] **(M)** T-380 [research] Research F-series DOHC VTEC: dual cam operation, i-VTEC (variable timing), engagement parameters, S2000 application -- full spec: docs/plans/09-f-series-mechanical.md @ T-380
 - [ ] **(M)** T-381 [research] Research F-series ECU variants: P27, P28, P72, socketed chips, tuning methods, aftermarket compatibility -- full spec: docs/plans/09-f-series-mechanical.md @ T-381
-- [ ] **(M)** T-382 [research] Research F-series sensor complement: MAP, TPS, IAT, ECT, O2, CKP, VTEC pressure switch — ranges and signals -- full spec: docs/plans/09-f-series-mechanical.md @ T-382
+- [ ] **(M)** T-382 [research] Research F-series sensor complement: MAP, TPS, IAT, ECT, O2, CKP, VTEC pressure switch - ranges and signals -- full spec: docs/plans/09-f-series-mechanical.md @ T-382
 - [ ] **(M)** T-383 [research] Research F-series NA tuning potential: Stage 1-3 modifications, bolt-on gains, cam upgrade paths, head work -- full spec: docs/plans/09-f-series-mechanical.md @ T-383
 - [ ] **(M)** T-384 [research] Research F-series turbocharging potential: stock bottom end limits, built bottom limits, real-world build cases -- full spec: docs/plans/09-f-series-mechanical.md @ T-384
 - [ ] **(M)** T-385 [research] Research F-series supercharging potential: kit availability, pulley options, power levels, reliability -- full spec: docs/plans/09-f-series-mechanical.md @ T-385
@@ -595,7 +594,7 @@ _(none)_
 
 ---
 
-## Backlog — Phase 10: F-Series Swaps, Motorsport, Aftermarket & Maintenance
+## Backlog - Phase 10: F-Series Swaps, Motorsport, Aftermarket & Maintenance
 
 ### Swaps & Applications
 
@@ -608,13 +607,13 @@ _(none)_
 ### Motorsport & Aftermarket
 
 - [ ] **(M)** T-394 [research] Research F20C in motorsport: S2000 GT racing, club racing, track day dominance, class regulations -- full spec: docs/plans/10-f-series-swaps.md @ T-394
-- [ ] **(M)** T-395 [research] Research F20C aftermarket support: camshafts, pistons, rods, heads, intakes, exhausts, ECUs — major brands and products -- full spec: docs/plans/10-f-series-swaps.md @ T-395
+- [ ] **(M)** T-395 [research] Research F20C aftermarket support: camshafts, pistons, rods, heads, intakes, exhausts, ECUs - major brands and products -- full spec: docs/plans/10-f-series-swaps.md @ T-395
 - [ ] **(M)** T-396 [research] Research F20C tuning community: popular builds, dyno results, cost-to-power ratios, reliability records -- full spec: docs/plans/10-f-series-swaps.md @ T-396
 - [ ] **(S)** T-397 [checkpoint] Phase 10 checkpoint: review F-series motorsport and aftermarket research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/10-f-series-swaps.md @ T-397
 
 ---
 
-## Backlog — Phase 11: Synthesis, Cross-Reference & Final Indexing
+## Backlog - Phase 11: Synthesis, Cross-Reference & Final Indexing
 
 - [ ] **(M)** T-398 [research] Create research/comparisons/h-vs-f.md: comprehensive H-series vs F-series comparison covering all aspects -- full spec: docs/plans/11-synthesis.md @ T-398
 - [ ] **(M)** T-399 [research] Create research/comparisons/h-vs-k20.md: H22A vs K20A detailed comparison with modern relevance analysis -- full spec: docs/plans/11-synthesis.md @ T-399
@@ -651,11 +650,11 @@ This keeps the pipeline self-sustaining and ensures exhaustive coverage.
 
 ## Known issues / quirks
 
-- **FRM cylinder liner data** is sparse — most sources don't detail the exact composition. Note in any output that RS Machine sleeves are the known aftermarket solution but OEM specs are proprietary.
+- **FRM cylinder liner data** is sparse - most sources don't detail the exact composition. Note in any output that RS Machine sleeves are the known aftermarket solution but OEM specs are proprietary.
 - **H22Z1 Australian variant** power output is disputed (200-203 PS). Sources conflict.
-- **OBD1 vs OBD2 ECU pinouts** have minor variations between P5M/P51/P13 — verify against community sources before relying on them for wiring work.
+- **OBD1 vs OBD2 ECU pinouts** have minor variations between P5M/P51/P13 - verify against community sources before relying on them for wiring work.
 - **QWEN.md** was compiled from 50+ web sources but some links may be stale (forum URLs, YouTube). Research tasks should verify and update.
-- **Playwright** may need MCP configuration for browser-based web navigation — see T-026.
+- **Playwright** may need MCP configuration for browser-based web navigation - see T-026.
 
 ## Cancelled
 
@@ -667,31 +666,33 @@ _(none yet)_
 
 **Phase 2: H-Series Technical Specifications Deep-Dive**
 
-- [x] **(S)** T-120 [checkpoint] Phase 2 checkpoint: review H-series specifications research, identify gaps, spawn new tasks if needed — done 2026-05-15 (no git repo yet) — full spec: docs/plans/02-h-series-specs.md @ T-120
-- [x] **(S)** T-096 [research] Research H-series intake manifold designs: dual runner vs single runner, plenum volume, runner length — done 2026-05-15, sha 3e3a0c0 — full spec: docs/plans/02-h-series-specs.md @ T-096
+- [x] **(S)** T-120 [checkpoint] Phase 2 checkpoint: review H-series specifications research, identify gaps, spawn new tasks if needed - done 2026-05-15 (no git repo yet) - full spec: docs/plans/02-h-series-specs.md @ T-120
+- [x] **(S)** T-096 [research] Research H-series intake manifold designs: dual runner vs single runner, plenum volume, runner length - done 2026-05-15, sha 3e3a0c0 - full spec: docs/plans/02-h-series-specs.md @ T-096
 
 **Phase 3: H-Series Engine Variants Detailed Research**
 
-- [x] **(M)** T-170 [research] Research H22A1 applications: 1993-1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features — done 2026-05-15, sha baa8953 — full spec: docs/plans/03-h-series-variants.md @ T-170
+- [x] **(M)** T-172 [research] Research H22A1 OBD1 diagnostics: connector pinout, test mode, live data, trouble code retrieval procedures -- done 2026-05-15, sha TBD — full spec: docs/plans/03-h-series-variants.md @ T-172
 
-- [x] **(S)** T-165 [research] Research H22A Blacktop value proposition: used prices, cost of ownership, modification investment returns — done 2026-05-15, sha ba9ef8c — full spec: docs/plans/03-h-series-variants.md @ T-165
+- [x] **(M)** T-170 [research] Research H22A1 applications: 1993–1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features — done 2026-05-15, sha baa8953 — full spec: docs/plans/03-h-series-variants.md @ T-170
 
-- [x] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type — done 2026-05-15, sha 8a0f02b — full spec: docs/plans/03-h-series-variants.md @ T-129
+- [x] **(S)** T-165 [research] Research H22A Blacktop value proposition: used prices, cost of ownership, modification investment returns - done 2026-05-15, sha ba9ef8c - full spec: docs/plans/03-h-series-variants.md @ T-165
 
-- [x] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type — done 2026-05-15, sha d225133 — full spec: docs/plans/03-h-series-variants.md @ T-129
+- [x] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type - done 2026-05-15, sha 8a0f02b - full spec: docs/plans/03-h-series-variants.md @ T-129
 
-- [x] **(M)** T-130 [research] Research H22A Redtop 4WS integration: which models had it, hydraulic system, steering ratio, turning circle — done 2026-05-15, sha 70bfce6 — full spec: docs/plans/03-h-series-variants.md @ T-130
+- [x] **(M)** T-129 [research] Research H22A Redtop transmission pairing: close-ratio 5-speed, gear ratios, final drive, differential type - done 2026-05-15, sha d225133 - full spec: docs/plans/03-h-series-variants.md @ T-129
 
-- [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability — done 2026-05-15, sha 213c79c — full spec: docs/plans/03-h-series-variants.md @ T-146
-- [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options — done 2026-05-15, sha 7a0e927 — full spec: docs/plans/03-h-series-variants.md @ T-147
-- [x] **(S)** T-148 [research] Research H22A Redtop daily usability: NVH levels, visibility, seat comfort, storage space, climate control — done 2026-05-15, sha d20bc28 — full spec: docs/plans/03-h-series-variants.md @ T-148
-- [x] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility — done 2026-05-15, sha 9b71865 — full spec: docs/plans/03-h-series-variants.md @ T-149
-- [x] **(M)** T-158 [research] Research H22A Blacktop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures — done 2026-05-15, sha 325df27 — full spec: docs/plans/03-h-series-variants.md @ T-158
-- [x] **(M)** T-159 [research] Research H22A Blacktop transmission pairing: gear ratios, final drive, differential type, limited-slip availability — done 2026-05-15, sha d602523 — full spec: docs/plans/03-h-series-variants.md @ T-159
+- [x] **(M)** T-130 [research] Research H22A Redtop 4WS integration: which models had it, hydraulic system, steering ratio, turning circle - done 2026-05-15, sha 70bfce6 - full spec: docs/plans/03-h-series-variants.md @ T-130
+
+- [x] **(S)** T-146 [research] Research H22A Redtop rally and endurance: Grassroots Motorsports results, oil consumption issues, durability - done 2026-05-15, sha 213c79c - full spec: docs/plans/03-h-series-variants.md @ T-146
+- [x] **(S)** T-147 [research] Research H22A Redtop winter driving: weight distribution for snow, traction characteristics, AWD conversion options - done 2026-05-15, sha 7a0e927 - full spec: docs/plans/03-h-series-variants.md @ T-147
+- [x] **(S)** T-148 [research] Research H22A Redtop daily usability: NVH levels, visibility, seat comfort, storage space, climate control - done 2026-05-15, sha d20bc28 - full spec: docs/plans/03-h-series-variants.md @ T-148
+- [x] **(S)** T-149 [research] Research H22A Redtop insurance costs: classification, premium factors, classic car insurance eligibility - done 2026-05-15, sha 9b71865 - full spec: docs/plans/03-h-series-variants.md @ T-149
+- [x] **(M)** T-158 [research] Research H22A Blacktop ECU: P28/P06/OBD2a, chip socket location, tuning potential, flash procedures - done 2026-05-15, sha 325df27 - full spec: docs/plans/03-h-series-variants.md @ T-158
+- [x] **(M)** T-159 [research] Research H22A Blacktop transmission pairing: gear ratios, final drive, differential type, limited-slip availability - done 2026-05-15, sha d602523 - full spec: docs/plans/03-h-series-variants.md @ T-159
 
 **Phase 1: H-Series Development History & Timeline
 
-- [x] **(S)** T-070 [checkpoint] Phase 1 checkpoint: review H-series development research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/01-h-series-development.md @ T-070 — 2026-05-15, sha d95fe1c
+- [x] **(S)** T-070 [checkpoint] Phase 1 checkpoint: review H-series development research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/01-h-series-development.md @ T-070 - 2026-05-15, sha d95fe1c
 
 **Phase 2: H-Series Technical Specifications Deep-Dive**
 
@@ -703,53 +704,53 @@ _(none yet)_
 - [x] **(S)** T-093 [research] Research H-series exhaust port design: runner length, cross-section, flow coefficients, heat management -- done 2026-05-15, sha 806f531 -- full spec: docs/plans/02-h-series-specs.md @ T-093
 - [x] **(S)** T-101 [research] Research H-series firing order and cylinder numbering: 1-3-4-2 convention, bank identification -- done 2026-05-15, sha fc2f38a -- full spec: docs/plans/02-h-series-specs.md @ T-101
 - [x] **(S)** T-102 [research] Research H-series timing marks and alignment: cam timing, crank timing, tensioner reference positions -- done 2026-05-15, sha 0e77511 -- full spec: docs/plans/02-h-series-specs.md @ T-102
-- [x] **(S)** T-103 [research] Research H-series oil specification: viscosity grades, capacity by variant, filter part numbers — done 2026-05-15, sha 4c922fe — full spec: docs/plans/02-h-series-specs.md @ T-103
+- [x] **(S)** T-103 [research] Research H-series oil specification: viscosity grades, capacity by variant, filter part numbers - done 2026-05-15, sha 4c922fe - full spec: docs/plans/02-h-series-specs.md @ T-103
 
 **Phase 3: H-Series Engine Variants Detailed Research**
 
-- [x] **(M)** T-151 [research] Research H22A Blacktop JDM origin: when introduced, which models received it, production years, market exclusivity -- full spec: docs/plans/03-h-series-variants.md @ T-151 — done 2026-05-15, sha fc1ac8a
-- [x] **(M)** T-152 [research] Research H22A Blacktop specifications: 200 PS @ 7000 RPM, 219 Nm @ 5500 RPM, 10.6:1 compression, flat-top pistons -- full spec: docs/plans/03-h-series-variants.md @ T-152 — done 2026-05-15, sha 8fc8666
-- [x] **(M)** T-153 [research] Research H22A Blacktop camshaft profiles: 288° intake duration, 308° exhaust duration, lift values, overlap -- full spec: docs/plans/03-h-series-variants.md @ T-153 — done 2026-05-15, sha 41f98d0
-- [x] **(M)** T-154 [research] Research H22A Blacktop intake system: single runner manifold, 60mm throttle body, plenum design, runner length -- full spec: docs/plans/03-h-series-variants.md @ T-154 — done 2026-05-15, sha 9e15a4c
+- [x] **(M)** T-151 [research] Research H22A Blacktop JDM origin: when introduced, which models received it, production years, market exclusivity -- full spec: docs/plans/03-h-series-variants.md @ T-151 - done 2026-05-15, sha fc1ac8a
+- [x] **(M)** T-152 [research] Research H22A Blacktop specifications: 200 PS @ 7000 RPM, 219 Nm @ 5500 RPM, 10.6:1 compression, flat-top pistons -- full spec: docs/plans/03-h-series-variants.md @ T-152 - done 2026-05-15, sha 8fc8666
+- [x] **(M)** T-153 [research] Research H22A Blacktop camshaft profiles: 288° intake duration, 308° exhaust duration, lift values, overlap -- full spec: docs/plans/03-h-series-variants.md @ T-153 - done 2026-05-15, sha 41f98d0
+- [x] **(M)** T-154 [research] Research H22A Blacktop intake system: single runner manifold, 60mm throttle body, plenum design, runner length -- full spec: docs/plans/03-h-series-variants.md @ T-154 - done 2026-05-15, sha 9e15a4c
 - [x] **(M)** T-155 [research] Research H22A Blacktop exhaust system: 51mm exhaust diameter, header design, catalytic converter placement -- done 2026-05-15, sha 1330e29 -- full spec: docs/plans/03-h-series-variants.md @ T-155
 - [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
 - [x] **(M)** T-160 [research] Research H22A Blacktop closed deck vs open deck: 1992-1996 closed deck, 1997-2001 open deck differences -- done 2026-05-15, sha 55373ea -- full spec: docs/plans/03-h-series-variants.md @ T-160
 - [x] **(S)** T-164 [research] Research H22A Blacktop reliability record: compared to Redtop, known issues, longevity data -- done 2026-05-15, sha 7eb2ce1 -- full spec: docs/plans/03-h-series-variants.md @ T-164
 - [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha 901e659 -- full spec: docs/plans/03-h-series-variants.md @ T-166
-- [x] **(M)** T-167 [research] Research H22A1 USDM origin: 1993 introduction, first DOHC VTEC in US market, regulatory drivers — done 2026-05-15, sha 39f555c — full spec: docs/plans/03-h-series-variants.md @ T-167
+- [x] **(M)** T-167 [research] Research H22A1 USDM origin: 1993 introduction, first DOHC VTEC in US market, regulatory drivers - done 2026-05-15, sha 39f555c - full spec: docs/plans/03-h-series-variants.md @ T-167
 
 **Phase 0 infrastructure**
 
-- [x] **(M)** T-001 [infra] Index all local service manuals: list files, sizes, dates, formats -- full spec: docs/plans/00-infrastructure.md @ T-001 — 2026-05-14 (dee1e10)
-- [x] **(M)** T-002 [infra] Parse 1992-1996 Helms Manual PDF metadata and table of contents -- full spec: docs/plans/00-infrastructure.md @ T-002 — 2026-05-14 (d5968c8)
-- [x] **(M)** T-004 [infra] Parse OBD1_H22A_Service_Manual.md structure and extract key sections -- full spec: docs/plans/00-infrastructure.md @ T-004 — 2026-05-14 (31a39b0)
-- [x] **(S)** T-007 [infra] Sample OCR page files: read 5 representative pages to assess quality — done 2026-05-14, sha f3212d5 — full spec: docs/plans/00-infrastructure.md @ T-007
+- [x] **(M)** T-001 [infra] Index all local service manuals: list files, sizes, dates, formats -- full spec: docs/plans/00-infrastructure.md @ T-001 - 2026-05-14 (dee1e10)
+- [x] **(M)** T-002 [infra] Parse 1992-1996 Helms Manual PDF metadata and table of contents -- full spec: docs/plans/00-infrastructure.md @ T-002 - 2026-05-14 (d5968c8)
+- [x] **(M)** T-004 [infra] Parse OBD1_H22A_Service_Manual.md structure and extract key sections -- full spec: docs/plans/00-infrastructure.md @ T-004 - 2026-05-14 (31a39b0)
+- [x] **(S)** T-007 [infra] Sample OCR page files: read 5 representative pages to assess quality - done 2026-05-14, sha f3212d5 - full spec: docs/plans/00-infrastructure.md @ T-007
 
 **Phase 1: H-Series Development History**
 
-- [x] **(M)** T-031 [research] Research Honda H-series engine family origins: when/why developed, relationship to F-series, design goals -- full spec: docs/plans/01-h-series-development.md @ T-031 — 2026-05-15
-- [x] **(M)** T-032 [research] Research Honda H-series development timeline: 1989-1991 development period, engineering decisions, prototype testing -- full spec: docs/plans/01-h-series-development.md @ T-032 — 2026-05-15
-- [x] **(M)** T-033 [research] Research H-series derivation from F-series architecture: shared components, differences, evolution path -- full spec: docs/plans/01-h-series-development.md @ T-033 — 2026-05-15 (f0eeb9f)
-- [x] **(M)** T-034 [research] Research H-series position in Honda's engine strategy: where it fit between B-series, F-series, and K-series -- full spec: docs/plans/01-h-series-development.md @ T-034 — 2026-05-15 (46fac25)
-- [x] **(S)** T-036 [research] Research FRM (Fiber-Reinforced Metal) cylinder liner technology: development, benefits, limitations, aftermarket solutions — done 2026-05-15, sha d28eac9 — full spec: docs/plans/01-h-series-development.md @ T-036
-- [x] **(S)** T-056 [research] Research H-series noise and vibration characteristics: NVH engineering, mounting strategies — done 2026-05-15, sha f0c124a — full spec: docs/plans/01-h-series-development.md @ T-056
-- [x] **(S)** T-057 [research] Research H-series cold weather operation: startup behavior, warm-up characteristics, oil pressure — done 2026-05-15, sha 42cc1ba — full spec: docs/plans/01-h-series-development.md @ T-057
-- [x] **(S)** T-058 [research] Research H-series hot weather operation: cooling system capacity, heat management, fan control — done 2026-05-15, sha 9bffdd2 — full spec: docs/plans/01-h-series-development.md @ T-058
-- [x] **(S)** T-060 [research] Research H-series fuel compatibility: octane requirements, ethanol tolerance, premium vs regular — done 2026-05-15, sha 915047a — full spec: docs/plans/01-h-series-development.md @ T-060
-- [x] **(S)** T-061 [research] Research H-series development team: chief engineers, key designers, corporate sponsors — done 2026-05-15, sha 4bd6a59 — full spec: docs/plans/01-h-series-development.md @ T-061
-- [x] **(S)** T-069 [research] Research H-series service bulletins: TSBs, technical service communications, known fixes — done 2026-05-15, sha 6f4b0f8 — full spec: docs/plans/01-h-series-development.md @ T-069
+- [x] **(M)** T-031 [research] Research Honda H-series engine family origins: when/why developed, relationship to F-series, design goals -- full spec: docs/plans/01-h-series-development.md @ T-031 - 2026-05-15
+- [x] **(M)** T-032 [research] Research Honda H-series development timeline: 1989-1991 development period, engineering decisions, prototype testing -- full spec: docs/plans/01-h-series-development.md @ T-032 - 2026-05-15
+- [x] **(M)** T-033 [research] Research H-series derivation from F-series architecture: shared components, differences, evolution path -- full spec: docs/plans/01-h-series-development.md @ T-033 - 2026-05-15 (f0eeb9f)
+- [x] **(M)** T-034 [research] Research H-series position in Honda's engine strategy: where it fit between B-series, F-series, and K-series -- full spec: docs/plans/01-h-series-development.md @ T-034 - 2026-05-15 (46fac25)
+- [x] **(S)** T-036 [research] Research FRM (Fiber-Reinforced Metal) cylinder liner technology: development, benefits, limitations, aftermarket solutions - done 2026-05-15, sha d28eac9 - full spec: docs/plans/01-h-series-development.md @ T-036
+- [x] **(S)** T-056 [research] Research H-series noise and vibration characteristics: NVH engineering, mounting strategies - done 2026-05-15, sha f0c124a - full spec: docs/plans/01-h-series-development.md @ T-056
+- [x] **(S)** T-057 [research] Research H-series cold weather operation: startup behavior, warm-up characteristics, oil pressure - done 2026-05-15, sha 42cc1ba - full spec: docs/plans/01-h-series-development.md @ T-057
+- [x] **(S)** T-058 [research] Research H-series hot weather operation: cooling system capacity, heat management, fan control - done 2026-05-15, sha 9bffdd2 - full spec: docs/plans/01-h-series-development.md @ T-058
+- [x] **(S)** T-060 [research] Research H-series fuel compatibility: octane requirements, ethanol tolerance, premium vs regular - done 2026-05-15, sha 915047a - full spec: docs/plans/01-h-series-development.md @ T-060
+- [x] **(S)** T-061 [research] Research H-series development team: chief engineers, key designers, corporate sponsors - done 2026-05-15, sha 4bd6a59 - full spec: docs/plans/01-h-series-development.md @ T-061
+- [x] **(S)** T-069 [research] Research H-series service bulletins: TSBs, technical service communications, known fixes - done 2026-05-15, sha 6f4b0f8 - full spec: docs/plans/01-h-series-development.md @ T-069
 
 ## Hand-off notes (read before picking up work)
 
-- **Plan docs are the spec.** `STATE.md` task lines are deliberately terse — the authoritative
+- **Plan docs are the spec.** `STATE.md` task lines are deliberately terse - the authoritative
   detail is the `### T-NNN` section in the relevant plan doc under `docs/plans/`. Always read it.
 - **Execution is strictly sequential.** `run-task.sh` picks the first open `- [ ]` top-to-bottom.
   Phases gate: a `[gate]` task cannot pass while any task in its phase is open.
 - **Audits grow the plan.** When you run a `[audit]` task, you append `[fix]` lines into the
-  relevant `## Backlog — Phase N` section per the audit's `Spawns` template — directly below the
+  relevant `## Backlog - Phase N` section per the audit's `Spawns` template - directly below the
   audit's own line. Never put a spawned line in the Done archive or inside a code fence.
 - **Checkpoints and gates may rewrite the plan.** A `[checkpoint]` (every ~20 tasks) or `[gate]`
-  may add/remove/reorder/re-spec remaining tasks — in **both** `STATE.md` and the plan doc — and
+  may add/remove/reorder/re-spec remaining tasks - in **both** `STATE.md` and the plan doc - and
   must record the change in its report.
 - **Script compatibility is load-bearing.** Keep task lines pure ASCII, starting `- [ ] **(S)** `
   (the `make_slug` regex depends on the `**(X)**` prefix), under a `## Backlog` heading, outside
