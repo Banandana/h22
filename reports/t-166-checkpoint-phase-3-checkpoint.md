@@ -2,7 +2,7 @@
 
 ## Task
 
-- [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-166 — done 2026-05-15, sha {COMMIT_SHA}
+- [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-166 — done 2026-05-15, sha 901e659
 
 ---
 
@@ -122,7 +122,11 @@ All 14 required Blacktop research tasks (T-151 through T-165) are complete. The 
 
 ## Commit SHA(s)
 
-{COMMIT_SHA_LIST}
+`901e659` — docs: T-166 checkpoint - update master index with 3 missing Blacktop entries
+```
+$ git log --oneline -n 1
+901e659 (origin/main, main) docs: T-166 checkpoint - update master index with 3 missing Blacktop entries
+```
 
 ---
 
