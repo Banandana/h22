@@ -194,6 +194,7 @@ and H22Z1 appear only in QWEN.md (the compiled reference), not in the service ma
 | Development timeline | QWEN.md | Development History | "1998: H22A7 introduced in European Accord Type R" |
 | Task list reference | STATE.md | T-013 task line | Listed as one of target variant codes |
 | Index reference | research/indexes/qwen-content-inventory.md | Content Inventory | Brief entry |
+| **Research file** | **research/h-series/variants/h22a7-edm-accord-type-r-ch1.md** | **Full EDM variant research** | **Specifications (212 PS @ 7,200 RPM, 222 Nm @ 6,700 RPM, 11.0:1 CR), history and development (Swindon UK manufacturing, facelift 2001), H22A7 vs H22A/H22A4/H22A8 comparison tables, PCBX intake manifold analysis, 4-2-1 exhaust manifold, ECU variants (P28/P72/P08/P30), vehicle specs (1,305 kg, 7.2s 0-62, 142 mph top speed), interior/equipment, modification potential, swap compatibility, known issues, collector status (< 2,000 UK units sold)** | 2026-05-15
 
 ---
 
