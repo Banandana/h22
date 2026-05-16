@@ -338,6 +338,40 @@ _(none)_
 
 ---
 
+## Backlog - Phase 4b: Torque & Fastener Index
+
+Vision-LLM extraction of every fastener + torque from the BB6 (whole vehicle)
+and OBD1 (engine chapters only) Helms manuals. Produces a canonical JSONL plus
+two cross-indexed markdown views (by-location, by-fastener). Runs before the
+remaining Phase 4 mechanical research because several of those tasks (T-244
+head gasket sequence, T-219 rod bolts) become easier once the index exists.
+
+Estimated API spend: $25-60 (Claude Sonnet 4.6 primary + Opus 4.7 rescue on
+low-confidence pages). All raw responses retained on disk; content-hash cache
+makes re-runs free.
+
+- [ ] **(S)** T-414 [infra] Write SCHEMA.md: core+meta row schema, role taxonomy enum, applies_to enum, conflict semantics -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414
+- [ ] **(S)** T-415 [infra] Build chapters.json mapping each Helms chapter to {system, page_start, page_end} for BB6 whole-vehicle + OBD1 engine-only -- full spec: docs/plans/04b-torque-fastener-index.md @ T-415
+- [ ] **(S)** T-416 [infra] Scaffold durable response store: responses/, cache/, cost-ledger, gitignore, Zod schema-validator stub -- full spec: docs/plans/04b-torque-fastener-index.md @ T-416
+- [ ] **(M)** T-417a [infra] Write scripts/extract-torques-vision.mjs skeleton: CLI flags, function signatures, prompt loader stub + scripts/prompts/extract-torques-v1.md -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417a
+- [ ] **(M)** T-417b [infra] Implement extract-torques-vision.mjs: Anthropic SDK calls (Sonnet + Opus), content-hash cache, streaming flush, retry-with-backoff, cost-ledger append -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417b
+- [ ] **(S)** T-418 [infra] Preflight: confirm ANTHROPIC_API_KEY set; run --dry-run on 3 sample pages; verify responses/cache/ledger populated and schema passes -- full spec: docs/plans/04b-torque-fastener-index.md @ T-418
+- [ ] **(L)** T-419 [research] Run BB6 Sonnet extraction across all mechanical chapters (~600-800 pages, ~$15-30) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-419
+- [ ] **(S)** T-420 [research] Identify rescue candidates in responses/bb6/: schema failures + low-confidence + manifestly-wrong torques + zero-row torque-bearing pages -- full spec: docs/plans/04b-torque-fastener-index.md @ T-420
+- [ ] **(M)** T-421 [research] Run Opus rescue on BB6 rescue list (~5% of pages, ~$5-15); retain both Sonnet and Opus responses -- full spec: docs/plans/04b-torque-fastener-index.md @ T-421
+- [ ] **(M)** T-422 [research] Run OBD1 engine-chapter extraction (PDF->PNG render + Sonnet + Opus rescue combined, ~150-250 pages, ~$5-15) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-422
+- [ ] **(M)** T-423 [research] Schema-validate all responses; emit h22-torques.jsonl (valid) + h22-torques-rejects.jsonl (invalid + raw + error) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-423
+- [ ] **(M)** T-424 [research] Dedup + conflict-merge: group by (assembly, name, thread); merge agreements with provenance; flag disagreements with conflict_group_id, never average -- full spec: docs/plans/04b-torque-fastener-index.md @ T-424
+- [ ] **(M)** T-425 [research] Honda OEM PN fill-in via partsouq/hondapartsnow for rows with null honda_part_number; PN only, never touch torques -- full spec: docs/plans/04b-torque-fastener-index.md @ T-425
+- [ ] **(M)** T-426 [research] ARP catalog aftermarket section: emit h22-torques-arp.jsonl with oem:false for tty-stretch + cap-screw roles -- full spec: docs/plans/04b-torque-fastener-index.md @ T-426
+- [ ] **(M)** T-427 [infra] Write scripts/render-torque-index.mjs; emit torque-by-location.md (system->assembly tables) + torque-by-fastener.md ((thread,role) groups + ARP subsection) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-427
+- [ ] **(M)** T-428 [research] Spot-check: 100% review of all TTY-stretch rows against source PNGs + 20-row stratified random sample (engine 8 / drivetrain 4 / chassis 6 / body 2) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-428
+- [ ] **(S)** T-429 [research] Update research/indexes/master-index.md + QWEN.md §Specifications with links to both views and SCHEMA.md -- full spec: docs/plans/04b-torque-fastener-index.md @ T-429
+- [ ] **(S)** T-430 [checkpoint] Phase 4b checkpoint: identify gaps, spawn follow-ups (Hasport mounts, M/T internals, variant coverage) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-430
+- [ ] **(S)** T-431 [gate] Phase 4b gate: TTY 100% correct, sample >=18/20, both views render, JSONL passes schema, cost ledger reconciled, retention guarantees demonstrated -- full spec: docs/plans/04b-torque-fastener-index.md @ T-431
+
+---
+
 ## Backlog - Phase 4: H-Series Mechanical Design & Internals
 
 ### Cylinder Block & Bottom End
