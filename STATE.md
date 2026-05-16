@@ -285,7 +285,7 @@ _(none)_
 - [x] **(M)** T-169 [research] Research H22A1 ECU: P5M (automatic), P51 (manual), socketed chips, tuning methods, Hondata compatibility - done 2026-05-15, sha 8811daf -- full spec: docs/plans/03-h-series-variants.md @ T-169
 - [x] **(M)** T-170 [research] Research H22A1 applications: 1993-1996 Prelude VTEC, SR-V (Canada), VTi-R (Australia) -- model years, features - done 2026-05-15, sha baa8953 - full spec: docs/plans/03-h-series-variants.md @ T-170
 - [x] **(M)** T-171 [research] Research H22A1 emissions equipment: EGR, PCV, secondary air injection, evaporative system, catalytic converter -- done 2026-05-15, sha 0e00f52 -- full spec: docs/plans/03-h-series-variants.md @ T-171
-- [x] **(S)** T-173 [research] Research H22A1 USDM detuning: what was changed vs JDM Redtop, power loss mechanisms, emissions compromises -- done 2026-05-15, sha TBD -- full spec: docs/plans/03-h-series-variants.md @ T-173
+- [x] **(S)** T-173 [research] Research H22A1 USDM detuning: what was changed vs JDM Redtop, power loss mechanisms, emissions compromises -- done 2026-05-15, sha 69a97ce -- full spec: docs/plans/03-h-series-variants.md @ T-173
 - [ ] **(S)** T-174 [research] Research H22A1 alloy oil sump: OBD1-specific design, capacity, baffle pattern, aftermarket alternatives -- full spec: docs/plans/03-h-series-variants.md @ T-174
 - [ ] **(S)** T-175 [research] Research H22A1 closed deck block: structural characteristics, boost potential, compared to later open deck -- full spec: docs/plans/03-h-series-variants.md @ T-175
 - [ ] **(S)** T-176 [research] Research H22A1 4WS models: which trim levels had four-wheel steering, system operation, maintenance -- full spec: docs/plans/03-h-series-variants.md @ T-176
