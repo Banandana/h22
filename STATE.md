@@ -372,7 +372,7 @@ Playwright before OBD1 extraction can run.
 - [x] **(S)** T-414b [infra] Write models.json (provider/model registry) + extraction-matrix.json (default Together-only + high-stakes overrides + rescue tier); verify Together model ids -- done 2026-05-16, sha de3ec2f -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414b
 - [x] **(M)** T-414c [infra] Acquire real OBD1 Honda service manual PDF via Playwright (techinfo.honda.com / Honda Service Express / enthusiast forums / archive.org); replace mislabeled HTML placeholder; verify with file/pdfinfo/pdftoppm sample render -- done 2026-05-16, sha 0733286 -- full spec: docs/plans/04b-torque-fastener-index.md @ T-414c
 - [x] **(S)** T-415 [infra] Build chapters.json mapping each manual chapter to {system, page_start, page_end} for BB6 whole-vehicle + OBD1 engine-only — done 2026-05-16, sha 1df903d2 -- full spec: docs/plans/04b-torque-fastener-index.md @ T-415
-- [ ] **(S)** T-416 [infra] Scaffold durable response store: per-page response subdirs, cache/, cost-ledger with multi-model columns, gitignore, Zod validators for both schemas -- full spec: docs/plans/04b-torque-fastener-index.md @ T-416
+- [x] **(S)** T-416 [infra] Scaffold durable response store: per-page response subdirs, cache/, cost-ledger with multi-model columns, gitignore, Zod validators for both schemas — done 2026-05-16, sha 868a2190 + 93a1dbd — full spec: docs/plans/04b-torque-fastener-index.md @ T-416
 - [ ] **(M)** T-417a [infra] Write scripts/extract-torques-vision.mjs skeleton: CLI flags (incl --matrix-profile/--model-id/--runs/--temperature/--seed-base), provider abstraction (Anthropic + Together), matrix loader, prompt loader stub + scripts/prompts/extract-torques-v1.md -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417a
 - [ ] **(M)** T-417b [infra] Implement extract-torques-vision.mjs: TogetherProvider + AnthropicProvider, multi-run loop, content-hash cache w/ seed, per-invocation record write, retry-with-backoff, ledger append -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417b
 - [ ] **(S)** T-418 [infra] Preflight: confirm each active-matrix provider's env key set; run --dry-run on 3 pages × default matrix; verify per-invocation records + cache + ledger -- full spec: docs/plans/04b-torque-fastener-index.md @ T-418
@@ -797,6 +797,10 @@ _(none yet)_
 - [x] **(M)** T-002 [infra] Parse 1992-1996 Helms Manual PDF metadata and table of contents -- full spec: docs/plans/00-infrastructure.md @ T-002 - 2026-05-14 (d5968c8)
 - [x] **(M)** T-004 [infra] Parse OBD1_H22A_Service_Manual.md structure and extract key sections -- full spec: docs/plans/00-infrastructure.md @ T-004 - 2026-05-14 (31a39b0)
 - [x] **(S)** T-007 [infra] Sample OCR page files: read 5 representative pages to assess quality - done 2026-05-14, sha f3212d5 - full spec: docs/plans/00-infrastructure.md @ T-007
+
+**Phase 4b: Torque & Fastener Index**
+
+- [x] **(S)** T-416 [infra] Scaffold durable response store: per-page response subdirs, cache/, cost-ledger with multi-model columns, gitignore, Zod validators for both schemas — done 2026-05-16, sha 868a2190 + 93a1dbd — full spec: docs/plans/04b-torque-fastener-index.md @ T-416
 
 **Phase 1: H-Series Development History**
 
