@@ -375,7 +375,7 @@ Playwright before OBD1 extraction can run.
 - [x] **(S)** T-416 [infra] Scaffold durable response store: per-page response subdirs, cache/, cost-ledger with multi-model columns, gitignore, Zod validators for both schemas — done 2026-05-16, sha 868a2190 + 93a1dbd — full spec: docs/plans/04b-torque-fastener-index.md @ T-416
 - [x] **(M)** T-417a [infra] Write scripts/extract-torques-vision.mjs skeleton: CLI flags (incl --matrix-profile/--model-id/--runs/--temperature/--seed-base), provider abstraction (Anthropic + Together), matrix loader, prompt loader stub + scripts/prompts/extract-torques-v1.md -- done 2026-05-16, sha 0f0057a2 -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417a
 - [x] **(M)** T-417b [infra] Implement extract-torques-vision.mjs: TogetherProvider + AnthropicProvider, multi-run loop, content-hash cache w/ seed, per-invocation record write, retry-with-backoff, ledger append -- done 2026-05-16, sha 1f2898e -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417b
-- [ ] **(S)** T-418 [infra] Preflight: confirm each active-matrix provider's env key set; run --dry-run on 3 pages × default matrix; verify per-invocation records + cache + ledger -- full spec: docs/plans/04b-torque-fastener-index.md @ T-418
+- [x] **(S)** T-418 [infra] Preflight: confirm each active-matrix provider's env key set; run --dry-run on 3 pages × default matrix; verify per-invocation records + cache + ledger -- done 2026-05-16, sha b55439c0 -- full spec: docs/plans/04b-torque-fastener-index.md @ T-418
 - [ ] **(M)** T-418b [infra] Bake-off: 10-page pilot on a hard chapter across every default-matrix model; emit bakeoff-report.md (schema-conformance, row count, eyeball accuracy, latency, cost); update extraction-matrix.json if a model underperforms -- full spec: docs/plans/04b-torque-fastener-index.md @ T-418b
 - [ ] **(L)** T-419 [research] Run BB6 matrix extraction: default profile across all chapters + high-stakes profile on TTY-critical chapters (~700 pages × 2 models + multi-run on hot pages, ~$18-28) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-419
 - [B] **(S)** T-420 [research] Identify rescue candidates: [B] blocked 2026-05-15 — T-419 (BB6 matrix extraction) not yet run; entire Phase 4b pipeline (T-414 through T-419) still open. See reports/t-420-research-identify-rescue-candidates.md @ T-420
@@ -799,6 +799,8 @@ _(none yet)_
 - [x] **(S)** T-007 [infra] Sample OCR page files: read 5 representative pages to assess quality - done 2026-05-14, sha f3212d5 - full spec: docs/plans/00-infrastructure.md @ T-007
 
 **Phase 4b: Torque & Fastener Index**
+
+- [x] **(S)** T-418 [infra] Preflight: confirm each active-matrix provider's env key set; run --dry-run on 3 pages × default matrix; verify per-invocation records + cache + ledger — done 2026-05-16, sha b55439c0 — full spec: docs/plans/04b-torque-fastener-index.md @ T-418
 
 - [x] **(S)** T-416 [infra] Scaffold durable response store: per-page response subdirs, cache/, cost-ledger with multi-model columns, gitignore, Zod validators for both schemas — done 2026-05-16, sha 868a2190 + 93a1dbd — full spec: docs/plans/04b-torque-fastener-index.md @ T-416
 
