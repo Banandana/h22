@@ -115,3 +115,25 @@ Scripts default to the **35B toaster** profile:
 - Sampling: temp=0.6, top_p=0.90, presence_penalty=1.05 (capped to 0.3 on Qwen3.5)
 - Thinking mode: ON
 - Override via `PI_PROVIDER` / `PI_MODEL` env vars or `--provider` / `--model` flags
+
+## Runaway-loop containment
+
+Research tasks have historically gotten the model stuck in tight loops (same tool call retried for dozens of turns, output tokens pegged at max, single iteration JSONL exceeding 8 GB). Three layers of defense, all installed 2026-05-16:
+
+**1. `loop-guard` pi extension** (`~/.pi/agent/extensions/loop-guard/`, outside the repo).
+Detects repeats, oscillation, semantic-repeats, consecutive failures, reasoning loops, and **output-token balloons** (consecutive turns ≥ 28K out tokens). Two real kill switches now wired:
+- `maxBlocksPerTurn=4` → `ctx.abort()` cancels the in-flight model stream.
+- `maxBlocksPerSession=12` → `ctx.shutdown()` exits pi so the wrapper stops re-launching.
+
+Counters are sticky across turns (used to reset every `agent_start` — that was the bug). Once a hash is struck, `stickyRepeatCount=2` fires on the very next repeat. `nextBlocked` re-arms itself so a second retry can't slip past.
+
+Tunable via `~/.pi/agent/loop-guard.json` or env vars (`LOOP_GUARD_*`). Inspect live state with the `/loop-guard` pi command; `/loop-guard reset` clears counters.
+
+**2. `scripts/run-task.sh` defaults**:
+- `MAX_ITERS=3` (was 8; if it didn't converge in 3 it's stuck — `-n N` overrides)
+- `timeout 1200` (20 min) wallclock cap per iteration, SIGTERM → SIGKILL +30s grace (`PI_ITER_TIMEOUT` overrides)
+- 500 MB JSONL size watchdog polls every 5s; kills the pi pipeline if exceeded (`PI_ITER_JSONL_MAX_BYTES` overrides)
+
+**3. Forensics.** `.runlog/<slug>/iter-N.{jsonl,log,stderr}` per iteration. If you see a dir > 1 GB after May 2026, the guards failed — investigate before raising thresholds. Canonical pre-fix incident: `t-160-research-research-h22a-blacktop/iter-4.jsonl` was 8.2 GB; the model decided a task was incomplete that was already done, then ran the same `cat >> ... PLAN_EOF` heredoc 6+ times with output tokens climbing 904 → 32000.
+
+When debugging a stuck task: open `iter-N.log` (rendered), not the JSONL. The `tokens out=N` annotation per turn is the fastest signal — climbing into the 20K+ range across consecutive turns means the model is spiralling, not converging.

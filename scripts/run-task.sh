@@ -46,7 +46,7 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
 # --- args ----------------------------------------------------------------
-MAX_ITERS=8
+MAX_ITERS=3
 DRY_RUN=0
 SELF_TEST=0
 TASK_FILTER=""
@@ -392,13 +392,38 @@ run_pi() {
   : > "$iter_log"
   # The prompt is passed as a plain argv element — no shell-string escaping
   # needed now that we no longer build a `script -c` command string.
-  pi "${pi_args[@]}" "$prompt_text" 2> >(tee -a "$iter_stderr" >&2) \
+  timeout --kill-after=30 "${PI_ITER_TIMEOUT:-1200}" pi "${pi_args[@]}" "$prompt_text" 2> >(tee -a "$iter_stderr" >&2) \
     | tee -a "$JSONL_LOG" "$iter_jsonl" \
     | render_events \
     | tee -a "$LOG_FILE" "$iter_log" &
   PI_PID=$(jobs -p | tail -1)
-  wait
+
+  # Disk-size watchdog. If a runaway loop slips past loop-guard's kill switches and the
+  # iter JSONL exceeds PI_ITER_JSONL_MAX_BYTES (default 500 MB), SIGTERM the pipeline.
+  # This is the last-line backstop — observed pre-fix: a single iter wrote 8.2 GB.
+  local max_bytes="${PI_ITER_JSONL_MAX_BYTES:-524288000}"
+  (
+    while kill -0 "$PI_PID" 2>/dev/null; do
+      sleep 5
+      local sz
+      sz=$(stat -c%s "$iter_jsonl" 2>/dev/null || echo 0)
+      if (( sz > max_bytes )); then
+        echo "[run-task] iter jsonl ${sz}B exceeded ${max_bytes}B cap — killing pi" >&2
+        pkill -TERM -P "$PI_PID" 2>/dev/null || true
+        kill -TERM "$PI_PID" 2>/dev/null || true
+        sleep 3
+        pkill -KILL -P "$PI_PID" 2>/dev/null || true
+        kill -KILL "$PI_PID" 2>/dev/null || true
+        break
+      fi
+    done
+  ) &
+  local WATCHDOG_PID=$!
+
+  wait "$PI_PID"
   local rc=$?
+  kill "$WATCHDOG_PID" 2>/dev/null || true
+  wait "$WATCHDOG_PID" 2>/dev/null || true
   PI_PID=""
   set -e
   return "$rc"
