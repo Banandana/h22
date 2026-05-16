@@ -292,7 +292,7 @@ _(none)_
 - [x] **(S)** T-177 [research] Research H22A1 automatic vs manual: gear ratios, torque converter, shift quality, performance difference -- done 2026-05-15, sha f32137e -- full spec: docs/plans/03-h-series-variants.md @ T-177
 - [x] **(S)** T-179 [research] Research H22A1 California vs non-California: emissions differences, power differences, ECU calibration -- done 2026-05-15, sha 050b429 -- full spec: docs/plans/03-h-series-variants.md @ T-179
 - [x] **(S)** T-180 [research] Research H22A1 swap legality: CARB EO numbers, EPA compliance, state-by-state legality analysis -- done 2026-05-15, sha 43362b3 -- full spec: docs/plans/03-h-series-variants.md @ T-180
-- [x] **(S)** T-181 [checkpoint] Phase 3 checkpoint: review H22A1 research, identify gaps, spawn new tasks if needed — done 2026-05-15, sha PENDING — full spec: docs/plans/03-h-series-variants.md @ T-181
+- [x] **(S)** T-181 [checkpoint] Phase 3 checkpoint: review H22A1 research, identify gaps, spawn new tasks if needed — done 2026-05-15, sha b6a6c3c — full spec: docs/plans/03-h-series-variants.md @ T-181
 
 ### H22A2 (EDM 1992-1996)
 
