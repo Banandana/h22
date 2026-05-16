@@ -1,0 +1,41 @@
+# Torque specs working set — never committed
+# Blobs >50MB are gitignored by repo-level policy
+
+# Per-invocation response store (raw API responses, large)
+responses/bb6/**/*.json
+responses/obd1/**/*.json
+
+# Content-hash cache entries (grows with each extraction run)
+# The index file itself is tracked; individual cached response copies are not
+# cache/index.json is committed separately
+
+# Intermediate JSONL outputs (generated from responses/)
+h22-torques-flat.jsonl
+h22-torques-rejects.jsonl
+h22-torques-disputed.jsonl
+h22-torques-arp.jsonl
+h22-torques.jsonl
+h22-torques.jsonl.preconflict
+consensus-report.md
+bakeoff-report.md
+rescue-list-bb6.txt
+rescue-reasons.jsonl
+
+# SQLite query layer (binary, regenerated)
+h22-torques.db
+QUERIES.md
+
+# Curated page images (WebP, ~10-25 MB)
+images/
+
+# OCR working set images (working set, >800MB)
+bb6_ocr/images/*.png
+obd1_source/pages/*.png
+
+# Large intermediate files
+*.tmp
+*.bak
+
+# Model weights / downloaded PDFs
+*.bin
+*.safetensors

@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "description": "Content-hash cache index. Maps SHA256(image_bytes, prompt_version, provider, model, temperature, seed) → relative response file path.",
+  "entries": {}
+}
