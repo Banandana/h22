@@ -334,7 +334,7 @@ _(none)_
 - [x] **(S)** T-211 [research] Research H23A internal oil passage for VTEC solenoid: unique to H23A, pressure requirements, failure modes -- done 2026-05-15, sha 8452709a -- full spec: docs/plans/03-h-series-variants.md @ T-211
 - [x] **(S)** T-212 [research] Research H23A oil squirters: provisions exist but not installed, block drilling requirements, aftermarket kits -- done 2026-05-15, sha c11d3b50 — full spec: docs/plans/03-h-series-variants.md @ T-212
 - [x] **(S)** T-213 [research] Research H23A lower redline: 7200 RPM vs H22's 7200-8200 RPM, longer stroke impact, piston speed calculations -- done 2026-05-15, sha PENDING -- full spec: docs/plans/03-h-series-variants.md @ T-213
-- [ ] **(S)** T-214 [checkpoint] Phase 3 checkpoint: review remaining H-series variants research, identify gaps, spawn new tasks if needed -- full spec: docs/plans/03-h-series-variants.md @ T-214
+- [x] **(S)** T-214 [checkpoint] Phase 3 checkpoint: review remaining H-series variants research, identify gaps, spawn new tasks if needed -- done 2026-05-16, sha 5d09965 -- full spec: docs/plans/03-h-series-variants.md @ T-214
 
 ---
 
