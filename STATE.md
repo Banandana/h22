@@ -276,7 +276,7 @@ _(none)_
 - [x] **(S)** T-163 [research] Research H22A Blacktop modification potential: bolt-on gains, cam upgrade path, head work recommendations -- done 2026-05-15, sha fd5479c -- full spec: docs/plans/03-h-series-variants.md @ T-163
 
 
-- [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha PLACEHOLDER_SHA — full spec: docs/plans/03-h-series-variants.md @ T-166
+- [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha 901e659 — full spec: docs/plans/03-h-series-variants.md @ T-166
 
 ### H22A1 (USDM 1993-1996)
 
@@ -713,7 +713,7 @@ _(none yet)_
 - [x] **(M)** T-156 [research] Research H22A Blacktop factory porting status: no factory porting, stock port condition, flow numbers -- done 2026-05-15, sha 3d0ca73 -- full spec: docs/plans/03-h-series-variants.md @ T-156
 - [x] **(M)** T-160 [research] Research H22A Blacktop closed deck vs open deck: 1992-1996 closed deck, 1997-2001 open deck differences -- done 2026-05-15, sha 55373ea -- full spec: docs/plans/03-h-series-variants.md @ T-160
 - [x] **(S)** T-164 [research] Research H22A Blacktop reliability record: compared to Redtop, known issues, longevity data -- done 2026-05-15, sha 7eb2ce1 -- full spec: docs/plans/03-h-series-variants.md @ T-164
-- [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha PLACEHOLDER_SHA -- full spec: docs/plans/03-h-series-variants.md @ T-166
+- [x] **(S)** T-166 [checkpoint] Phase 3 checkpoint: review H22A Blacktop research, identify gaps, spawn new tasks if needed -- done 2026-05-15, sha 901e659 -- full spec: docs/plans/03-h-series-variants.md @ T-166
 
 **Phase 0 infrastructure**
 
