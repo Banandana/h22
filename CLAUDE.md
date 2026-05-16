@@ -21,7 +21,7 @@ a unified, verifiable knowledge base.
 | `docs/plans/` | Per-phase plan docs with detailed task specs |
 | `reports/` | Per-task report files written by pi after completion |
 | `.runlog/` | Raw JSONL event logs + rendered logs per task iteration |
-| `scripts/` | `run-all.sh` (orchestrator) + `run-task.sh` (single task driver) |
+| `scripts/` | `run-fanout.sh` (dep-aware parallel orchestrator) + `run-all.sh` (legacy serial) + `run-task.sh` (single task driver) |
 | `*.pdf` | Source service manuals (Helms manuals for 4th/5th gen Prelude) |
 | `*_extracted.txt` | OCR-extracted text from PDFs |
 | `bb6_ocr/` | OCR processing scripts and samples |
@@ -115,6 +115,39 @@ Scripts default to the **35B toaster** profile:
 - Sampling: temp=0.6, top_p=0.90, presence_penalty=1.05 (capped to 0.3 on Qwen3.5)
 - Thinking mode: ON
 - Override via `PI_PROVIDER` / `PI_MODEL` env vars or `--provider` / `--model` flags
+
+## Parallel orchestration (`scripts/run-fanout.sh`)
+
+Default driver for working through STATE.md. Dependency-aware: launches up
+to `-w` workers in parallel, but only on tasks whose in-section
+predecessors are all `[x]` done or `[-]` skipped. Open `[ ]`/`[~]`/`[B]`
+gates everything after it in the same `### section`. Open `[gate]` in any
+earlier section globally blocks later sections. Open `[checkpoint]` is
+advisory and does NOT block.
+
+Usage:
+- `scripts/run-fanout.sh --continuous -w 6` — work the whole backlog;
+  re-picks the ready set after each completion as deps unlock.
+- `scripts/run-fanout.sh --dry-run` — print the initial ready set, exit.
+- `scripts/run-fanout.sh --self-test T-419 T-422` — diagnose why specific
+  IDs aren't ready (e.g. "section predecessor open: T-414").
+- `scripts/run-fanout.sh T-419 --force` — escape hatch; launches even if
+  deps unmet. The model will see the blocked state and is expected to
+  write a `[B]` blocked-report rather than freelance upstream infra.
+
+Logs: per-worker stdout at `.runlog/fanout-<ts>/<task>.log`, orchestrator
+summary at `.runlog/fanout-<ts>/orchestrator.log`. Per-task `.runlog/<slug>/`
+trees are still produced by `run-task.sh` underneath.
+
+**Why this exists**: on 2026-05-15 the old fanout was invoked explicitly
+on T-419..T-423b while T-414..T-418b were still `[ ]`. Three workers
+ignored the blockage and freelanced unauthorized upstream infra (created
+`src/`, `npm install zod`, wrote scaffolding under `research/raw-data/`).
+Orchestrator-level gating prevents a stray model from being *asked* to do
+the wrong work. `--force` is the only way to bypass and prints a warning.
+
+The legacy `scripts/run-all.sh` (single-worker sequential) still works but
+is superseded by `--continuous`.
 
 ## Runaway-loop containment
 
