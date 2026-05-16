@@ -2,8 +2,8 @@
 /**
  * extract-torques-vision.mjs — Vision-based torque/fastener extraction pipeline.
  *
- * Skeleton interface for extracting torque specifications from Honda service
- * manual pages using multimodal LLMs via Together AI and optionally Anthropic.
+ * Extracts torque specifications from Honda service manual pages using
+ * multimodal LLMs via Together AI and optionally Anthropic.
  *
  * Usage:
  *   node scripts/extract-torques-vision.mjs --manual=BB6 --matrix-profile=default
@@ -11,12 +11,29 @@
  *   node scripts/extract-torques-vision.mjs --manual=BB6 --model-id=together.kimi-k2-6-fp4 --runs=3 --temperature=0.3 --seed-base=1000
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
-import { join, dirname } from "node:path";
+import {
+  createHash,
+  randomUUID,
+} from "node:crypto";
+import {
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  existsSync,
+  appendFileSync,
+  readdirSync,
+} from "node:fs";
+import { join, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
+
+// ─── Constants ──────────────────────────────────────────────────────────────
+
+const PROMPT_VERSION = "v1";
+const MAX_RETRIES = 4;
+const BASE_DELAY_MS = 1000;
 
 // ─── CLI parsing ────────────────────────────────────────────────────────────
 
@@ -26,18 +43,27 @@ const ROOT = join(__dirname, "..");
  * @param {string[]} argv - process.argv slice(2)
  * @returns {Record<string, string | boolean>}
  */
-function parseArgs(argv) {
+export function parseArgs(argv) {
   const args = {};
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg.startsWith("--")) {
-      const key = arg.slice(2).replace(/-/g, "_");
-      const next = argv[i + 1];
-      if (next && !next.startsWith("--")) {
-        args[key] = next === "true" ? true : next === "false" ? false : next;
-        i++;
+      // Handle --key=value format
+      const eqIdx = arg.indexOf("=");
+      let key, value;
+      if (eqIdx !== -1) {
+        key = arg.slice(2, eqIdx).replace(/-/g, "_");
+        value = arg.slice(eqIdx + 1);
+        args[key] = value === "true" ? true : value === "false" ? false : value;
       } else {
-        args[key] = true;
+        key = arg.slice(2).replace(/-/g, "_");
+        const next = argv[i + 1];
+        if (next && !next.startsWith("--")) {
+          args[key] = next === "true" ? true : next === "false" ? false : next;
+          i++;
+        } else {
+          args[key] = true;
+        }
       }
     }
   }
@@ -73,11 +99,11 @@ function loadPrompt() {
  * @param {string} profileName - "default", "high-stakes", or "rescue"
  * @returns {{ model_id: string, runs: number, temperature: number, seed_base?: number }[]}
  */
-function loadMatrixProfile(profileName) {
+export function loadMatrixProfile(profileName) {
   const matrix = loadJSON(
     "research/raw-data/torque-specs/extraction-matrix.json",
   );
-  const profile = matrix[profileName] || matrix["default"];
+  const profile = matrix[profileName];
   if (!profile) {
     throw new Error(`Unknown matrix profile: ${profileName}`);
   }
@@ -106,10 +132,10 @@ class ProviderClient {
    * @param {string} modelId - Model identifier from models.json
    * @param {number} temperature - Sampling temperature
    * @param {number} seed - Random seed for reproducibility
-   * @param {RawResponse} _prompt - System + user prompt objects
+   * @param {object} prompt - System + user prompt objects
    * @returns {Promise<RawResponse>}
    */
-  async extractFromPage(pageBytes, modelId, temperature, seed, _prompt) {
+  async extractFromPage(pageBytes, modelId, temperature, seed, prompt) {
     throw new Error("not implemented");
   }
 
@@ -126,8 +152,94 @@ class ProviderClient {
  * Together AI provider — uses the Together AI vision API.
  */
 class TogetherProvider extends ProviderClient {
+  /** @type {string} */
+  baseUrl = "https://api.together.xyz/v1/chat/completions";
+
   async extractFromPage(pageBytes, modelId, temperature, seed, prompt) {
-    throw new Error("not implemented");
+    const models = loadJSON("research/raw-data/torque-specs/models.json");
+    const modelInfo = models[modelId];
+    if (!modelInfo) {
+      throw new Error(`Model not found in registry: ${modelId}`);
+    }
+
+    const apiKey = process.env.TOGETHER_API_KEY;
+    if (!apiKey) {
+      throw new Error("TOGETHER_API_KEY not set");
+    }
+
+    const base64Image = imageToBase64Temp(pageBytes);
+    const userContent = [
+      { type: "image_url", image_url: { url: `data:image/png;base64,${base64Image}` } },
+      { type: "text", text: prompt.user },
+    ];
+
+    const requestBody = {
+      model: modelInfo.model,
+      messages: [
+        { role: "system", content: prompt.system },
+        { role: "user", content: userContent },
+      ],
+      max_tokens: 8192,
+      temperature,
+      seed,
+      response_format: { type: "json_object" },
+    };
+
+    const startTime = Date.now();
+    let lastError = null;
+
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const res = await fetch(this.baseUrl, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (res.status === 429 || res.status >= 500) {
+          lastError = new Error(`HTTP ${res.status}: ${res.statusText}`);
+          if (attempt < MAX_RETRIES) {
+            const delay = BASE_DELAY_MS * Math.pow(2, attempt);
+            console.log(`  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} after ${delay}ms`);
+            await sleep(delay);
+            continue;
+          }
+          throw lastError;
+        }
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        const latencyMs = Date.now() - startTime;
+
+        const content =
+          data.choices?.[0]?.message?.content ?? "";
+        const usage = data.usage || {};
+
+        return {
+          content,
+          inputTokens: usage.prompt_tokens ?? 0,
+          outputTokens: usage.completion_tokens ?? 0,
+          latencyMs,
+        };
+      } catch (err) {
+        lastError = err;
+        if (attempt < MAX_RETRIES) {
+          const delay = BASE_DELAY_MS * Math.pow(2, attempt);
+          console.log(`  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} error: ${err.message} after ${delay}ms`);
+          await sleep(delay);
+        }
+      }
+    }
+
+    throw new Error(
+      `Together API failed after ${MAX_RETRIES + 1} attempts: ${lastError?.message}`,
+    );
   }
 
   preflight() {
@@ -142,8 +254,102 @@ class TogetherProvider extends ProviderClient {
  * Only available when ANTHROPIC_API_KEY is set.
  */
 class AnthropicProvider extends ProviderClient {
+  /** @type {string} */
+  baseUrl = "https://api.anthropic.com/v1/messages";
+
   async extractFromPage(pageBytes, modelId, temperature, seed, prompt) {
-    throw new Error("not implemented");
+    const models = loadJSON("research/raw-data/torque-specs/models.json");
+    const modelInfo = models[modelId];
+    if (!modelInfo) {
+      throw new Error(`Model not found in registry: ${modelId}`);
+    }
+
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error("ANTHROPIC_API_KEY not set");
+    }
+
+    const base64Image = imageToBase64Temp(pageBytes);
+
+    const requestBody = {
+      model: modelInfo.model,
+      max_tokens: 8192,
+      temperature,
+      system: prompt.system,
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "image",
+              source: {
+                type: "base64",
+                media_type: "image/png",
+                data: base64Image,
+              },
+            },
+            { type: "text", text: prompt.user },
+          ],
+        },
+      ],
+    };
+
+    const startTime = Date.now();
+    let lastError = null;
+
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const res = await fetch(this.baseUrl, {
+          method: "POST",
+          headers: {
+            "x-api-key": apiKey,
+            "anthropic-version": "2023-06-01",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (res.status === 429 || res.status >= 500) {
+          lastError = new Error(`HTTP ${res.status}: ${res.statusText}`);
+          if (attempt < MAX_RETRIES) {
+            const delay = BASE_DELAY_MS * Math.pow(2, attempt);
+            console.log(`  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} after ${delay}ms`);
+            await sleep(delay);
+            continue;
+          }
+          throw lastError;
+        }
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        const latencyMs = Date.now() - startTime;
+
+        const content =
+          data.content?.find((c) => c.type === "text")?.text ?? "";
+        const usage = data.usage || {};
+
+        return {
+          content,
+          inputTokens: usage.input_tokens ?? 0,
+          outputTokens: usage.output_tokens ?? 0,
+          latencyMs,
+        };
+      } catch (err) {
+        lastError = err;
+        if (attempt < MAX_RETRIES) {
+          const delay = BASE_DELAY_MS * Math.pow(2, attempt);
+          console.log(`  [retry] ${modelId} attempt ${attempt + 1}/${MAX_RETRIES} error: ${err.message} after ${delay}ms`);
+          await sleep(delay);
+        }
+      }
+    }
+
+    throw new Error(
+      `Anthropic API failed after ${MAX_RETRIES + 1} attempts: ${lastError?.message}`,
+    );
   }
 
   preflight() {
@@ -158,7 +364,7 @@ class AnthropicProvider extends ProviderClient {
  * @param {string} providerName - "together" | "anthropic"
  * @returns {ProviderClient}
  */
-function createProvider(providerName) {
+export function createProvider(providerName) {
   if (providerName === "together") return new TogetherProvider();
   if (providerName === "anthropic") return new AnthropicProvider();
   throw new Error(`Unknown provider: ${providerName}`);
@@ -172,7 +378,7 @@ function createProvider(providerName) {
  * @param {number} pageNum - Page number for context injection
  * @returns {{ system: string, user: string }}
  */
-function buildPrompt(promptText, pageNum) {
+export function buildPrompt(promptText, pageNum) {
   return {
     system:
       "You are an expert automotive technician extracting torque specifications from Honda service manual pages. Output valid JSON only.",
@@ -184,21 +390,67 @@ function buildPrompt(promptText, pageNum) {
 
 /**
  * Find a page image file on disk given manual name and page number.
+ * Looks in bb6_ocr/images/ or obd1_source/pages/ depending on manual.
  * @param {string} manual - "BB6" or "OBD1"
  * @param {number} pageNum - Page number
  * @returns {{ path: string, relative: string } | null}
  */
 function findPageImage(manual, pageNum) {
-  throw new Error("not implemented");
+  const imagesDir = join(ROOT, "bb6_ocr", "images");
+  const obd1Dir = join(ROOT, "obd1_source", "pages");
+
+  // BB6: p{page}-*.png pattern from bb6_ocr
+  if (manual === "BB6") {
+    const entries = existsSync(imagesDir)
+      ? readdirSync(imagesDir)
+      : [];
+    const match = entries.find((f) => f.startsWith(`p${pageNum}-`) && f.endsWith(".png"));
+    if (match) {
+      return {
+        path: join(imagesDir, match),
+        relative: `bb6_ocr/images/${match}`,
+      };
+    }
+  }
+
+  // OBD1: p{page}.png or p{page}-*.png pattern from obd1_source
+  if (manual === "OBD1") {
+    const candidate = join(obd1Dir, `p${pageNum}.png`);
+    if (existsSync(candidate)) {
+      return { path: candidate, relative: `obd1_source/pages/p${pageNum}.png` };
+    }
+    const entries = existsSync(obd1Dir) ? readdirSync(obd1Dir) : [];
+    const match = entries.find((f) => f.startsWith(`p${pageNum}-`) && f.endsWith(".png"));
+    if (match) {
+      return {
+        path: join(obd1Dir, match),
+        relative: `obd1_source/pages/${match}`,
+      };
+    }
+  }
+
+  return null;
 }
+
+
 
 /**
  * Convert a PNG file to base64 string.
- * @param {string} filePath - Absolute path to PNG file
+ * @param {Buffer} pageBytes - Raw PNG bytes
+ * @returns {string} base64 string
+ */
+function pageBytesToBase64(pageBytes) {
+  return pageBytes.toString("base64");
+}
+
+// Temporary wrapper used by providers before page lookup is integrated
+/**
+ * Convert page bytes to base64 (temporary helper for provider calls).
+ * @param {Buffer} pageBytes
  * @returns {string}
  */
-function imageToBase64(filePath) {
-  throw new Error("not implemented");
+function imageToBase64Temp(pageBytes) {
+  return pageBytes.toString("base64");
 }
 
 // ─── Cache ──────────────────────────────────────────────────────────────────
@@ -216,21 +468,22 @@ let cache = {};
 /**
  * Load the cache index from disk.
  */
-function loadCache() {
+export function loadCache() {
   try {
     cache = JSON.parse(readFileSync(CACHE_PATH, "utf-8"));
   } catch {
-    cache = {};
+    cache = { version: 1, description: "", entries: {} };
   }
+  if (!cache.entries) cache.entries = {};
 }
 
 /**
  * Persist the cache index to disk.
  */
-function saveCache() {
+export function saveCache() {
   const dir = dirname(CACHE_PATH);
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-  writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2));
+  writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2) + "\n");
 }
 
 /**
@@ -243,7 +496,7 @@ function saveCache() {
  * @param {string} promptVersion - Prompt version tag (e.g. "v1")
  * @returns {string} SHA256 hex digest
  */
-function getCacheKey(
+export function getCacheKey(
   imageBuf,
   provider,
   modelId,
@@ -251,7 +504,14 @@ function getCacheKey(
   seed,
   promptVersion,
 ) {
-  throw new Error("not implemented");
+  const hash = createHash("sha256");
+  hash.update(imageBuf);
+  hash.update(promptVersion);
+  hash.update(provider);
+  hash.update(modelId);
+  hash.update(String(temperature));
+  hash.update(String(seed));
+  return hash.digest("hex");
 }
 
 /**
@@ -259,8 +519,18 @@ function getCacheKey(
  * @param {string} cacheKey
  * @returns {{ hit: boolean, record: unknown | null }}
  */
-function checkCache(cacheKey) {
-  throw new Error("not implemented");
+export function checkCache(cacheKey) {
+  const entry = cache.entries?.[cacheKey];
+  if (!entry) return { hit: false, record: null };
+
+  const respPath = join(ROOT, entry.path);
+  if (!existsSync(respPath)) return { hit: false, record: null };
+
+  try {
+    return { hit: true, record: JSON.parse(readFileSync(respPath, "utf-8")) };
+  } catch {
+    return { hit: false, record: null };
+  }
 }
 
 /**
@@ -268,8 +538,11 @@ function checkCache(cacheKey) {
  * @param {string} cacheKey
  * @param {object} record - Per-invocation record with response_path
  */
-function setCache(cacheKey, record) {
-  cache[cacheKey] = { path: record.response_path, timestamp: Date.now() };
+export function setCache(cacheKey, record) {
+  cache.entries[cacheKey] = {
+    path: record.response_path,
+    timestamp: Date.now(),
+  };
 }
 
 // ─── Response store ─────────────────────────────────────────────────────────
@@ -285,8 +558,13 @@ function setCache(cacheKey, record) {
  * @param {string} run - "r1", "r2", etc.
  * @returns {string} Absolute path to the response file
  */
-function getResponsePath(manual, pageNum, provider, modelId, run) {
-  throw new Error("not implemented");
+export function getResponsePath(manual, pageNum, provider, modelId, run) {
+  const safeModel = modelId.replace(/[\/\\:*?"<>|]/g, "_");
+  const safeProvider = provider.replace(/[\/\\:*?"<>|]/g, "_");
+  const ts = new Date().toISOString().replace(/[:.]/g, "-") + "Z";
+  const fileName = `${safeProvider}__${safeModel}__${run}__${ts}.json`;
+  const pageDir = join(ROOT, "research", "raw-data", "torque-specs", "responses", manual.toLowerCase(), String(pageNum));
+  return join(pageDir, fileName);
 }
 
 /**
@@ -294,8 +572,10 @@ function getResponsePath(manual, pageNum, provider, modelId, run) {
  * Implements retention guarantee #3 (stream-to-disk).
  * @param {object} record - Full per-invocation record
  */
-function writeInvocationRecord(record) {
-  throw new Error("not implemented");
+export function writeInvocationRecord(record) {
+  const dir = dirname(record.response_path);
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  writeFileSync(record.response_path, JSON.stringify(record, null, 2), "utf-8");
 }
 
 /**
@@ -314,7 +594,7 @@ function writeInvocationRecord(record) {
  * @param {number} costUsd
  * @param {number} latencyMs
  */
-function appendLedger(
+export function appendLedger(
   invocationId,
   manual,
   page,
@@ -328,7 +608,67 @@ function appendLedger(
   costUsd,
   latencyMs,
 ) {
-  throw new Error("not implemented");
+  const ledgerPath = join(
+    ROOT,
+    "research/raw-data/torque-specs/cost-ledger.jsonl",
+  );
+  const row = {
+    invocation_id: invocationId,
+    manual,
+    page,
+    provider,
+    model_id: modelId,
+    run,
+    temperature,
+    seed,
+    input_tokens: inputTokens,
+    output_tokens: outputTokens,
+    cost_usd: costUsd,
+    latency_ms: latencyMs,
+    timestamp: new Date().toISOString(),
+  };
+  appendFileSync(ledgerPath, JSON.stringify(row) + "\n", "utf-8");
+}
+
+// ─── Schema parsing ─────────────────────────────────────────────────────────
+
+/**
+ * Attempt to parse the model's JSON response into canonical rows.
+ * Uses the schema validator to validate each parsed row.
+ * @param {string} rawContent - Raw text response from the model
+ * @returns {{ rows: unknown[], parseError: string | null }}
+ */
+export function parseResponse(rawContent) {
+  // Try direct JSON parse first
+  try {
+    const parsed = JSON.parse(rawContent);
+    const rows = Array.isArray(parsed) ? parsed : [parsed];
+    return { rows, parseError: null };
+  } catch {
+    // Try to extract JSON from markdown code blocks
+    const jsonMatch = rawContent.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if (jsonMatch) {
+      try {
+        const parsed = JSON.parse(jsonMatch[1]);
+        const rows = Array.isArray(parsed) ? parsed : [parsed];
+        return { rows, parseError: null };
+      } catch {
+        // fall through
+      }
+    }
+    // Try to find JSON array anywhere in the text
+    const arrayMatch = rawContent.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      try {
+        const parsed = JSON.parse(arrayMatch[0]);
+        const rows = Array.isArray(parsed) ? parsed : [parsed];
+        return { rows, parseError: null };
+      } catch {
+        // fall through
+      }
+    }
+    return { rows: [], parseError: `Failed to parse JSON: ${rawContent.slice(0, 200)}` };
+  }
 }
 
 // ─── Main extraction loop ───────────────────────────────────────────────────
@@ -343,28 +683,196 @@ function appendLedger(
  * @param {boolean} dryRun - If true, skip actual API calls
  * @returns {Promise<object[]>} Parsed rows with _invocation_id attached
  */
-async function extractPage(
+export async function extractPage(
   manual,
   pageNum,
   modelConfig,
   promptText,
   dryRun = false,
 ) {
-  throw new Error("not implemented");
+  const models = loadJSON("research/raw-data/torque-specs/models.json");
+  const modelInfo = models[modelConfig.model_id];
+  if (!modelInfo) {
+    throw new Error(`Unknown model: ${modelConfig.model_id}`);
+  }
+
+  const provider = createProvider(modelInfo.provider);
+  const prompt = buildPrompt(promptText, pageNum);
+
+  // Find page image
+  const imgInfo = findPageImage(manual, pageNum);
+  if (!imgInfo) {
+    console.log(`  [skip] No page image found for ${manual} p.${pageNum}`);
+    return [];
+  }
+
+  const pageBytes = readFileSync(imgInfo.path);
+
+  const allRows = [];
+  const runs = modelConfig.runs || 1;
+  const seedBase = modelConfig.seed_base ?? 0;
+
+  for (let runIdx = 0; runIdx < runs; runIdx++) {
+    const runLabel = `r${runIdx + 1}`;
+    const seed = seedBase + runIdx;
+    const temperature = modelConfig.temperature;
+
+    // Compute cache key
+    const cacheKey = getCacheKey(
+      pageBytes,
+      modelInfo.provider,
+      modelConfig.model_id,
+      temperature,
+      seed,
+      PROMPT_VERSION,
+    );
+
+    // Check cache
+    const cached = checkCache(cacheKey);
+    if (cached.hit) {
+      console.log(
+        `  [cached] ${modelConfig.model_id} ${runLabel} page ${pageNum} (${cached.record.latency_ms ?? "?"}ms, $${(cached.record.cost_usd ?? 0).toFixed(4)})`,
+      );
+      // Enrich cached rows with invocation_id
+      const invocationId = cached.record.invocation_id;
+      if (cached.record.response_parsed && Array.isArray(cached.record.response_parsed)) {
+        for (const row of cached.record.response_parsed) {
+          allRows.push({ ...row, invocation_id: invocationId });
+        }
+      }
+      continue;
+    }
+
+    if (dryRun) {
+      console.log(
+        `  [dry-run] ${modelConfig.model_id} ${runLabel} page ${pageNum} temp=${temperature} seed=${seed}`,
+      );
+      continue;
+    }
+
+    // Call provider
+    console.log(
+      `  [call] ${modelConfig.model_id} ${runLabel} page ${pageNum} temp=${temperature} seed=${seed}`,
+    );
+    const startTime = Date.now();
+    const rawResponse = await provider.extractFromPage(
+      pageBytes,
+      modelConfig.model_id,
+      temperature,
+      seed,
+      prompt,
+    );
+    const latencyMs = Date.now() - startTime;
+
+    // Parse response
+    const { rows: parsedRows, parseError } = parseResponse(rawResponse.content);
+
+    // Build per-invocation record
+    const invocationId = `${modelInfo.provider}.${modelConfig.model_id}.${runLabel}.${new Date().toISOString().replace(/[:.]/g, "-")}Z`;
+    const responsePath = getResponsePath(
+      manual,
+      pageNum,
+      modelInfo.provider,
+      modelConfig.model_id,
+      runLabel,
+    );
+
+    // Compute hashes
+    const imageHash = createHash("sha256").update(pageBytes).digest("hex");
+    const promptHash = createHash("sha256")
+      .update(promptText)
+      .digest("hex");
+
+    const invocationRecord = {
+      invocation_id: invocationId,
+      manual,
+      page: pageNum,
+      model_id: modelConfig.model_id,
+      provider: modelInfo.provider,
+      model: modelInfo.model,
+      run: runLabel,
+      temperature,
+      seed,
+      prompt_version: PROMPT_VERSION,
+      prompt_hash: promptHash,
+      image_hash: imageHash,
+      cache_key: cacheKey,
+      timestamp_start: new Date(Date.now() - latencyMs).toISOString(),
+      timestamp_end: new Date().toISOString(),
+      latency_ms: rawResponse.latencyMs ?? latencyMs,
+      tokens: {
+        input: rawResponse.inputTokens ?? 0,
+        output: rawResponse.outputTokens ?? 0,
+      },
+      cost_usd: 0, // TODO: compute from pricing table
+      request: {}, // omitted for brevity
+      response_raw: rawResponse.content,
+      response_parsed: parsedRows,
+      parse_error: parseError,
+      response_path: responsePath,
+    };
+
+    // Retention guarantee #1: write raw response FIRST
+    writeInvocationRecord(invocationRecord);
+
+    // Retention guarantee #9: append ledger
+    appendLedger(
+      invocationId,
+      manual,
+      pageNum,
+      modelInfo.provider,
+      modelConfig.model_id,
+      runLabel,
+      temperature,
+      seed,
+      rawResponse.inputTokens ?? 0,
+      rawResponse.outputTokens ?? 0,
+      invocationRecord.cost_usd,
+      invocationRecord.latency_ms,
+    );
+
+    // Update cache
+    setCache(cacheKey, invocationRecord);
+
+    console.log(
+      `  [done] ${modelConfig.model_id} ${runLabel} page ${pageNum} (${invocationRecord.latency_ms}ms, ${parsedRows.length} rows, ${parseError ? "PARSE_ERR" : "OK"})`,
+    );
+
+    // Enrich parsed rows with invocation_id
+    for (const row of parsedRows) {
+      allRows.push({ ...row, invocation_id: invocationId });
+    }
+  }
+
+  return allRows;
 }
 
 /**
  * Get the page range for a chapter from chapters.json.
- * @param {{ id?: string, name?: string, manual?: string }} chapter
+ * @param {{ id?: string, name?: string, chapter_name?: string, manual?: string }} chapter
  * @returns {{ start: number, end: number } | null}
  */
-function getPageRangeForChapter(chapter) {
-  throw new Error("not implemented");
+export function getPageRangeForChapter(chapter) {
+  if (chapter?.page_start != null && chapter?.page_end != null) {
+    return { start: chapter.page_start, end: chapter.page_end };
+  }
+  return null;
+}
+
+// ─── Utility ────────────────────────────────────────────────────────────────
+
+/**
+ * Sleep for the given number of milliseconds.
+ * @param {number} ms
+ * @returns {Promise<void>}
+ */
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // ─── Entry point ────────────────────────────────────────────────────────────
 
-async function main() {
+export async function main() {
   const args = parseArgs(process.argv);
   const manual = (args.manual || "BB6").toUpperCase();
   const matrixProfile = args.matrix_profile || "default";
@@ -380,7 +888,7 @@ async function main() {
   const chapterFilter = args.chapter || null;
 
   if (noCache) {
-    cache = {};
+    cache = { version: 1, description: "", entries: {} };
   }
 
   loadCache();
@@ -499,14 +1007,17 @@ async function main() {
   }
   writeFileSync(
     outputPath,
-    allRows.map((r) => JSON.stringify(r)).join("\n") + "\n",
+    allRows.length > 0 ? allRows.map((r) => JSON.stringify(r)).join("\n") + "\n" : "",
   );
 
   saveCache();
 }
 
-main().catch((err) => {
-  console.error("FATAL:", err.message);
-  console.error(err.stack);
-  process.exit(1);
-});
+// Run main only when executed directly (not when imported by tests)
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((err) => {
+    console.error("FATAL:", err.message);
+    console.error(err.stack);
+    process.exit(1);
+  });
+}
