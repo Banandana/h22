@@ -74,7 +74,16 @@ n/a — no code changed; this is a data acquisition task replacing one source fi
 
 ## Commit SHA(s)
 
-Pending commit (see below).
+```
+0733286 fix: acquire real OBD1 Honda service manual PDF (1408 pages, PDF v1.4) replacing mislabeled HTML placeholder
+481afab docs: mark T-414c done in STATE.md
+```
+
+git log --oneline -n 2:
+```
+0733286 (HEAD -> main, origin/main) fix: acquire real OBD1 Honda service manual PDF (1408 pages, PDF v1.4) replacing mislabeled HTML placeholder
+481afab docs: mark T-414c done in STATE.md
+```
 
 ## DoD checklist
 
