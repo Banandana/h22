@@ -158,10 +158,10 @@ describe(".gitignore — exclusion rules", () => {
 
   it("gitignores intermediate JSONL outputs", () => {
     const content = readFileSync(join(ROOT, ".gitignore"), "utf8");
-    expect(content).toContain("h22-torques-flat.jsonl");
-    expect(content).toContain("h22-torques-rejects.jsonl");
+    // disputed and consensus are still ignored (not yet generated)
     expect(content).toContain("h22-torques-disputed.jsonl");
     expect(content).toContain("h22-torques.jsonl");
+    // flat and rejects are committed deliverables (T-419) — no longer ignored
   });
 
   it("gitignores SQLite DB", () => {
