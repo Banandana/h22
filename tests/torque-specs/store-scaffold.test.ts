@@ -9,6 +9,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateCanonicalRow } from "../../research/raw-data/torque-specs/schema-validator.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -215,7 +216,7 @@ describe("Schema validator — exports", async () => {
   });
 
   it("exports VALID_MANUALS enum", () => {
-    expect(mod.VALID_MANUALS).toEqual(["BB6", "OBD1"]);
+    expect(mod.VALID_MANUALS).toEqual(["BB6", "OBD1", "ARP"]);
   });
 
   it("exports VALID_SYSTEMS enum", () => {
@@ -243,5 +244,138 @@ describe("Schema validator — exports", async () => {
 
   it("exports VALID_CONFIDENCES enum", () => {
     expect(mod.VALID_CONFIDENCES).toEqual(["high", "medium", "low"]);
+  });
+});
+
+// ===========================================================================
+// ARP aftermarket JSONL — T-426
+// ===========================================================================
+
+describe("ARP aftermarket torques — T-426", () => {
+  const arpPath = join(ROOT, "h22-torques-arp.jsonl");
+
+  it("h22-torques-arp.jsonl exists", () => {
+    expect(statSync(arpPath).isFile()).toBe(true);
+  });
+
+  it("has exactly 5 ARP fastener entries", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    expect(lines.length).toBe(5);
+  });
+
+  it("all rows have oem: false", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    lines.forEach((line) => {
+      const row = JSON.parse(line);
+      expect(row.oem).toBe(false);
+    });
+  });
+
+  it("all rows validate against canonical schema", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    lines.forEach((line) => {
+      const row = JSON.parse(line);
+      const v = validateCanonicalRow(row);
+      expect(v.success).toBe(true);
+    });
+  });
+
+  it("covers all required roles (tty-stretch + cap-screw)", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    const roles = new Set();
+    lines.forEach((line) => {
+      const row = JSON.parse(line);
+      const v = validateCanonicalRow(row);
+      if (v.success) roles.add(row.role);
+    });
+    expect(roles.has("tty-stretch")).toBe(true);
+    expect(roles.has("cap-screw")).toBe(true);
+  });
+
+  it("all rows have meta.arp_pn populated", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    lines.forEach((line) => {
+      const row = JSON.parse(line);
+      expect(row.meta?.arp_pn).toBeDefined();
+      expect(typeof row.meta.arp_pn).toBe("string");
+    });
+  });
+
+  it("includes head stud kit (208-4304)", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    const headStud = lines.find((l) => {
+      const r = JSON.parse(l);
+      return r.meta?.arp_pn === "208-4304";
+    });
+    expect(headStud).toBeDefined();
+    const r = JSON.parse(headStud);
+    expect(r.assembly).toBe("cylinder-head");
+    expect(r.role).toBe("tty-stretch");
+    expect(r.qty).toBe(10);
+  });
+
+  it("includes main stud kit (208-5401)", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    const mainStud = lines.find((l) => {
+      const r = JSON.parse(l);
+      return r.meta?.arp_pn === "208-5401";
+    });
+    expect(mainStud).toBeDefined();
+    const r = JSON.parse(mainStud);
+    expect(r.assembly).toBe("main-bearing-cap");
+    expect(r.role).toBe("tty-stretch");
+  });
+
+  it("includes rod bolt kit (208-6001)", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    const rodBolt = lines.find((l) => {
+      const r = JSON.parse(l);
+      return r.meta?.arp_pn === "208-6001";
+    });
+    expect(rodBolt).toBeDefined();
+    const r = JSON.parse(rodBolt);
+    expect(r.assembly).toBe("connecting-rod");
+    expect(r.role).toBe("tty-stretch");
+  });
+
+  it("includes flywheel bolt kit (208-2802)", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    const flywheel = lines.find((l) => {
+      const r = JSON.parse(l);
+      return r.meta?.arp_pn === "208-2802";
+    });
+    expect(flywheel).toBeDefined();
+    const r = JSON.parse(flywheel);
+    expect(r.assembly).toBe("flywheel");
+    expect(r.role).toBe("cap-screw");
+  });
+
+  it("includes cam cap bolts", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    const camCap = lines.find((l) => {
+      const r = JSON.parse(l);
+      return r.assembly === "cam-caps";
+    });
+    expect(camCap).toBeDefined();
+    const r = JSON.parse(camCap);
+    expect(r.role).toBe("cap-screw");
+  });
+
+  it("all torque steps have nm value", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    lines.forEach((line) => {
+      const row = JSON.parse(line);
+      row.torque.steps.forEach((step) => {
+        expect(step.nm).toBeGreaterThan(0);
+      });
+    });
+  });
+
+  it("all rows are reusable (oem aftermarket hardware)", () => {
+    const lines = readFileSync(arpPath, "utf8").trim().split("\n");
+    lines.forEach((line) => {
+      const row = JSON.parse(line);
+      expect(row.reusable).toBe(true);
+    });
   });
 });

@@ -11,7 +11,7 @@ responses/obd1/**/*.json
 
 # Intermediate JSONL outputs (generated from responses/)
 h22-torques-disputed.jsonl
-h22-torques-arp.jsonl
+!h22-torques-arp.jsonl
 h22-torques.jsonl
 h22-torques.jsonl.preconflict
 consensus-report.md

@@ -242,7 +242,7 @@ export function coercePage(raw) {
 // Shared enums
 // ===========================================================================
 
-const VALID_MANUALS = /** @type {const} */ (["BB6", "OBD1"]);
+const VALID_MANUALS = /** @type {const} */ (["BB6", "OBD1", "ARP"]);
 const VALID_SYSTEMS = /** @type {const} */ ([
   "engine",
   "drivetrain",
@@ -324,7 +324,7 @@ const CanonicalRowSchema = z.object({
   id: z.string().min(1),
   source: z.object({
     manual: z.enum(VALID_MANUALS),
-    page: z.number().int().positive(),
+    page: z.number().int().positive().nullable().optional(),
     figure: z.string().nullable().optional(),
   }),
   applies_to: z
@@ -531,10 +531,14 @@ export function enrichAndNormalizeRow(raw) {
     row.source = {};
   }
 
-  // Step 4: Coerce source.page string -> number
+  // Step 4: Coerce source.page string -> number (skip for ARP — no page numbers)
   /** @type {Record<string, unknown>} */
   const src = row.source;
-  src.page = coercePage(src.page);
+  if (src.manual !== "ARP") {
+    src.page = coercePage(src.page);
+  } else {
+    src.page = null;
+  }
 
   // Step 5: Null -> default for enum fields
   if (row.lubrication === null || row.lubrication === undefined) {
