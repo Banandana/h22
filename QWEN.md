@@ -210,6 +210,24 @@ The H22 was discontinued in 2001 and replaced by the K20A and K24A engines as Ho
 | **Oil Pan** | 7 ft-lb |
 | **Timing Belt Tensioner** | 33 ft-lb |
 
+### Torque & Fastener Index (Phase 4b)
+
+Vision-LLM extraction of every fastener + torque from the BB6 (whole vehicle) and OBD1 (engine chapters only) Helms manuals. Multi-model corroboration with consensus algorithm.
+
+**Two cross-indexed views:**
+- [`torque-by-location.md`](research/h-series/maintenance/torque-by-location.md) — `system → assembly → fastener` view. "What do I torque this to?"
+- [`torque-by-fastener.md`](research/h-series/maintenance/torque-by-fastener.md) — `(thread, role)` groups. "I have this bolt, what is it?"
+
+**Canonical data:** `research/raw-data/torque-specs/h22-torques.jsonl` — one row per fastener after multi-model consensus, with full `corroboration` block (agreeing/disagreeing invocations, vote strength, intra-model consistency).
+
+**SQLite query layer:** `research/raw-data/torque-specs/h22-torques.db` — FTS5 over markdown views; tables for torques, invocations, pages, chapters, disputes, ARP. See `QUERIES.md` for example SQL patterns.
+
+**Schema reference:** `research/raw-data/torque-specs/SCHEMA.md` — canonical row schema, per-invocation record schema, role taxonomy, consensus algorithm.
+
+**Coverage:** BB6 (1997–2001 Prelude, whole vehicle) + OBD1 (1992–1996 Prelude, engine chapters). ~1,655 pages extracted. Models: Kimi K2.6-FP4 + Qwen3-VL-235B via Together AI. Curated WebP image set (~1,318 files, ~51 MB) at `research/raw-data/torque-specs/images/bb6/`.
+
+**Aftermarket cross-reference:** `h22-torques-arp.jsonl` — ARP equivalents for TTY-stretch + cap-screw roles (`oem: false`).
+
 ---
 
 ## Engine Variants & Regional Differences
@@ -1635,12 +1653,13 @@ While the P28 physical hardware is identical between Blacktop and Redtop applica
 
 - **Initial Compilation:** April 2026
 - **Research Sources:** 50+ web sources, forums, technical documentation
-- **Last Updated:** 2026-05-15
-- **Version:** 2.3 (Valve Spring + Bearing Clearances Added)
+- **Last Updated:** 2026-05-17
+- **Version:** 2.4 (Torque & Fastener Index Added)
 - **Additions:** H-series spark plug specifications research (T-105): OEM part numbers, dimensions, gap, heat range, torque, replacement interval
 - **Additions:** H-series valve spring specifications research (T-106): free length, installed height, coil bind, aftermarket comparison
 - **Additions:** H-series bearing clearances research (T-107): main/rod/thrust clearance specs per-journal, thrust washer selection, Plastigage procedure, cross-series compatibility
 - **Additions:** BB6 Helms Manual OCR extraction (1,376 pages, 1.8MB searchable text)
+- **Additions:** Torque & Fastener Index (T-429): links to both markdown views (by-location, by-fastener), SQLite DB with FTS5, SCHEMA.md, QUERIES.md, curated WebP image set (~1,318 files, ~51 MB), canonical JSONL with corroboration blocks, ARP aftermarket cross-reference. Phase 4b pipeline complete.
 
 ---
 

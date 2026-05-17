@@ -3,7 +3,8 @@
 > Entry point for navigating the research corpus.
 > Generated: 2026-05-14
 > Task: T-020 [infra] Create initial master index with placeholder structure
-> Status: Placeholder — links will be populated as research progresses
+> Updated: 2026-05-17 (T-429) — Torque & Fastener Index added
+> Status: Active — links populated as research progresses
 
 ---
 
@@ -42,7 +43,8 @@
    - [Aftermarket](#aftermarket-1)
    - [Comparisons](#comparisons-1)
    - [Maintenance](#maintenance-1)
-8. [Cross-Engine Comparisons](#cross-engine-comparisons)
+8. [Torque & Fastener Index](#torque--fastener-index)
+9. [Cross-Engine Comparisons](#cross-engine-comparisons)
    - [H-Series vs F-Series](#h-series-vs-f-series)
    - [H-Series vs B16](#h-series-vs-b16)
    - [H-Series vs K20](#h-series-vs-k20)
@@ -50,7 +52,8 @@
    - [F-Series vs B16](#f-series-vs-b16)
    - [F-Series vs K20](#f-series-vs-k20)
 9. [Raw Data](#raw-data)
-10. [Templates & Standards](#templates--standards)
+10. [Torque & Fastener Index](#torque--fastener-index)
+11. [Templates & Standards](#templates--standards)
 
 ---
 
@@ -527,13 +530,76 @@ Each subdirectory below will contain one or more research markdown files followi
 
 ---
 
+## Torque & Fastener Index
+
+> Vision-LLM extraction of every fastener + torque from the BB6 (whole vehicle) and OBD1 (engine chapters only) Helms manuals. Multi-model corroboration with consensus algorithm. Phase 4b deliverables.
+
+### Human-Readable Views
+
+| File | Description | Status |
+|------|-------------|--------|
+| [`torque-by-location.md`](../h-series/maintenance/torque-by-location.md) | `system → assembly → fastener` view with vote-strength badges + conflict callouts | ✅ Complete (T-427) |
+| [`torque-by-fastener.md`](../h-series/maintenance/torque-by-fastener.md) | `(thread, role)` groups listing every application + median/range torque + ARP aftermarket subsection | ✅ Complete (T-427) |
+
+### Canonical Data Files
+
+| File | Description | Status |
+|------|-------------|--------|
+| [`h22-torques.jsonl`](../raw-data/torque-specs/h22-torques.jsonl) | Canonical consensus rows with `corroboration` block — one row per fastener after multi-model agreement | ✅ Complete (T-423b) |
+| [`h22-torques-flat.jsonl`](../raw-data/torque-specs/h22-torques-flat.jsonl) | Intermediate: one row per (invocation × fastener) with full provenance | ✅ Complete (T-423) |
+| [`h22-torques-disputed.jsonl`](../raw-data/torque-specs/h22-torques-disputed.jsonl) | Fastener groups where models had no majority consensus | ✅ Complete (T-423b) |
+| [`h22-torques-rejects.jsonl`](../raw-data/torque-specs/h22-torques-rejects.jsonl) | Invocations whose responses failed schema validation | ✅ Complete (T-423) |
+| [`h22-torques-arp.jsonl`](../raw-data/torque-specs/h22-torques-arp.jsonl) | ARP aftermarket cross-reference (`oem: false`) | ✅ Complete (T-426) |
+
+### Query Layer
+
+| File | Description | Status |
+|------|-------------|--------|
+| [`h22-torques.db`](../raw-data/torque-specs/h22-torques.db) | SQLite DB with FTS5 over markdown views; tables for torques, invocations, pages, chapters, disputes, ARP | ✅ Complete (T-432) |
+| [`QUERIES.md`](../raw-data/torque-specs/QUERIES.md) | 5–10 example SQL query patterns (by-assembly, by-thread+role, single-source TTY, etc.) | ✅ Complete (T-432) |
+
+### Schema & Provenance
+
+| File | Description | Status |
+|------|-------------|--------|
+| [`SCHEMA.md`](../raw-data/torque-specs/SCHEMA.md) | Canonical row schema + per-invocation record schema + role taxonomy + consensus algorithm | ✅ Complete (T-414) |
+| [`consensus-report.md`](../raw-data/torque-specs/consensus-report.md) | Per-page vote-strength histogram, single-source count, disputed-row count | ✅ Complete (T-423b) |
+| [`bakeoff-report.md`](../raw-data/torque-specs/bakeoff-report.md) | Per-model accuracy/cost/latency comparison | ✅ Complete (T-418b) |
+| [`models.json`](../raw-data/torque-specs/models.json) | Provider/model registry (Together + Anthropic) | ✅ Complete (T-414b) |
+| [`extraction-matrix.json`](../raw-data/torque-specs/extraction-matrix.json) | Default + high-stakes + rescue tier matrix | ✅ Complete (T-414b) |
+| [`chapters.json`](../raw-data/torque-specs/chapters.json) | Chapter-to-page-range map for BB6 + OBD1 | ✅ Complete (T-415) |
+| [`cost-ledger.jsonl`](../raw-data/torque-specs/cost-ledger.jsonl) | Append-only spend ledger per invocation | ✅ Complete (T-416) |
+
+### Curated Image Set
+
+| Directory | Description | Status |
+|-----------|-------------|--------|
+| [`images/bb6/`](../raw-data/torque-specs/images/bb6/) | WebP-compressed page images from BB6 manual (~1,318 files, ~51 MB total) | ✅ Complete (T-433, T-434) |
+
+Every torque row's `source.image_path` resolves to `images/<manual>/p<page>.webp`.
+
+### Coverage Summary
+
+| Metric | Value |
+|--------|-------|
+| Source manuals | BB6 (1997–2001 Prelude, whole vehicle) + OBD1 (1992–1996 Prelude, engine chapters) |
+| Pages extracted | ~1,655 pages across both manuals |
+| Models used | Kimi K2.6-FP4 (Together), Qwen3-VL-235B (Together) |
+| Total invocations | 110 |
+| Canonical torque rows | 1+ (see JSONL) |
+| ARP aftermarket xrefs | 5 |
+| Disputed rows | 0 |
+| Reject records | 4,916 |
+
+---
+
 ## Raw Data
 
 > Unprocessed or intermediate data files go here.
 
 | Directory | Purpose | Contents |
 |-----------|---------|----------|
-| `../raw-data/` | Raw extraction outputs, intermediate files | ⬜ Empty |
+| `../raw-data/` | Raw extraction outputs, intermediate files | ✅ Torque specs at `../raw-data/torque-specs/` (T-414 through T-434) |
 
 ---
 
