@@ -28,7 +28,7 @@ const ROOT = join(__dirname, "..");
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
-const PROMPT_VERSION = "v1";
+const PROMPT_VERSION = "v2";
 const MAX_RETRIES = 4;
 const BASE_DELAY_MS = 1000;
 
