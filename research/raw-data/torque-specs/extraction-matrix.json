@@ -7,13 +7,20 @@
     }
   ],
   "high_stakes_chapters": [
-    "engine-mechanical",
-    "cylinder-head",
-    "main-bearings",
-    "connecting-rods",
-    "flywheel-clutch"
+    "bb6.cylinder-head",
+    "bb6.engine-block",
+    "bb6.engine-electrical",
+    "bb6.engine-lubrication"
   ],
   "high_stakes_overrides": [
+    {
+      "model_id": "together.kimi-k2-6-fp4",
+      "runs": 3,
+      "temperature": 0.3,
+      "seed_base": 1000
+    }
+  ],
+  "high-stakes": [
     {
       "model_id": "together.kimi-k2-6-fp4",
       "runs": 3,

@@ -423,7 +423,7 @@ export function findPageImage(manual, pageNum) {
     }
     if (foundPath) {
       const size = readFileSync(foundPath).length;
-      if (size >= 50000) {
+      if (size >= 5000) {
         const displayPath = foundPath === singlePagePadded
           ? `page-${paddedName}.png`
           : `page-${pageNum}.png`;
@@ -1041,8 +1041,8 @@ export async function main() {
       const safeProvider = provider.replace(/[\\/:*?"<>|]/g, "_");
       const safeModel = mc.model_id.replace(/[\\/:*?"<>|]/g, "_");
       for (let r = 1; r <= mc.runs; r++) {
-        const combo = `${safeProvider}__${safeModel}__r${r}__`;
-        const hasRun = existingCombos.some((c) => c.startsWith(combo));
+        const combo = `${safeProvider}__${safeModel}__r${r}`;
+        const hasRun = existingCombos.has(combo);
         if (!hasRun) {
           pending.push({ ...mc, pageNum });
           break; // Only need one pending run to process the whole model
