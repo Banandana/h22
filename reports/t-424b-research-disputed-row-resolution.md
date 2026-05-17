@@ -61,7 +61,7 @@ n/a — no new code with tests; this task is a data-resolution step. The existin
 
 ## Commit SHA(s)
 
-Pending commit.
+`93d2749e` — feat: add disputed-row resolution script (T-424b) + schema enrichment follow-up task
 
 ## DoD checklist
 
