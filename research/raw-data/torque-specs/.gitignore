@@ -23,8 +23,10 @@ rescue-reasons.jsonl
 h22-torques.db
 # QUERIES.md is tracked (see T-432)
 
-# Curated page images (WebP, ~10-25 MB)
-images/
+# Curated page images (WebP, ~48 MB)
+# NOTE: kept in git despite size because every torque row's image_path
+# resolves here; future clients need a single clone.
+!images/
 
 # OCR working set images (working set, >800MB)
 bb6_ocr/images/*.png
