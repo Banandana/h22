@@ -377,7 +377,7 @@ Playwright before OBD1 extraction can run.
 - [x] **(M)** T-417b [infra] Implement extract-torques-vision.mjs: TogetherProvider + AnthropicProvider, multi-run loop, content-hash cache w/ seed, per-invocation record write, retry-with-backoff, ledger append -- done 2026-05-16, sha 1f2898e -- full spec: docs/plans/04b-torque-fastener-index.md @ T-417b
 - [x] **(S)** T-418 [infra] Preflight: confirm each active-matrix provider's env key set; run --dry-run on 3 pages × default matrix; verify per-invocation records + cache + ledger -- done 2026-05-16, sha b55439c0 -- full spec: docs/plans/04b-torque-fastener-index.md @ T-418
 - [x] **(M)** T-418b [infra] Bake-off: 10-page pilot on hard chapters across default-matrix models; Kimi K2.6 succeeded 10/10 (100% parse, $0.08); Qwen3-VL dropped (non-serverless on Together) — bakeoff-report.md, extraction-matrix.json updated -- done 2026-05-16, sha 394134f -- full spec: docs/plans/04b-torque-fastener-index.md @ T-418b
-- [ ] **(L)** T-419 [research] Run BB6 matrix extraction: default profile across all chapters + high-stakes profile on TTY-critical chapters (~700 pages × 2 models + multi-run on hot pages, ~$18-28) -- full spec: docs/plans/04b-torque-fastener-index.md @ T-419
+- [x] **(L)** T-419 [research] Run BB6 matrix extraction: default profile across all chapters + high-stakes profile on TTY-critical chapters (~700 pages × 2 models + multi-run on hot pages, ~$18-28) — done 2026-05-17, sha a99469de — full spec: docs/plans/04b-torque-fastener-index.md @ T-419
 - [B] **(S)** T-420 [research] Identify rescue candidates: [B] blocked 2026-05-15 — T-419 (BB6 matrix extraction) not yet run; entire Phase 4b pipeline (T-414 through T-419) still open. See reports/t-420-research-identify-rescue-candidates.md @ T-420
 - [B] **(M)** T-421 [research] Opus rescue (CONDITIONAL on ANTHROPIC_API_KEY): [B] blocked 2026-05-15 — ANTHROPIC_API_KEY not set (primary) + T-420 dependency not met, rescue-list-bb6.txt does not exist (secondary); report: reports/t-421-research-opus-rescue-conditional.md -- full spec: docs/plans/04b-torque-fastener-index.md @ T-421
 - [B] **(M)** T-422 [research] Run OBD1 engine-chapter matrix extraction (PDF->PNG + default profile + inline rescue, ~150-250 pages, ~$4-10) -- [B] blocked 2026-05-15: all upstream deps (T-414 through T-418b) still [ ]; see reports/t-422-research-run-obd1-engine.md -- full spec: docs/plans/04b-torque-fastener-index.md @ T-422
@@ -799,6 +799,8 @@ _(none yet)_
 - [x] **(S)** T-007 [infra] Sample OCR page files: read 5 representative pages to assess quality - done 2026-05-14, sha f3212d5 - full spec: docs/plans/00-infrastructure.md @ T-007
 
 **Phase 4b: Torque & Fastener Index**
+
+- [x] **(L)** T-419 [research] Run BB6 matrix extraction: default profile across all chapters + high-stakes on TTY-critical chapters — done 2026-05-17, sha a99469de — full spec: docs/plans/04b-torque-fastener-index.md @ T-419
 
 - [x] **(S)** T-418 [infra] Preflight: confirm each active-matrix provider's env key set; run --dry-run on 3 pages × default matrix; verify per-invocation records + cache + ledger — done 2026-05-16, sha b55439c0 — full spec: docs/plans/04b-torque-fastener-index.md @ T-418
 
