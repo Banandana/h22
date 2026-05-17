@@ -21,7 +21,7 @@ rescue-reasons.jsonl
 
 # SQLite query layer (binary, regenerated)
 h22-torques.db
-QUERIES.md
+# QUERIES.md is tracked (see T-432)
 
 # Curated page images (WebP, ~10-25 MB)
 images/
