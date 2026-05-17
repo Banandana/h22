@@ -146,7 +146,7 @@ function buildPages(chapterRows) {
           manual: ch.manual,
           page: p,
           chapter_id: ch.id,
-          image_path: `images/${ch.manual.toLowerCase()}/p${String(p).padStart(4, "0")}.webp`,
+          image_path: `images/${ch.manual.toLowerCase()}/p${p}.webp`,
           ocr_text: null,
         });
       }
