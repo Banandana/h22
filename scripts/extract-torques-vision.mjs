@@ -407,22 +407,38 @@ export function findPageImage(manual, pageNum) {
   const obd1Dir = join(ROOT, "obd1_source", "pages");
 
   // BB6: page-{page}.png pattern (single-page renders — real manual pages)
+  // Files are zero-padded to 3 digits (page-055.png), so try both padded and unpadded.
   // Priority over p{page}-*.png because the latter are often tiny nav-link placeholders
   // from the OCR pipeline. Real manual pages are 100KB+; nav links are <2KB.
   if (manual === "BB6") {
-    const singlePage = join(imagesDir, `page-${pageNum}.png`);
-    if (existsSync(singlePage)) {
-      const size = readFileSync(singlePage).length;
+    // Try zero-padded first (page-055.png), then unpadded (page-55.png)
+    const paddedName = String(pageNum).padStart(3, "0");
+    const singlePagePadded = join(imagesDir, `page-${paddedName}.png`);
+    const singlePageUnpadded = join(imagesDir, `page-${pageNum}.png`);
+    let foundPath = null;
+    if (existsSync(singlePagePadded)) {
+      foundPath = singlePagePadded;
+    } else if (existsSync(singlePageUnpadded)) {
+      foundPath = singlePageUnpadded;
+    }
+    if (foundPath) {
+      const size = readFileSync(foundPath).length;
       if (size >= 50000) {
+        const displayPath = foundPath === singlePagePadded
+          ? `page-${paddedName}.png`
+          : `page-${pageNum}.png`;
         return {
-          path: singlePage,
-          relative: `bb6_ocr/images/page-${pageNum}.png`,
+          path: foundPath,
+          relative: `bb6_ocr/images/${displayPath}`,
         };
       }
     }
     // Fallback: p{page}-*.png pattern from bb6_ocr (multi-page OCR renders)
+    // Also try zero-padded prefix (p055-*.png)
     const entries = existsSync(imagesDir) ? readdirSync(imagesDir) : [];
     const match = entries.find(
+      (f) => f.startsWith(`p${paddedName}-`) && f.endsWith(".png"),
+    ) || entries.find(
       (f) => f.startsWith(`p${pageNum}-`) && f.endsWith(".png"),
     );
     if (match) {
@@ -480,7 +496,7 @@ function imageToBase64Temp(pageBytes) {
  * Implements retention guarantee #2 (content-hash cache).
  */
 const CACHE_PATH = join(
-  ROOT,
+  process.cwd(),
   "research/raw-data/torque-specs/cache/index.json",
 );
 let cache = {};
@@ -984,10 +1000,34 @@ export async function main() {
 
   let totalRows = 0;
   let totalPages = 0;
+  let pagesSkipped = 0;
   const pageResults = new Map();
+
+  /**
+   * Check if a page already has at least one response file.
+   * Skips re-processing to avoid redundant API calls.
+   */
+  function pageHasResponse(manual, pageNum) {
+    const respDir = join(
+      ROOT,
+      "research/raw-data/torque-specs/responses",
+      manual.toLowerCase(),
+      String(pageNum),
+    );
+    if (!existsSync(respDir)) return false;
+    const files = readdirSync(respDir);
+    return files.some((f) => f.endsWith(".json") && f !== "test-record.json");
+  }
 
   for (const page of pages) {
     const { manual: m, page: p, chapter } = page;
+
+    // Skip pages that already have response files (avoid redundant API calls)
+    if (pageHasResponse(m, p)) {
+      pagesSkipped++;
+      continue;
+    }
+
     console.log(`\n--- Page ${p} (${chapter?.chapter_name || "unknown"}) ---`);
 
     if (dryRun) {
@@ -1027,6 +1067,7 @@ export async function main() {
   console.log(`\n==============================`);
   console.log(`Extraction complete.`);
   console.log(`Pages processed: ${totalPages}`);
+  console.log(`Pages skipped (already have responses): ${pagesSkipped}`);
   console.log(`Total rows extracted: ${totalRows}`);
   console.log(`==============================`);
 
