@@ -14,6 +14,7 @@ import {
   validateRejectRecord,
   validateSummaryStats,
   validateInvocationParsedRows,
+  enrichAndNormalizeRow,
 } from "../schema-validator.mjs";
 import * as fixtures from "./test-data.js";
 
@@ -28,28 +29,56 @@ describe("validateCanonicalRow — valid", () => {
   });
 
   it("accepts row with corroboration block", () => {
-    const r = validateCanonicalRow(fixtures.VALID_CANONICAL_ROW_WITH_CORROBORATION);
+    const r = validateCanonicalRow(
+      fixtures.VALID_CANONICAL_ROW_WITH_CORROBORATION,
+    );
     assert.strictEqual(r.success, true);
   });
 
   it("accepts OBD1 manual", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, source: { manual: "OBD1", page: 1205 } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      source: { manual: "OBD1", page: 1205 },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
   it("accepts all system enums", () => {
-    for (const sys of ["engine", "drivetrain", "chassis", "body", "electrical"]) {
-      assert.strictEqual(validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, system: sys }).success, true);
+    for (const sys of [
+      "engine",
+      "drivetrain",
+      "chassis",
+      "body",
+      "electrical",
+    ]) {
+      assert.strictEqual(
+        validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, system: sys })
+          .success,
+        true,
+      );
     }
   });
 
   it("accepts all role enums", () => {
     for (const role of [
-      "tty-stretch", "cap-screw", "flange-bolt", "stud-and-nut",
-      "self-locking-nut", "castellated-nut", "banjo-bolt", "sealing-plug",
-      "wheel-lug", "caliper-guide", "bracket-mount", "clip-or-clamp", "other",
+      "tty-stretch",
+      "cap-screw",
+      "flange-bolt",
+      "stud-and-nut",
+      "self-locking-nut",
+      "castellated-nut",
+      "banjo-bolt",
+      "sealing-plug",
+      "wheel-lug",
+      "caliper-guide",
+      "bracket-mount",
+      "clip-or-clamp",
+      "other",
     ]) {
-      assert.strictEqual(validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, role }).success, true);
+      assert.strictEqual(
+        validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, role }).success,
+        true,
+      );
     }
   });
 
@@ -86,7 +115,11 @@ describe("validateCanonicalRow — valid", () => {
   });
 
   it("accepts ARP aftermarket row (oem: false)", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, oem: false, meta: { arp_pn: "ARP-134-1001" } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      oem: false,
+      meta: { arp_pn: "ARP-134-1001" },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
@@ -99,30 +132,50 @@ describe("validateCanonicalRow — valid", () => {
   });
 
   it("accepts row with null thread values", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, thread: { nominal_mm: null, pitch_mm: null, length_mm: null, grade: null } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      thread: {
+        nominal_mm: null,
+        pitch_mm: null,
+        length_mm: null,
+        grade: null,
+      },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
   it("accepts row with figure reference", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, source: { manual: "BB6", page: 6617, figure: "Fig 7-12" } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      source: { manual: "BB6", page: 6617, figure: "Fig 7-12" },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
   it("accepts row with sequence_ref", () => {
     const row = {
       ...fixtures.VALID_CANONICAL_ROW,
-      torque: { steps: [{ pass: 1, nm: 39, kgfm: 4.0, lbft: 29, angle_deg: null }], sequence_ref: "BB6 p.6617 fig.2" },
+      torque: {
+        steps: [{ pass: 1, nm: 39, kgfm: 4.0, lbft: 29, angle_deg: null }],
+        sequence_ref: "BB6 p.6617 fig.2",
+      },
     };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
   it("accepts row with conflict_group_id", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, conflict_group_id: "cg-cylhead-bolt-001" };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      conflict_group_id: "cg-cylhead-bolt-001",
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
   it("accepts row with engine_codes array", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, applies_to: { engine_codes: ["H22A4", "H22A1"] } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      applies_to: { engine_codes: ["H22A4", "H22A1"] },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
@@ -132,7 +185,10 @@ describe("validateCanonicalRow — valid", () => {
   });
 
   it("accepts row with complex meta", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, meta: { custom: { field: "value" }, tags: [1, 2] } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      meta: { custom: { field: "value" }, tags: [1, 2] },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
@@ -157,8 +213,18 @@ describe("validateCanonicalRow — valid", () => {
       corroboration: {
         consensus_strategy: "unanimous",
         agreeing_invocations: [
-          { model_id: "together.kimi-k2-6-fp4", run: "r1", temperature: 0, response_path: "responses/bb6/6617/together__kimi__r1.json" },
-          { model_id: "together.qwen3-vl-235b", run: "r1", temperature: 0, response_path: "responses/bb6/6617/together__qwen__r1.json" },
+          {
+            model_id: "together.kimi-k2-6-fp4",
+            run: "r1",
+            temperature: 0,
+            response_path: "responses/bb6/6617/together__kimi__r1.json",
+          },
+          {
+            model_id: "together.qwen3-vl-235b",
+            run: "r1",
+            temperature: 0,
+            response_path: "responses/bb6/6617/together__qwen__r1.json",
+          },
         ],
         disagreeing_invocations: [],
         vote_strength: 1.0,
@@ -174,8 +240,23 @@ describe("validateCanonicalRow — valid", () => {
       ...fixtures.VALID_CANONICAL_ROW,
       corroboration: {
         consensus_strategy: "majority-vote-torque-nm",
-        agreeing_invocations: [{ model_id: "together.kimi-k2-6-fp4", run: "r1", temperature: 0, response_path: "resp.json" }],
-        disagreeing_invocations: [{ model_id: "together.qwen3-vl-235b", run: "r1", temperature: 0, response_path: "resp.json", their_torque_nm: 44 }],
+        agreeing_invocations: [
+          {
+            model_id: "together.kimi-k2-6-fp4",
+            run: "r1",
+            temperature: 0,
+            response_path: "resp.json",
+          },
+        ],
+        disagreeing_invocations: [
+          {
+            model_id: "together.qwen3-vl-235b",
+            run: "r1",
+            temperature: 0,
+            response_path: "resp.json",
+            their_torque_nm: 44,
+          },
+        ],
         vote_strength: 0.5,
         intra_model_consistency: {},
         single_source: false,
@@ -192,7 +273,10 @@ describe("validateCanonicalRow — valid", () => {
         agreeing_invocations: [],
         disagreeing_invocations: [],
         vote_strength: 0.667,
-        intra_model_consistency: { "together.kimi-k2-6-fp4": 1.0, "together.qwen3-vl-235b": 0.5 },
+        intra_model_consistency: {
+          "together.kimi-k2-6-fp4": 1.0,
+          "together.qwen3-vl-235b": 0.5,
+        },
         single_source: false,
       },
     };
@@ -210,12 +294,19 @@ describe("validateCanonicalRow — valid", () => {
   });
 
   it("accepts row with sealant lubrication", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, lubrication: "sealant:RTF1403" };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      lubrication: "sealant:RTF1403",
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
   it("accepts row with reusable conditions", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, reusable: true, reuse_conditions: "Clean threads and measure length" };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      reusable: true,
+      reuse_conditions: "Clean threads and measure length",
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
@@ -240,17 +331,31 @@ describe("validateCanonicalRow — valid", () => {
   });
 
   it("accepts row with null figure", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, source: { manual: "BB6", page: 6617, figure: null } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      source: { manual: "BB6", page: 6617, figure: null },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
   it("accepts row with null sequence_ref", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, torque: { steps: [{ pass: 1, nm: 39, kgfm: 4.0, lbft: 29, angle_deg: null }], sequence_ref: null } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      torque: {
+        steps: [{ pass: 1, nm: 39, kgfm: 4.0, lbft: 29, angle_deg: null }],
+        sequence_ref: null,
+      },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
   it("accepts row with undefined optional fields", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, applies_to: undefined, corroboration: undefined, meta: undefined };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      applies_to: undefined,
+      corroboration: undefined,
+      meta: undefined,
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 
@@ -277,7 +382,11 @@ describe("validateCanonicalRow — valid", () => {
   });
 
   it("accepts row with other role and meta.role_note", () => {
-    const row = { ...fixtures.VALID_CANONICAL_ROW, role: "other", meta: { role_note: "custom fastener type" } };
+    const row = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      role: "other",
+      meta: { role_note: "custom fastener type" },
+    };
     assert.strictEqual(validateCanonicalRow(row).success, true);
   });
 });
@@ -296,13 +405,21 @@ describe("validateCanonicalRow — invalid", () => {
   });
 
   it("rejects invalid role enum", () => {
-    const r = validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, role: "not-a-real-role" });
+    const r = validateCanonicalRow({
+      ...fixtures.VALID_CANONICAL_ROW,
+      role: "not-a-real-role",
+    });
     assert.strictEqual(r.success, false);
     assert.ok(r.error.includes("role"));
   });
 
   it("rejects negative torque step nm", () => {
-    const r = validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, torque: { steps: [{ pass: 1, nm: -5, kgfm: -0.5, lbft: -4, angle_deg: null }] } });
+    const r = validateCanonicalRow({
+      ...fixtures.VALID_CANONICAL_ROW,
+      torque: {
+        steps: [{ pass: 1, nm: -5, kgfm: -0.5, lbft: -4, angle_deg: null }],
+      },
+    });
     assert.strictEqual(r.success, false);
     assert.ok(r.error.includes("nm"));
   });
@@ -313,7 +430,10 @@ describe("validateCanonicalRow — invalid", () => {
   });
 
   it("rejects negative qty", () => {
-    const r = validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, qty: -1 });
+    const r = validateCanonicalRow({
+      ...fixtures.VALID_CANONICAL_ROW,
+      qty: -1,
+    });
     assert.strictEqual(r.success, false);
   });
 
@@ -332,24 +452,37 @@ describe("validateCanonicalRow — invalid", () => {
   });
 
   it("rejects non-string id", () => {
-    const r = validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, id: 12345 });
+    const r = validateCanonicalRow({
+      ...fixtures.VALID_CANONICAL_ROW,
+      id: 12345,
+    });
     assert.strictEqual(r.success, false);
   });
 
   it("rejects non-boolean oem", () => {
-    const r = validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, oem: "true" });
+    const r = validateCanonicalRow({
+      ...fixtures.VALID_CANONICAL_ROW,
+      oem: "true",
+    });
     assert.strictEqual(r.success, false);
   });
 
   it("rejects invalid manual enum", () => {
-    const r = validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, source: { manual: "INVALID", page: 1205 } });
+    const r = validateCanonicalRow({
+      ...fixtures.VALID_CANONICAL_ROW,
+      source: { manual: "INVALID", page: 1205 },
+    });
     assert.strictEqual(r.success, false);
   });
 
   it("rejects invalid consensus_strategy", () => {
     const r = validateCanonicalRow({
       ...fixtures.VALID_CANONICAL_ROW,
-      corroboration: { consensus_strategy: "invalid-strategy", agreeing_invocations: [], disagreeing_invocations: [] },
+      corroboration: {
+        consensus_strategy: "invalid-strategy",
+        agreeing_invocations: [],
+        disagreeing_invocations: [],
+      },
     });
     assert.strictEqual(r.success, false);
   });
@@ -357,7 +490,12 @@ describe("validateCanonicalRow — invalid", () => {
   it("rejects vote_strength > 1", () => {
     const r = validateCanonicalRow({
       ...fixtures.VALID_CANONICAL_ROW,
-      corroboration: { consensus_strategy: "majority-vote-torque-nm", agreeing_invocations: [], disagreeing_invocations: [], vote_strength: 1.5 },
+      corroboration: {
+        consensus_strategy: "majority-vote-torque-nm",
+        agreeing_invocations: [],
+        disagreeing_invocations: [],
+        vote_strength: 1.5,
+      },
     });
     assert.strictEqual(r.success, false);
   });
@@ -365,13 +503,21 @@ describe("validateCanonicalRow — invalid", () => {
   it("rejects vote_strength < 0", () => {
     const r = validateCanonicalRow({
       ...fixtures.VALID_CANONICAL_ROW,
-      corroboration: { consensus_strategy: "majority-vote-torque-nm", agreeing_invocations: [], disagreeing_invocations: [], vote_strength: -0.1 },
+      corroboration: {
+        consensus_strategy: "majority-vote-torque-nm",
+        agreeing_invocations: [],
+        disagreeing_invocations: [],
+        vote_strength: -0.1,
+      },
     });
     assert.strictEqual(r.success, false);
   });
 
   it("rejects non-string thread grade", () => {
-    const r = validateCanonicalRow({ ...fixtures.VALID_CANONICAL_ROW, thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: 12.9 } });
+    const r = validateCanonicalRow({
+      ...fixtures.VALID_CANONICAL_ROW,
+      thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: 12.9 },
+    });
     assert.strictEqual(r.success, false);
   });
 
@@ -397,7 +543,9 @@ describe("validateInvocationRecord", () => {
   });
 
   it("rejects record missing manual field", () => {
-    const r = validateInvocationRecord(fixtures.INVALID_INVOCATION_RECORD_MISSING_MANUAL);
+    const r = validateInvocationRecord(
+      fixtures.INVALID_INVOCATION_RECORD_MISSING_MANUAL,
+    );
     assert.strictEqual(r.success, false);
     assert.ok(r.error.includes("manual"));
   });
@@ -420,7 +568,10 @@ describe("validateInvocationRecord", () => {
   });
 
   it("rejects non-object input", () => {
-    assert.strictEqual(validateInvocationRecord("not an object").success, false);
+    assert.strictEqual(
+      validateInvocationRecord("not an object").success,
+      false,
+    );
   });
 });
 
@@ -430,7 +581,10 @@ describe("validateInvocationRecord", () => {
 
 describe("validateFlatRow", () => {
   it("accepts flat row with invocation_id", () => {
-    const flatRow = { ...fixtures.VALID_CANONICAL_ROW, invocation_id: "together.kimi-k2-6-fp4.r1.2026-05-15T22-03-11Z" };
+    const flatRow = {
+      ...fixtures.VALID_CANONICAL_ROW,
+      invocation_id: "together.kimi-k2-6-fp4.r1.2026-05-15T22-03-11Z",
+    };
     const r = validateFlatRow(flatRow);
     assert.strictEqual(r.success, true);
   });
@@ -472,7 +626,10 @@ describe("validateSummaryStats", () => {
       total_invocations: 10,
       total_flat_rows: 50,
       total_rejects: 2,
-      per_model_row_count: { "together.kimi-k2-6-fp4": 30, "together.qwen3-vl-235b": 20 },
+      per_model_row_count: {
+        "together.kimi-k2-6-fp4": 30,
+        "together.qwen3-vl-235b": 20,
+      },
       confidence_distribution: { high: 40, medium: 5, low: 3, unknown: 2 },
     };
     const r = validateSummaryStats(stats);
@@ -498,47 +655,246 @@ describe("validateSummaryStats", () => {
 
 describe("validateInvocationParsedRows", () => {
   it("returns flat rows for valid invocation", () => {
-    const { flatRows, rejects } = validateInvocationParsedRows(fixtures.VALID_INVOCATION_RECORD);
+    const { flatRows, rejects } = validateInvocationParsedRows(
+      fixtures.VALID_INVOCATION_RECORD,
+    );
     assert.strictEqual(flatRows.length, 1);
     assert.strictEqual(rejects.length, 0);
-    assert.strictEqual(flatRows[0].invocation_id, fixtures.VALID_INVOCATION_RECORD.invocation_id);
+    assert.strictEqual(
+      flatRows[0].invocation_id,
+      fixtures.VALID_INVOCATION_RECORD.invocation_id,
+    );
   });
 
   it("returns multiple flat rows for multi-row invocation", () => {
-    const { flatRows, rejects } = validateInvocationParsedRows(fixtures.VALID_INVOCATION_MULTI_ROWS);
+    const { flatRows, rejects } = validateInvocationParsedRows(
+      fixtures.VALID_INVOCATION_MULTI_ROWS,
+    );
     assert.strictEqual(flatRows.length, 2);
     assert.strictEqual(rejects.length, 0);
   });
 
   it("returns empty arrays for empty response_parsed", () => {
-    const { flatRows, rejects } = validateInvocationParsedRows(fixtures.INVOCATION_EMPTY_PARSED);
+    const { flatRows, rejects } = validateInvocationParsedRows(
+      fixtures.INVOCATION_EMPTY_PARSED,
+    );
     assert.strictEqual(flatRows.length, 0);
     assert.strictEqual(rejects.length, 0);
   });
 
   it("returns empty arrays for null response_parsed", () => {
-    const { flatRows, rejects } = validateInvocationParsedRows(fixtures.INVOCATION_NULL_PARSED);
+    const { flatRows, rejects } = validateInvocationParsedRows(
+      fixtures.INVOCATION_NULL_PARSED,
+    );
     assert.strictEqual(flatRows.length, 0);
     assert.strictEqual(rejects.length, 0);
   });
 
   it("returns empty arrays for parse_error invocation", () => {
-    const { flatRows, rejects } = validateInvocationParsedRows(fixtures.INVOCATION_WITH_PARSE_ERROR);
+    const { flatRows, rejects } = validateInvocationParsedRows(
+      fixtures.INVOCATION_WITH_PARSE_ERROR,
+    );
     assert.strictEqual(flatRows.length, 0);
     assert.strictEqual(rejects.length, 0);
   });
 
   it("separates valid and invalid rows from mixed invocation", () => {
-    const { flatRows, rejects } = validateInvocationParsedRows(fixtures.INVOCATION_MIXED_ROWS);
+    const { flatRows, rejects } = validateInvocationParsedRows(
+      fixtures.INVOCATION_MIXED_ROWS,
+    );
     assert.strictEqual(flatRows.length, 2); // first and third rows are valid
     assert.strictEqual(rejects.length, 1); // second row is invalid (negative qty)
     assert.ok(rejects[0].errors.some((e) => e.includes("qty")));
   });
 
   it("enriches each flat row with invocation_id", () => {
-    const { flatRows } = validateInvocationParsedRows(fixtures.VALID_INVOCATION_MULTI_ROWS);
+    const { flatRows } = validateInvocationParsedRows(
+      fixtures.VALID_INVOCATION_MULTI_ROWS,
+    );
     for (const row of flatRows) {
       assert.ok(row.invocation_id.startsWith("together.qwen3-vl-235b"));
     }
+  });
+});
+
+// ===========================================================================
+// enrichAndNormalizeRow — envelope array iteration (T-436 fix)
+// ===========================================================================
+
+describe("enrichAndNormalizeRow — envelope array iteration", () => {
+  it("iterates ALL items in a fasteners envelope array", () => {
+    const result = enrichAndNormalizeRow(
+      fixtures.ENVELOPE_WITH_MULTI_FASTENERS,
+    );
+    assert.strictEqual(result.success, true);
+    assert.ok(
+      result.data._allNormalized,
+      "should have _allNormalized attached",
+    );
+    assert.strictEqual(
+      result.data._allNormalized.length,
+      3,
+      "should collect all 3 fasteners",
+    );
+  });
+
+  it("normalizes field names (fastener -> fastener_name) for all items", () => {
+    const result = enrichAndNormalizeRow(
+      fixtures.ENVELOPE_WITH_MULTI_FASTENERS,
+    );
+    assert.strictEqual(result.success, true);
+    for (const item of result.data._allNormalized) {
+      assert.ok(item.fastener_name, "each item should have fastener_name");
+      assert.ok(!item.fastener, "alias fastener should be normalized away");
+    }
+  });
+
+  it("returns the last normalized item as data when multiple collected", () => {
+    const result = enrichAndNormalizeRow(
+      fixtures.ENVELOPE_WITH_MULTI_FASTENERS,
+    );
+    assert.strictEqual(result.success, true);
+    // Last item is oil pan bolt
+    assert.strictEqual(result.data.id, "BB6-p101-bolt-3");
+  });
+
+  it("handles single-item envelope array", () => {
+    const singleItemEnvelope = { fasteners: [fixtures.VALID_CANONICAL_ROW] };
+    const result = enrichAndNormalizeRow(singleItemEnvelope);
+    assert.strictEqual(result.success, true);
+    assert.strictEqual(result.data.id, fixtures.VALID_CANONICAL_ROW.id);
+  });
+
+  it("handles already-canonical row (no envelope)", () => {
+    const result = enrichAndNormalizeRow(fixtures.VALID_CANONICAL_ROW);
+    assert.strictEqual(result.success, true);
+    assert.strictEqual(result.data.id, fixtures.VALID_CANONICAL_ROW.id);
+  });
+
+  it("handles empty envelope array", () => {
+    const result = enrichAndNormalizeRow({ fasteners: [] });
+    assert.strictEqual(result.success, false);
+    assert.ok(result.error.includes("empty array"));
+  });
+
+  it("handles envelope with non-object items", () => {
+    const result = enrichAndNormalizeRow({ fasteners: [null, "string", 123] });
+    assert.strictEqual(result.success, false);
+    assert.ok(result.error.includes("passed normalization"));
+  });
+
+  it("handles mixed valid/invalid items in envelope array", () => {
+    const mixed = {
+      fasteners: [
+        {
+          id: "valid-1",
+          source: { manual: "BB6", page: 1 },
+          system: "engine",
+          assembly: "test",
+          fastener_name: "Test",
+          thread: {},
+          qty: 1,
+          torque: { steps: [{ pass: 1, nm: 10 }] },
+          oem: true,
+        },
+        null,
+        {
+          id: "valid-2",
+          source: { manual: "BB6", page: 1 },
+          system: "engine",
+          assembly: "test2",
+          fastener_name: "Test2",
+          thread: {},
+          qty: 2,
+          torque: { steps: [{ pass: 1, nm: 20 }] },
+          oem: true,
+        },
+      ],
+    };
+    const result = enrichAndNormalizeRow(mixed);
+    assert.strictEqual(result.success, true);
+    assert.strictEqual(
+      result.data._allNormalized.length,
+      2,
+      "should collect 2 valid items",
+    );
+  });
+
+  it("handles output envelope with nested findings", () => {
+    const result = enrichAndNormalizeRow({
+      analysis: "some text",
+      findings: [],
+      output: [
+        {
+          id: "out-1",
+          source: { manual: "BB6", page: 50 },
+          system: "engine",
+          assembly: "test",
+          fastener_name: "Output bolt",
+          thread: {},
+          qty: 1,
+          torque: { steps: [{ pass: 1, nm: 15 }] },
+          oem: true,
+        },
+      ],
+    });
+    assert.strictEqual(result.success, true);
+    assert.strictEqual(result.data.id, "out-1");
+  });
+});
+
+// ===========================================================================
+// validateCanonicalRow — multi-row envelope support
+// ===========================================================================
+
+describe("validateCanonicalRow — multi-row envelope support", () => {
+  it("returns _extraValidated when envelope has multiple valid items", () => {
+    const result = validateCanonicalRow(fixtures.ENVELOPE_WITH_MULTI_FASTENERS);
+    assert.strictEqual(result.success, true);
+    assert.ok(result._extraValidated, "should have _extraValidated");
+    assert.strictEqual(
+      result._extraValidated.length,
+      2,
+      "should have 2 extra validated rows (3 total - 1 primary)",
+    );
+  });
+
+  it("all validated rows from envelope pass Zod schema", () => {
+    const result = validateCanonicalRow(fixtures.ENVELOPE_WITH_MULTI_FASTENERS);
+    assert.strictEqual(result.success, true);
+    // Primary row
+    assert.ok(result.data.id);
+    // Extra rows
+    for (const extra of result._extraValidated) {
+      assert.ok(extra.id);
+      assert.ok(extra.fastener_name);
+      assert.ok(extra.torque.steps.length > 0);
+    }
+  });
+
+  it("returns success without _extraValidated for single-item envelope", () => {
+    const result = validateCanonicalRow({
+      fasteners: [fixtures.VALID_CANONICAL_ROW],
+    });
+    assert.strictEqual(result.success, true);
+    assert.strictEqual(result._extraValidated, undefined);
+  });
+
+  it("returns failure for envelope where all items fail validation", () => {
+    const result = validateCanonicalRow({
+      fasteners: [
+        {
+          source: { manual: "BB6", page: 1 },
+          system: "engine",
+          assembly: "test",
+          fastener_name: "Test",
+          thread: {},
+          qty: -1,
+          torque: { steps: [{ pass: 1, nm: 10 }] },
+          oem: true,
+        },
+      ],
+    });
+    assert.strictEqual(result.success, false);
   });
 });

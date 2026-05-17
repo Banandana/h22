@@ -94,17 +94,21 @@ const bb6Dir = join(baseDir, "responses", "bb6");
 const obd1Dir = join(baseDir, "responses", "obd1");
 
 const bb6Files = statSync(bb6Dir).isDirectory() ? collectJsonFiles(bb6Dir) : [];
-const obd1Files = statSync(obd1Dir).isDirectory() ? collectJsonFiles(obd1Dir) : [];
+const obd1Files = statSync(obd1Dir).isDirectory()
+  ? collectJsonFiles(obd1Dir)
+  : [];
 const allFiles = [...bb6Files, ...obd1Files].sort();
 
-console.log(`Found ${allFiles.length} invocation record files (${bb6Files.length} BB6 + ${obd1Files.length} OBD1)`);
+console.log(
+  `Found ${allFiles.length} invocation record files (${bb6Files.length} BB6 + ${obd1Files.length} OBD1)`,
+);
 
 // Accumulators
 const flatRows = [];
 const rejectRecords = [];
 let totalInvocations = 0;
-let validInvocations = 0;       // invocations that produced at least one flat row
-let emptyInvocations = 0;      // invocations with empty/null response_parsed
+let validInvocations = 0; // invocations that produced at least one flat row
+let emptyInvocations = 0; // invocations with empty/null response_parsed
 let nonConformantInvocations = 0; // invocations with parsed rows that failed schema validation
 let perModelRowCount = {};
 let confidenceDistribution = { high: 0, medium: 0, low: 0, unknown: 0 };
@@ -159,12 +163,16 @@ for (const filePath of allFiles) {
   for (let i = 0; i < parsed.length; i++) {
     const rowResult = validateCanonicalRow(parsed[i]);
     if (rowResult.success) {
+      // Primary validated row
       const flatRow = /** @type {Record<string, unknown>} */ (rowResult.data);
       flatRow.invocation_id = record.invocation_id;
 
       // Dedup within this invocation: same row_key only kept once
       const key = rowKey(flatRow);
-      const dupIndex = flatRows.findIndex((r) => r._dedup_key === key && r._dedup_invocation === record.invocation_id);
+      const dupIndex = flatRows.findIndex(
+        (r) =>
+          r._dedup_key === key && r._dedup_invocation === record.invocation_id,
+      );
       if (dupIndex >= 0) {
         // Duplicate within same invocation — skip
         continue;
@@ -182,6 +190,42 @@ for (const filePath of allFiles) {
         confidenceDistribution[conf]++;
       } else {
         confidenceDistribution.unknown++;
+      }
+
+      // Process extra validated rows from envelope array iteration
+      if (
+        rowResult._extraValidated &&
+        Array.isArray(rowResult._extraValidated)
+      ) {
+        for (const extraRow of rowResult._extraValidated) {
+          const extraFlatRow = /** @type {Record<string, unknown>} */ (
+            extraRow
+          );
+          extraFlatRow.invocation_id = record.invocation_id;
+
+          // Dedup within this invocation
+          const extraKey = rowKey(extraFlatRow);
+          const extraDupIndex = flatRows.findIndex(
+            (r) =>
+              r._dedup_key === extraKey &&
+              r._dedup_invocation === record.invocation_id,
+          );
+          if (extraDupIndex >= 0) continue;
+
+          extraFlatRow._dedup_key = extraKey;
+          extraFlatRow._dedup_invocation = record.invocation_id;
+
+          flatRows.push(extraFlatRow);
+          perModelRowCount[modelId]++;
+          rowsFromThisInvocation++;
+
+          const extraConf = extraFlatRow.confidence || "unknown";
+          if (confidenceDistribution[extraConf] !== undefined) {
+            confidenceDistribution[extraConf]++;
+          } else {
+            confidenceDistribution.unknown++;
+          }
+        }
       }
     } else {
       rejectedRows.push({ index: i, errors: [rowResult.error] });
@@ -215,23 +259,31 @@ const summaryStats = {
 
 const statsValidation = validateSummaryStats(summaryStats);
 if (!statsValidation.success) {
-  console.error(`WARNING: Summary stats failed validation: ${statsValidation.error}`);
+  console.error(
+    `WARNING: Summary stats failed validation: ${statsValidation.error}`,
+  );
 }
 
 // Print summary
 console.log("\n=== Summary ===");
 console.log(`Total invocation records scanned: ${totalInvocations}`);
 console.log(`Valid invocations (with parsed rows → flat): ${validInvocations}`);
-console.log(`Non-conformant invocations (parsed but failed schema): ${nonConformantInvocations}`);
+console.log(
+  `Non-conformant invocations (parsed but failed schema): ${nonConformantInvocations}`,
+);
 console.log(`Empty/null response_parsed: ${emptyInvocations}`);
 console.log(`Flat rows emitted: ${flatRows.length}`);
 console.log(`Reject records: ${rejectRecords.length}`);
 console.log(`Per-model row counts:`);
-for (const [model, count] of Object.entries(perModelRowCount).sort((a, b) => b[1] - a[1])) {
+for (const [model, count] of Object.entries(perModelRowCount).sort(
+  (a, b) => b[1] - a[1],
+)) {
   console.log(`  ${model}: ${count}`);
 }
 console.log(`Confidence distribution:`);
-for (const [level, count] of Object.entries(confidenceDistribution).sort((a, b) => b[1] - a[1])) {
+for (const [level, count] of Object.entries(confidenceDistribution).sort(
+  (a, b) => b[1] - a[1],
+)) {
   console.log(`  ${level}: ${count}`);
 }
 
@@ -252,7 +304,9 @@ for (const row of flatRows) {
 }
 
 if (crossInvocationDups.length > 0) {
-  console.log(`\nCross-invocation duplicates removed: ${crossInvocationDups.length}`);
+  console.log(
+    `\nCross-invocation duplicates removed: ${crossInvocationDups.length}`,
+  );
 }
 
 // Write outputs
@@ -260,18 +314,30 @@ if (!dryRun) {
   const flatPath = join(baseDir, "h22-torques-flat.jsonl");
   const rejectsPath = join(baseDir, "h22-torques-rejects.jsonl");
 
-  writeFileSync(flatPath, dedupedFlatRows.map((r) => JSON.stringify(r)).join("\n") + "\n", "utf-8");
-  writeFileSync(rejectsPath, rejectRecords.map((r) => JSON.stringify(r)).join("\n") + "\n", "utf-8");
+  writeFileSync(
+    flatPath,
+    dedupedFlatRows.map((r) => JSON.stringify(r)).join("\n") + "\n",
+    "utf-8",
+  );
+  writeFileSync(
+    rejectsPath,
+    rejectRecords.map((r) => JSON.stringify(r)).join("\n") + "\n",
+    "utf-8",
+  );
 
   console.log(`\nWrote ${dedupedFlatRows.length} flat rows to ${flatPath}`);
   console.log(`Wrote ${rejectRecords.length} reject records to ${rejectsPath}`);
 } else {
-  console.log(`\nDRY RUN — would write ${dedupedFlatRows.length} flat rows and ${rejectRecords.length} rejects`);
+  console.log(
+    `\nDRY RUN — would write ${dedupedFlatRows.length} flat rows and ${rejectRecords.length} rejects`,
+  );
 }
 
 // Exit code: non-zero if any rejects were found (signals downstream tasks to inspect)
 if (rejectRecords.length > 0) {
-  console.log(`\nNOTE: ${rejectRecords.length} reject records found. Inspect h22-torques-rejects.jsonl for details.`);
+  console.log(
+    `\nNOTE: ${rejectRecords.length} reject records found. Inspect h22-torques-rejects.jsonl for details.`,
+  );
 }
 
 process.exit(0);

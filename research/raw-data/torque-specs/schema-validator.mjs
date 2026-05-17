@@ -489,49 +489,22 @@ const SummaryStatsSchema = z.object({
  * @returns {{ success: boolean; data?: unknown; error?: string }}
  */
 /**
- * Preprocess a raw vision-model output row before Zod validation.
+ * Internal helper: apply enrichment/normalization steps to a single row object.
+ * Mutates the row in place and returns it.
  *
- * Handles:
- *  1. Unwrapping envelope objects ({ fasteners: [...] }, { analysis, output: [...] }, etc.)
- *  2. Normalizing field-name aliases (fastener -> fastener_name, etc.)
- *  3. Coercing types (string page -> number, null lubrication -> "dry")
- *  4. Normalizing lubrication values (grease -> oiled, anti-seize -> oiled)
- *
- * @param {unknown} raw
- * @returns {{ success: boolean; data?: Record<string, unknown>; error?: string }}
+ * @param {Record<string, unknown>} row
+ * @returns {Record<string, unknown>}
  */
-export function enrichAndNormalizeRow(raw) {
-  if (!raw || typeof raw !== "object") {
-    return { success: false, error: "input is not an object" };
-  }
-
-  /** @type {Record<string, unknown>} */
-  let row = /** @type {Record<string, unknown>} */ (raw);
-
-  // Step 1: Unwrap envelope
-  const unwrapped = unwrapEnvelope(row);
-  if (Array.isArray(unwrapped)) {
-    // Envelope contained an array; take the first item if it looks like a row
-    if (unwrapped.length === 0) {
-      return { success: false, error: "envelope contained empty array" };
-    }
-    const first = unwrapped[0];
-    if (first && typeof first === "object") {
-      row = /** @type {Record<string, unknown>} */ (first);
-    } else {
-      return { success: false, error: "envelope first item is not an object" };
-    }
-  }
-
-  // Step 2: Normalize field names
+function _normalizeSingleRow(row) {
+  // Step 1: Normalize field names
   row = normalizeFieldNames(row);
 
-  // Step 3: Ensure source object exists
+  // Step 2: Ensure source object exists
   if (!row.source || typeof row.source !== "object") {
     row.source = {};
   }
 
-  // Step 4: Coerce source.page string -> number (skip for ARP — no page numbers)
+  // Step 3: Coerce source.page string -> number (skip for ARP — no page numbers)
   /** @type {Record<string, unknown>} */
   const src = row.source;
   if (src.manual !== "ARP") {
@@ -540,7 +513,7 @@ export function enrichAndNormalizeRow(raw) {
     src.page = null;
   }
 
-  // Step 5: Null -> default for enum fields
+  // Step 4: Null -> default for enum fields
   if (row.lubrication === null || row.lubrication === undefined) {
     row.lubrication = "dry";
   }
@@ -551,19 +524,19 @@ export function enrichAndNormalizeRow(raw) {
     row.reusable = true;
   }
 
-  // Step 6: Normalize lubrication value
+  // Step 5: Normalize lubrication value
   if (row.lubrication !== null && row.lubrication !== undefined) {
     const normalized = normalizeLubrication(row.lubrication);
     row.lubrication = normalized;
   }
 
-  // Step 7: Normalize system — some models omit it or use wrong values
+  // Step 6: Normalize system — some models omit it or use wrong values
   if (row.system === null || row.system === undefined) {
     // Default to "engine" as most torque specs are engine-related
     row.system = "engine";
   }
 
-  // Step 8: Coerce null → undefined in nested objects so Zod .optional() accepts them
+  // Step 7: Coerce null → undefined in nested objects so Zod .optional() accepts them
   // Vision models often return null instead of omitting optional fields.
   if (row.applies_to && typeof row.applies_to === "object") {
     for (const k of Object.keys(row.applies_to)) {
@@ -594,6 +567,72 @@ export function enrichAndNormalizeRow(raw) {
     }
   }
 
+  return row;
+}
+
+/**
+ * Preprocess a raw vision-model output row before Zod validation.
+ *
+ * Handles:
+ *  1. Unwrapping envelope objects ({ fasteners: [...] }, { analysis, output: [...] }, etc.)
+ *  2. Normalizing field-name aliases (fastener -> fastener_name, etc.)
+ *  3. Coercing types (string page -> number, null lubrication -> "dry")
+ *  4. Normalizing lubrication values (grease -> oiled, anti-seize -> oiled)
+ *
+ * When the input is an envelope containing an array with multiple items,
+ * iterates ALL items and collects every one that passes normalization.
+ *
+ * @param {unknown} raw
+ * @returns {{ success: boolean; data?: Record<string, unknown>; error?: string }}
+ */
+export function enrichAndNormalizeRow(raw) {
+  if (!raw || typeof raw !== "object") {
+    return { success: false, error: "input is not an object" };
+  }
+
+  /** @type {Record<string, unknown>} */
+  let row = /** @type {Record<string, unknown>} */ (raw);
+
+  // Step 1: Unwrap envelope
+  const unwrapped = unwrapEnvelope(row);
+  if (Array.isArray(unwrapped)) {
+    // Envelope contained an array — iterate ALL items, collect those passing normalization
+    if (unwrapped.length === 0) {
+      return { success: false, error: "envelope contained empty array" };
+    }
+
+    /** @type {Record<string, unknown>[]} */
+    const collected = [];
+    for (const item of unwrapped) {
+      if (item && typeof item === "object") {
+        try {
+          const normalized = _normalizeSingleRow(
+            /** @type {Record<string, unknown>} */ (item),
+          );
+          collected.push(normalized);
+        } catch {
+          // Skip items that fail normalization
+        }
+      }
+    }
+
+    if (collected.length === 0) {
+      return {
+        success: false,
+        error: "no items in envelope passed normalization",
+      };
+    }
+
+    // Return the last successfully normalized item (for backward compatibility)
+    // The caller should also check for multiple results via allCollected
+    const result = collected[collected.length - 1];
+    // Attach all collected rows for multi-row callers
+    result._allNormalized = collected;
+    return { success: true, data: result };
+  }
+
+  // Not an envelope array — normalize single row as before
+  row = _normalizeSingleRow(row);
   return { success: true, data: row };
 }
 
@@ -601,8 +640,12 @@ export function enrichAndNormalizeRow(raw) {
  * Validate a canonical torque row against the full schema.
  * Runs enrichment/normalization first, then Zod parse.
  *
+ * When enrichment detects an envelope array with multiple items,
+ * validates ALL of them and returns the first successful parse.
+ * Additional validated rows are available via _extraValidated.
+ *
  * @param {unknown} row
- * @returns {{ success: boolean; data?: unknown; error?: string }}
+ * @returns {{ success: boolean; data?: unknown; error?: string; _extraValidated?: unknown[] }}
  */
 export function validateCanonicalRow(row) {
   // Preprocess before Zod validation
@@ -611,9 +654,14 @@ export function validateCanonicalRow(row) {
     return { success: false, error: `enrichment failed: ${enriched.error}` };
   }
 
+  /** @type {unknown[]} */
+  const results = [];
+
+  // Try the primary result first
+  const primary = enriched.data;
   try {
-    const parsed = CanonicalRowSchema.parse(enriched.data);
-    return { success: true, data: parsed };
+    const parsed = CanonicalRowSchema.parse(primary);
+    results.push(parsed);
   } catch (err) {
     if (err instanceof z.ZodError) {
       return {
@@ -625,6 +673,33 @@ export function validateCanonicalRow(row) {
     }
     return { success: false, error: String(err) };
   }
+
+  // Check for additional normalized rows from envelope array
+  /** @type {Record<string, unknown>} */
+  const enrichedData = /** @type {Record<string, unknown>} */ (primary);
+  const allCollected = enrichedData._allNormalized;
+  const extraValidated = [];
+
+  if (allCollected && Array.isArray(allCollected)) {
+    for (const extraRow of allCollected) {
+      if (extraRow === primary) continue; // skip the primary
+      try {
+        const parsed = CanonicalRowSchema.parse(extraRow);
+        extraValidated.push(parsed);
+      } catch {
+        // Skip rows that fail Zod validation
+      }
+    }
+  }
+
+  const result = {
+    success: true,
+    data: results[0],
+  };
+  if (extraValidated.length > 0) {
+    result._extraValidated = extraValidated;
+  }
+  return result;
 }
 
 /**
@@ -745,9 +820,19 @@ export function validateInvocationParsedRows(invocationRecord) {
   for (let i = 0; i < parsed.length; i++) {
     const result = validateCanonicalRow(parsed[i]);
     if (result.success) {
+      // Primary validated row
       /** @type {Record<string, unknown>} */ (result.data).invocation_id =
         record.invocation_id;
       flatRows.push(result.data);
+
+      // Process extra validated rows from envelope array iteration
+      if (result._extraValidated && Array.isArray(result._extraValidated)) {
+        for (const extraRow of result._extraValidated) {
+          /** @type {Record<string, unknown>} */ (extraRow).invocation_id =
+            record.invocation_id;
+          flatRows.push(extraRow);
+        }
+      }
     } else {
       rejects.push({ index: i, errors: [result.error] });
     }

@@ -35,7 +35,12 @@ export const VALID_CANONICAL_ROW_WITH_CORROBORATION = {
   corroboration: {
     consensus_strategy: "majority-vote-torque-nm",
     agreeing_invocations: [
-      { model_id: "together.kimi-k2-6-fp4", run: "r1", temperature: 0, response_path: "responses/bb6/136/together__kimi__r1.json" },
+      {
+        model_id: "together.kimi-k2-6-fp4",
+        run: "r1",
+        temperature: 0,
+        response_path: "responses/bb6/136/together__kimi__r1.json",
+      },
     ],
     disagreeing_invocations: [],
     vote_strength: 1.0,
@@ -79,7 +84,9 @@ export const VALID_INVOCATION_RECORD = {
       thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: null },
       qty: 10,
       role: "tty-stretch",
-      torque: { steps: [{ pass: 1, nm: 39, kgfm: 4.0, lbft: 29, angle_deg: null }] },
+      torque: {
+        steps: [{ pass: 1, nm: 39, kgfm: 4.0, lbft: 29, angle_deg: null }],
+      },
       lubrication: "dry",
       reusable: false,
       oem: true,
@@ -173,7 +180,9 @@ export const VALID_INVOCATION_MULTI_ROWS = {
       thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: null },
       qty: 10,
       role: "tty-stretch",
-      torque: { steps: [{ pass: 1, nm: 39, kgfm: 4.0, lbft: 29, angle_deg: null }] },
+      torque: {
+        steps: [{ pass: 1, nm: 39, kgfm: 4.0, lbft: 29, angle_deg: null }],
+      },
       lubrication: "dry",
       reusable: false,
       oem: true,
@@ -187,9 +196,61 @@ export const VALID_INVOCATION_MULTI_ROWS = {
       thread: { nominal_mm: 8, pitch_mm: 1.25, length_mm: null, grade: null },
       qty: 12,
       role: "cap-screw",
-      torque: { steps: [{ pass: 1, nm: 9, kgfm: 0.9, lbft: 7, angle_deg: null }] },
+      torque: {
+        steps: [{ pass: 1, nm: 9, kgfm: 0.9, lbft: 7, angle_deg: null }],
+      },
       lubrication: "dry",
       reusable: true,
+      oem: true,
+    },
+  ],
+};
+
+// ===========================================================================
+// Envelope with multiple fasteners (the T-436 fix target)
+// ===========================================================================
+
+/**
+ * Simulates a vision model response like:
+ * { fasteners: [{...row1}, {...row2}, {...row3}] }
+ * where each inner item is a valid fastener object but uses alias field names.
+ */
+export const ENVELOPE_WITH_MULTI_FASTENERS = {
+  fasteners: [
+    {
+      id: "BB6-p101-bolt-1",
+      source: { manual: "BB6", page: 101 },
+      system: "engine",
+      assembly: "cylinder-head",
+      fastener: "Cylinder head bolt", // alias: should normalize to fastener_name
+      thread: { nominal_mm: 10, pitch_mm: 1.25 },
+      qty: 10,
+      role: "tty-stretch",
+      torque: { steps: [{ pass: 1, nm: 39 }] },
+      oem: true,
+    },
+    {
+      id: "BB6-p101-bolt-2",
+      source: { manual: "BB6", page: 101 },
+      system: "engine",
+      assembly: "valve-cover",
+      fastener: "Valve cover bolt",
+      thread: { nominal_mm: 8, pitch_mm: 1.25 },
+      qty: 12,
+      role: "cap-screw",
+      torque: { steps: [{ pass: 1, nm: 9 }] },
+      oem: true,
+    },
+    {
+      id: "BB6-p101-bolt-3",
+      source: { manual: "BB6", page: 101 },
+      system: "engine",
+      assembly: "oil-pan",
+      fastener: "Oil pan bolt",
+      thread: { nominal_mm: 10, pitch_mm: 1.25 },
+      qty: 14,
+      role: "cap-screw",
+      torque: { steps: [{ pass: 1, nm: 12 }] },
       oem: true,
     },
   ],
@@ -212,7 +273,9 @@ export const INVOCATION_MIXED_ROWS = {
       thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: null },
       qty: 1,
       role: "cap-screw",
-      torque: { steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }] },
+      torque: {
+        steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }],
+      },
       lubrication: "dry",
       reusable: true,
       oem: true,
@@ -227,7 +290,9 @@ export const INVOCATION_MIXED_ROWS = {
       thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: null },
       qty: -1, // negative qty is invalid
       role: "cap-screw",
-      torque: { steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }] },
+      torque: {
+        steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }],
+      },
       lubrication: "dry",
       reusable: true,
       oem: true,
@@ -242,7 +307,9 @@ export const INVOCATION_MIXED_ROWS = {
       thread: { nominal_mm: 12, pitch_mm: 1.75, length_mm: null, grade: null },
       qty: 4,
       role: "flange-bolt",
-      torque: { steps: [{ pass: 1, nm: 50, kgfm: 5.1, lbft: 37, angle_deg: null }] },
+      torque: {
+        steps: [{ pass: 1, nm: 50, kgfm: 5.1, lbft: 37, angle_deg: null }],
+      },
       lubrication: "oiled",
       reusable: true,
       oem: true,

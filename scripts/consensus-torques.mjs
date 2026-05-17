@@ -92,7 +92,8 @@ function getTorqueNm(row) {
     if (!Array.isArray(steps) || steps.length === 0) return null;
     const first = steps[0];
     const nm = first?.nm;
-    if (nm === null || nm === undefined || typeof nm !== "number" || nm <= 0) return null;
+    if (nm === null || nm === undefined || typeof nm !== "number" || nm <= 0)
+      return null;
     return nm;
   } catch {
     return null;
@@ -114,7 +115,9 @@ function groupKey(row) {
  */
 function clusterByTorque(rows) {
   // First pass: collect all torque values
-  const torques = rows.map((r) => ({ row: r, nm: getTorqueNm(r) })).filter((x) => x.nm !== null);
+  const torques = rows
+    .map((r) => ({ row: r, nm: getTorqueNm(r) }))
+    .filter((x) => x.nm !== null);
 
   if (torques.length === 0) return [];
 
@@ -167,20 +170,26 @@ function buildCorroboration(
   winningCluster,
   allRowsInGroup,
   totalInvocationsForPage,
-  modelRunsMap
+  modelRunsMap,
 ) {
   const agreeingPaths = winningCluster.rows.map((r) => {
     // Find the invocation_id from the row (we'll enrich it below)
     return { row: r };
   });
 
-  const disagreeingPaths = allRowsInGroup.filter((r) => !winningCluster.rows.includes(r)).map((r) => ({
-    row: r,
-  }));
+  const disagreeingPaths = allRowsInGroup
+    .filter((r) => !winningCluster.rows.includes(r))
+    .map((r) => ({
+      row: r,
+    }));
 
   // Count unique models in agreeing vs disagreeing
-  const agreeingModels = new Set(agreeingPaths.map((a) => a.row._model_id).filter(Boolean));
-  const disagreeingModels = new Set(disagreeingPaths.map((d) => d.row._model_id).filter(Boolean));
+  const agreeingModels = new Set(
+    agreeingPaths.map((a) => a.row._model_id).filter(Boolean),
+  );
+  const disagreeingModels = new Set(
+    disagreeingPaths.map((d) => d.row._model_id).filter(Boolean),
+  );
 
   // Determine consensus strategy
   let strategy = "single-source";
@@ -193,16 +202,20 @@ function buildCorroboration(
   }
 
   // Vote strength
-  const voteStrength = totalInvocationsForPage > 0
-    ? Math.round((agreeingPaths.length / allRowsInGroup.length) * 1000) / 1000
-    : 1.0;
+  const voteStrength =
+    totalInvocationsForPage > 0
+      ? Math.round((agreeingPaths.length / allRowsInGroup.length) * 1000) / 1000
+      : 1.0;
 
   // Intra-model consistency
   const intraModelConsistency = {};
   for (const [modelId, runs] of Object.entries(modelRunsMap)) {
     if (runs.length > 1) {
-      const agreeingFromThisModel = runs.filter((r) => winningCluster.rows.includes(r)).length;
-      intraModelConsistency[modelId] = Math.round((agreeingFromThisModel / runs.length) * 1000) / 1000;
+      const agreeingFromThisModel = runs.filter((r) =>
+        winningCluster.rows.includes(r),
+      ).length;
+      intraModelConsistency[modelId] =
+        Math.round((agreeingFromThisModel / runs.length) * 1000) / 1000;
     } else {
       intraModelConsistency[modelId] = null;
     }
@@ -243,10 +256,14 @@ const bb6Dir = join(baseDir, "responses", "bb6");
 const obd1Dir = join(baseDir, "responses", "obd1");
 
 const bb6Files = statSync(bb6Dir).isDirectory() ? collectJsonFiles(bb6Dir) : [];
-const obd1Files = statSync(obd1Dir).isDirectory() ? collectJsonFiles(obd1Dir) : [];
+const obd1Files = statSync(obd1Dir).isDirectory()
+  ? collectJsonFiles(obd1Dir)
+  : [];
 const allFiles = [...bb6Files, ...obd1Files].sort();
 
-console.log(`Found ${allFiles.length} invocation record files (${bb6Files.length} BB6 + ${obd1Files.length} OBD1)`);
+console.log(
+  `Found ${allFiles.length} invocation record files (${bb6Files.length} BB6 + ${obd1Files.length} OBD1)`,
+);
 
 // Phase 1: Load all valid parsed rows, organized by page
 // Structure: pages[manual][page] = [{ row, invocation_id, model_id, run, temperature, response_path }]
@@ -306,6 +323,7 @@ for (const filePath of allFiles) {
   for (const row of parsed) {
     const rowResult = validateCanonicalRow(row);
     if (rowResult.success) {
+      // Primary validated row
       const enrichedRow = {
         ...rowResult.data,
         _invocation_id: record.invocation_id,
@@ -316,6 +334,25 @@ for (const filePath of allFiles) {
       };
       pages[manual][page].push(enrichedRow);
       hasValidRow = true;
+
+      // Process extra validated rows from envelope array iteration
+      if (
+        rowResult._extraValidated &&
+        Array.isArray(rowResult._extraValidated)
+      ) {
+        for (const extraRow of rowResult._extraValidated) {
+          const extraEnriched = {
+            ...extraRow,
+            _invocation_id: record.invocation_id,
+            _model_id: modelId,
+            _run: run,
+            _temperature: temperature,
+            _response_path: responsePath,
+          };
+          pages[manual][page].push(extraEnriched);
+          hasValidRow = true;
+        }
+      }
     } else {
       schemaFailInvocations++;
     }
@@ -386,7 +423,10 @@ for (const [manual, pageMap] of Object.entries(pages)) {
       }
 
       // Pick the largest cluster (majority wins)
-      const winningCluster = clusters.reduce((best, c) => (c.count > best.count ? c : best), clusters[0]);
+      const winningCluster = clusters.reduce(
+        (best, c) => (c.count > best.count ? c : best),
+        clusters[0],
+      );
 
       // Check if we have a clear majority
       // Majority = more than half of the rows agree
@@ -402,7 +442,9 @@ for (const [manual, pageMap] of Object.entries(pages)) {
 
       if (isUnanimous || (hasMajority && winningCluster.count >= 2)) {
         // Emit consensus row
-        const consensusRow = /** @type {Record<string, unknown>} */ (JSON.parse(JSON.stringify(winningCluster.rows[0])));
+        const consensusRow = /** @type {Record<string, unknown>} */ (
+          JSON.parse(JSON.stringify(winningCluster.rows[0]))
+        );
 
         // Remove internal fields
         delete consensusRow._invocation_id;
@@ -415,14 +457,19 @@ for (const [manual, pageMap] of Object.entries(pages)) {
         if (!consensusRow.confidence) consensusRow.confidence = "high";
         if (consensusRow.notes === undefined) consensusRow.notes = null;
         if (consensusRow.reusable === undefined) consensusRow.reusable = false;
-        if (consensusRow.lubrication === undefined) consensusRow.lubrication = "dry";
+        if (consensusRow.lubrication === undefined)
+          consensusRow.lubrication = "dry";
         if (consensusRow.qty === undefined) consensusRow.qty = 1;
-        if (consensusRow.honda_part_number === undefined) consensusRow.honda_part_number = null;
-        if (consensusRow.special_tool === undefined) consensusRow.special_tool = null;
+        if (consensusRow.honda_part_number === undefined)
+          consensusRow.honda_part_number = null;
+        if (consensusRow.special_tool === undefined)
+          consensusRow.special_tool = null;
         if (consensusRow.tty === undefined) consensusRow.tty = {};
         if (consensusRow.meta === undefined) consensusRow.meta = {};
-        if (consensusRow.source?.figure === undefined) consensusRow.source.figure = null;
-        if (consensusRow.torque?.sequence_ref === undefined) consensusRow.torque.sequence_ref = null;
+        if (consensusRow.source?.figure === undefined)
+          consensusRow.source.figure = null;
+        if (consensusRow.torque?.sequence_ref === undefined)
+          consensusRow.torque.sequence_ref = null;
         if (consensusRow.applies_to === undefined) consensusRow.applies_to = {};
 
         // Build corroboration block
@@ -430,7 +477,7 @@ for (const [manual, pageMap] of Object.entries(pages)) {
           winningCluster,
           groupRows,
           totalInvocationsForPage,
-          modelRunsMap
+          modelRunsMap,
         );
 
         consensusRows.push(consensusRow);
@@ -467,7 +514,11 @@ for (const [manual, pageMap] of Object.entries(pages)) {
           system: groupRows[0].system,
           candidates,
           candidate_count: candidates.length,
-          unique_torque_values: [...new Set(candidates.map((c) => c.torque_nm).filter((v) => v !== null))],
+          unique_torque_values: [
+            ...new Set(
+              candidates.map((c) => c.torque_nm).filter((v) => v !== null),
+            ),
+          ],
           unique_models: [...uniqueModelsInGroup],
           total_invocations_for_page: totalInvocationsForPage,
           unresolved: true,
@@ -495,7 +546,12 @@ console.log(`Disputed rows emitted: ${disputedRows.length}`);
 let singleSourceTotal = 0;
 let unanimousTotal = 0;
 let majorityTotal = 0;
-const voteStrengthBuckets = { "1.0": 0, "0.75-0.99": 0, "0.50-0.74": 0, "<0.50": 0 };
+const voteStrengthBuckets = {
+  "1.0": 0,
+  "0.75-0.99": 0,
+  "0.50-0.74": 0,
+  "<0.50": 0,
+};
 
 for (const row of consensusRows) {
   const corrob = row.corroboration || {};
@@ -506,7 +562,7 @@ for (const row of consensusRows) {
   const vs = corrob.vote_strength || 0;
   if (vs >= 0.99) voteStrengthBuckets["1.0"]++;
   else if (vs >= 0.75) voteStrengthBuckets["0.75-0.99"]++;
-  else if (vs >= 0.50) voteStrengthBuckets["0.50-0.74"]++;
+  else if (vs >= 0.5) voteStrengthBuckets["0.50-0.74"]++;
   else voteStrengthBuckets["<0.50"]++;
 }
 
@@ -532,12 +588,22 @@ for (const [n, count] of Object.entries(disputedUniqueTorques).sort()) {
 if (!dryRun) {
   // Write h22-torques.jsonl
   const torquesPath = join(baseDir, "h22-torques.jsonl");
-  writeFileSync(torquesPath, consensusRows.map((r) => JSON.stringify(r)).join("\n") + "\n", "utf-8");
-  console.log(`\nWrote ${consensusRows.length} consensus rows to ${torquesPath}`);
+  writeFileSync(
+    torquesPath,
+    consensusRows.map((r) => JSON.stringify(r)).join("\n") + "\n",
+    "utf-8",
+  );
+  console.log(
+    `\nWrote ${consensusRows.length} consensus rows to ${torquesPath}`,
+  );
 
   // Write h22-torques-disputed.jsonl
   const disputedPath = join(baseDir, "h22-torques-disputed.jsonl");
-  writeFileSync(disputedPath, disputedRows.map((r) => JSON.stringify(r)).join("\n") + "\n", "utf-8");
+  writeFileSync(
+    disputedPath,
+    disputedRows.map((r) => JSON.stringify(r)).join("\n") + "\n",
+    "utf-8",
+  );
   console.log(`Wrote ${disputedRows.length} disputed rows to ${disputedPath}`);
 
   // Write consensus-report.md
@@ -573,10 +639,14 @@ if (!dryRun) {
   ];
 
   // Sort pages for consistent output — only include pages with data
-  const sortedPageKeys = Object.keys(pageStats).filter((k) => pageStats[k].total_groups > 0).sort();
+  const sortedPageKeys = Object.keys(pageStats)
+    .filter((k) => pageStats[k].total_groups > 0)
+    .sort();
   for (const pk of sortedPageKeys) {
     const s = pageStats[pk];
-    reportLines.push(`| ${pk} | ${s.total_groups} | ${s.consensus_count} | ${s.disputed_count} | ${s.single_source_count} |`);
+    reportLines.push(
+      `| ${pk} | ${s.total_groups} | ${s.consensus_count} | ${s.disputed_count} | ${s.single_source_count} |`,
+    );
   }
   if (sortedPageKeys.length === 0) {
     reportLines.push("_No pages with fastener groups._");
@@ -586,13 +656,18 @@ if (!dryRun) {
   reportLines.push("## Disputed Rows Detail", "");
 
   if (disputedRows.length === 0) {
-    reportLines.push("_No disputed rows — all fastener groups reached consensus._");
+    reportLines.push(
+      "_No disputed rows — all fastener groups reached consensus._",
+    );
   } else {
-    reportLines.push("| ID | Manual | Page | Assembly | Fastener | Thread | Unique Torques | Models |", "|----|--------|------|----------|----------|--------|---------------|--------|");
+    reportLines.push(
+      "| ID | Manual | Page | Assembly | Fastener | Thread | Unique Torques | Models |",
+      "|----|--------|------|----------|----------|--------|---------------|--------|",
+    );
     for (const d of disputedRows) {
       const threads = d.thread || {};
       reportLines.push(
-        `| ${d.id} | ${d.source.manual} | ${d.source.page} | ${d.assembly} | ${d.fastener_name} | ${threads.nominal_mm}×${threads.pitch_mm} | ${d.unique_torque_values.join(", ")} | ${d.unique_models.join(", ")} |`
+        `| ${d.id} | ${d.source.manual} | ${d.source.page} | ${d.assembly} | ${d.fastener_name} | ${threads.nominal_mm}×${threads.pitch_mm} | ${d.unique_torque_values.join(", ")} | ${d.unique_models.join(", ")} |`,
       );
     }
   }
@@ -601,7 +676,9 @@ if (!dryRun) {
   writeFileSync(reportPath, reportLines.join("\n"), "utf-8");
   console.log(`Wrote consensus report to ${reportPath}`);
 } else {
-  console.log(`\nDRY RUN — would write ${consensusRows.length} consensus rows, ${disputedRows.length} disputed rows`);
+  console.log(
+    `\nDRY RUN — would write ${consensusRows.length} consensus rows, ${disputedRows.length} disputed rows`,
+  );
 }
 
 // Exit
