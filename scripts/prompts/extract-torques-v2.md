@@ -44,7 +44,7 @@ Each element in the JSON array must be a single JSON object conforming to this e
 {
   "id": "<stable-identifier>",
   "source": {
-    "manual": "BB6",
+    "manual": "{manual}",
     "page": <integer-page-number>,
     "figure": null
   },
@@ -92,7 +92,7 @@ Each element in the JSON array must be a single JSON object conforming to this e
 | Field | Required | Notes |
 |---|---|---|
 | `id` | Yes | Unique identifier: `<assembly>-<fastener>-<seq>` |
-| `source.manual` | Yes | Always `"BB6"` |
+| `source.manual` | Yes | MUST be exactly `{manual}` — the value substituted from the prompt template. Never use chapter titles, brand names, or any other text.
 | `source.page` | Yes | Integer page number from the image |
 | `source.figure` | Yes | String or null |
 | `applies_to.trans` | Yes | `"A/T"`, `"M/T"`, `"both"`, or `null` |
@@ -147,7 +147,7 @@ Use exactly one of these values for `role`:
 [
   {
     "id": "cylinder-head-bolt-1",
-    "source": { "manual": "BB6", "page": 136, "figure": null },
+    "source": { "manual": "{manual}", "page": 136, "figure": null },
     "applies_to": { "trans": null, "trim": null, "my": null, "engine_codes": ["H22A4"] },
     "system": "engine",
     "assembly": "cylinder-head",
@@ -182,7 +182,7 @@ Use exactly one of these values for `role`:
 [
   {
     "id": "oil-pan-bolt-1",
-    "source": { "manual": "BB6", "page": 200, "figure": null },
+    "source": { "manual": "{manual}", "page": 200, "figure": null },
     "applies_to": { "trans": null, "trim": null, "my": null, "engine_codes": [] },
     "system": "engine",
     "assembly": "oil-pan",
@@ -207,7 +207,7 @@ Use exactly one of these values for `role`:
   },
   {
     "id": "oil-drain-plug-1",
-    "source": { "manual": "BB6", "page": 200, "figure": null },
+    "source": { "manual": "{manual}", "page": 200, "figure": null },
     "applies_to": { "trans": null, "trim": null, "my": null, "engine_codes": [] },
     "system": "engine",
     "assembly": "oil-pan",
@@ -245,7 +245,7 @@ Use exactly one of these values for `role`:
 [
   {
     "id": "main-cap-bolt-1",
-    "source": { "manual": "BB6", "page": 140, "figure": "Fig 3-7" },
+    "source": { "manual": "{manual}", "page": 140, "figure": "Fig 3-7" },
     "applies_to": { "trans": null, "trim": null, "my": null, "engine_codes": ["H22A4"] },
     "system": "engine",
     "assembly": "main-bearing-cap",

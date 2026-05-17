@@ -84,7 +84,7 @@ function loadJSON(relPath) {
  */
 function loadPrompt() {
   return readFileSync(
-    join(ROOT, "scripts/prompts/extract-torques-v1.md"),
+    join(ROOT, "scripts/prompts/extract-torques-v2.md"),
     "utf-8",
   );
 }
@@ -383,13 +383,14 @@ export function createProvider(providerName) {
  * Build system + user prompt objects from the loaded prompt template.
  * @param {string} promptText - Contents of extract-torques-v1.md
  * @param {number} pageNum - Page number for context injection
+ * @param {string} manual - Manual name (BB6, OBD1, ARP)
  * @returns {{ system: string, user: string }}
  */
-export function buildPrompt(promptText, pageNum) {
+export function buildPrompt(promptText, pageNum, manual = "BB6") {
   return {
     system:
       "You are an expert automotive technician extracting torque specifications from Honda service manual pages. Output valid JSON only.",
-    user: promptText.replace("{page}", String(pageNum)),
+    user: promptText.replace("{page}", String(pageNum)).replace("{manual}", manual),
   };
 }
 
@@ -746,7 +747,7 @@ export async function extractPage(
   }
 
   const provider = createProvider(modelInfo.provider);
-  const prompt = buildPrompt(promptText, pageNum);
+  const prompt = buildPrompt(promptText, pageNum, manual);
 
   // Find page image
   const imgInfo = findPageImage(manual, pageNum);
@@ -1079,19 +1080,27 @@ export async function main() {
       continue;
     }
 
-    const pageRows = [];
-    for (const mc of pending) {
-      // Apply overrides
-      const cfg = { ...mc };
-      if (modelIdOverride && cfg.model_id !== modelIdOverride) continue;
-      if (runsOverride) cfg.runs = runsOverride;
-      if (temperatureOverride) cfg.temperature = temperatureOverride;
-      if (seedBaseOverride) cfg.seed_base = cfg.seed_base ?? 0;
+    let pageRows = [];
+    try {
+      for (const mc of pending) {
+        // Apply overrides
+        const cfg = { ...mc };
+        if (modelIdOverride && cfg.model_id !== modelIdOverride) continue;
+        if (runsOverride) cfg.runs = runsOverride;
+        if (temperatureOverride) cfg.temperature = temperatureOverride;
+        if (seedBaseOverride) cfg.seed_base = cfg.seed_base ?? 0;
 
-      const rows = await extractPage(m, p, cfg, promptText, dryRun);
-      pageRows.push(...rows);
-      totalRows += rows.length;
-      totalPages++;
+        const rows = await extractPage(m, p, cfg, promptText, dryRun);
+        pageRows.push(...rows);
+        totalRows += rows.length;
+        totalPages++;
+      }
+    } catch (err) {
+      console.error(
+        `  [error] Page ${p}: ${err.message} — skipping page`,
+      );
+      // Continue to next page instead of crashing
+      pageRows = [];
     }
 
     pageResults.set(p, pageRows);

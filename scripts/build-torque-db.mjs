@@ -321,13 +321,26 @@ const tx = db.transaction(() => {
     chStmt.run(ch.id, ch.manual, ch.chapter_name, ch.system, ch.page_start, ch.page_end);
   }
 
-  // 2. Pages
+  // 2. Pages — from chapters + any pages referenced by torque rows
   const pages = buildPages(chapters);
   const pgStmt = db.prepare(
     "INSERT OR REPLACE INTO pages (manual, page, chapter_id, image_path, ocr_text) VALUES (?, ?, ?, ?, ?)"
   );
   for (const [, p] of pages) {
     pgStmt.run(p.manual, p.page, p.chapter_id, p.image_path, p.ocr_text);
+  }
+
+  // Add any pages referenced by torque/ARP rows that aren't in chapters
+  const missingPageStmt = db.prepare(
+    "INSERT OR IGNORE INTO pages (manual, page, chapter_id, image_path, ocr_text) VALUES (?, ?, NULL, ?, NULL)"
+  );
+  for (const row of [...torques, ...arpRows]) {
+    const manual = row.source?.manual || "BB6";
+    const page = row.source?.page;
+    if (page && !pages.has(`${manual}:${page}`)) {
+      const imagePath = row.source?.image_path || `images/${manual.toLowerCase()}/p${page}.webp`;
+      missingPageStmt.run(manual, page, imagePath);
+    }
   }
 
   // 3. Invocations

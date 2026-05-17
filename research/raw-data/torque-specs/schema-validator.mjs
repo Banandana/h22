@@ -480,6 +480,39 @@ const SummaryStatsSchema = z.object({
  */
 
 // ===========================================================================
+// Source manual normalizer — corrects model-returned manual names
+// ===========================================================================
+
+/**
+ * Normalize source.manual from vision-model output to match the known manual.
+ * Vision models sometimes return wrong values:
+ *   - Chapter titles like "Honda Service Manual" (not in VALID_MANUALS)
+ *   - The wrong manual name (e.g., "BB6" when processing OBD1 pages)
+ * This function always overrides with the known manual context from the
+ * invocation record.
+ *
+ * @param {unknown} row - The parsed row object (mutated in place)
+ * @param {string} knownManual - The known manual name from the invocation record
+ * @returns {Record<string, unknown>}
+ */
+export function normalizeSourceManual(row, knownManual) {
+  if (!row || typeof row !== "object") return row;
+
+  // Ensure source is an object (it may be a string or missing)
+  /** @type {Record<string, unknown>} */
+  let src = row.source;
+  if (!src || typeof src !== "object" || Array.isArray(src)) {
+    src = {};
+    row.source = src;
+  }
+
+  // Always override source.manual from known context
+  src.manual = knownManual;
+
+  return row;
+}
+
+// ===========================================================================
 // Public API
 // ===========================================================================
 
@@ -818,6 +851,9 @@ export function validateInvocationParsedRows(invocationRecord) {
   const rejects = [];
 
   for (let i = 0; i < parsed.length; i++) {
+    // Normalize source.manual from known invocation context before validation
+    normalizeSourceManual(parsed[i], record.manual);
+
     const result = validateCanonicalRow(parsed[i]);
     if (result.success) {
       // Primary validated row
