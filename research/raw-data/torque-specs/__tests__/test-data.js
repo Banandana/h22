@@ -217,14 +217,15 @@ export const INVOCATION_MIXED_ROWS = {
       reusable: true,
       oem: true,
     },
-    // Invalid row — missing system
+    // Invalid row — missing required fields that enrichment cannot fill
     {
       id: "BB6-p136-bad",
       source: { manual: "BB6", page: 136 },
+      system: "engine",
       assembly: "test",
       fastener_name: "Bad bolt",
       thread: { nominal_mm: 10, pitch_mm: 1.25, length_mm: null, grade: null },
-      qty: 1,
+      qty: -1, // negative qty is invalid
       role: "cap-screw",
       torque: { steps: [{ pass: 1, nm: 30, kgfm: 3.0, lbft: 22, angle_deg: null }] },
       lubrication: "dry",

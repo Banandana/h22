@@ -287,12 +287,12 @@ describe("validateCanonicalRow — valid", () => {
 // ===========================================================================
 
 describe("validateCanonicalRow — invalid", () => {
-  it("rejects missing system field", () => {
+  it("rejects missing id field", () => {
     const row = { ...fixtures.VALID_CANONICAL_ROW };
-    delete row.system;
+    delete row.id;
     const r = validateCanonicalRow(row);
     assert.strictEqual(r.success, false);
-    assert.ok(r.error.includes("system"));
+    assert.ok(r.error.includes("id"));
   });
 
   it("rejects invalid role enum", () => {
@@ -531,8 +531,8 @@ describe("validateInvocationParsedRows", () => {
   it("separates valid and invalid rows from mixed invocation", () => {
     const { flatRows, rejects } = validateInvocationParsedRows(fixtures.INVOCATION_MIXED_ROWS);
     assert.strictEqual(flatRows.length, 2); // first and third rows are valid
-    assert.strictEqual(rejects.length, 1); // second row is invalid
-    assert.ok(rejects[0].errors.some((e) => e.includes("system")));
+    assert.strictEqual(rejects.length, 1); // second row is invalid (negative qty)
+    assert.ok(rejects[0].errors.some((e) => e.includes("qty")));
   });
 
   it("enriches each flat row with invocation_id", () => {
