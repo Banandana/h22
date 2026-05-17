@@ -1004,26 +1004,60 @@ export async function main() {
   const pageResults = new Map();
 
   /**
-   * Check if a page already has at least one response file.
-   * Skips re-processing to avoid redundant API calls.
+   * Check which models+runs still need processing for a page.
+   * Returns list of (modelConfig, pageNum) tuples that haven't been fully processed.
+   * Skips individual model+run combos that already have response files,
+   * but processes any that are missing.
    */
-  function pageHasResponse(manual, pageNum) {
+  function getPendingRuns(manual, pageNum, matrixProfileModels) {
     const respDir = join(
       ROOT,
       "research/raw-data/torque-specs/responses",
       manual.toLowerCase(),
       String(pageNum),
     );
-    if (!existsSync(respDir)) return false;
-    const files = readdirSync(respDir);
-    return files.some((f) => f.endsWith(".json") && f !== "test-record.json");
+    if (!existsSync(respDir)) {
+      // No responses at all — all pending
+      return matrixProfileModels.map((mc) => ({ ...mc, pageNum }));
+    }
+    const existingFiles = readdirSync(respDir).filter(
+      (f) => f.endsWith(".json") && f !== "test-record.json",
+    );
+    // Parse existing filenames to find which model+run combos exist
+    // Filename format: {provider}__{model}__r{N}__{timestamp}.json
+    const existingCombos = new Set();
+    for (const f of existingFiles) {
+      const match = f.match(/^(.+)__(.+)__r(\d+)__/);
+      if (match) {
+        existingCombos.add(`${match[1]}__${match[2]}__r${match[3]}`);
+      }
+    }
+    // Check each model config
+    const pending = [];
+    for (const mc of matrixProfileModels) {
+      const modelInfo = models[mc.model_id];
+      if (!modelInfo) continue;
+      const provider = modelInfo.provider;
+      const safeProvider = provider.replace(/[\\/:*?"<>|]/g, "_");
+      const safeModel = mc.model_id.replace(/[\\/:*?"<>|]/g, "_");
+      for (let r = 1; r <= mc.runs; r++) {
+        const combo = `${safeProvider}__${safeModel}__r${r}__`;
+        const hasRun = existingCombos.some((c) => c.startsWith(combo));
+        if (!hasRun) {
+          pending.push({ ...mc, pageNum });
+          break; // Only need one pending run to process the whole model
+        }
+      }
+    }
+    return pending;
   }
 
   for (const page of pages) {
     const { manual: m, page: p, chapter } = page;
 
-    // Skip pages that already have response files (avoid redundant API calls)
-    if (pageHasResponse(m, p)) {
+    // Check which model+run combos still need processing
+    const pending = getPendingRuns(m, p, matrix);
+    if (pending.length === 0) {
       pagesSkipped++;
       continue;
     }
@@ -1031,12 +1065,12 @@ export async function main() {
     console.log(`\n--- Page ${p} (${chapter?.chapter_name || "unknown"}) ---`);
 
     if (dryRun) {
-      for (const modelConfig of matrix) {
-        const cfg = { ...modelConfig };
+      for (const mc of pending) {
+        const cfg = { ...mc };
         if (modelIdOverride && cfg.model_id !== modelIdOverride) continue;
         if (runsOverride) cfg.runs = runsOverride;
         if (temperatureOverride) cfg.temperature = temperatureOverride;
-        if (seedBaseOverride) cfg.seed_base = seedBaseOverride;
+        if (seedBaseOverride) cfg.seed_base = cfg.seed_base ?? 0;
         console.log(
           `  [DRY RUN] ${cfg.model_id} run r1 page ${p} temp=${cfg.temperature} seed=${cfg.seed_base || 0}`,
         );
@@ -1046,13 +1080,13 @@ export async function main() {
     }
 
     const pageRows = [];
-    for (const modelConfig of matrix) {
+    for (const mc of pending) {
       // Apply overrides
-      const cfg = { ...modelConfig };
+      const cfg = { ...mc };
       if (modelIdOverride && cfg.model_id !== modelIdOverride) continue;
       if (runsOverride) cfg.runs = runsOverride;
       if (temperatureOverride) cfg.temperature = temperatureOverride;
-      if (seedBaseOverride) cfg.seed_base = seedBaseOverride;
+      if (seedBaseOverride) cfg.seed_base = cfg.seed_base ?? 0;
 
       const rows = await extractPage(m, p, cfg, promptText, dryRun);
       pageRows.push(...rows);
