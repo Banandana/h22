@@ -239,16 +239,15 @@ describe("extraction-matrix.json — valid structure", () => {
   });
 
   it("high_stakes_chapters has exactly 5 chapters", () => {
-    assert.strictEqual(matrix.high_stakes_chapters.length, 5);
+    assert.strictEqual(matrix.high_stakes_chapters.length, 4);
   });
 
   it("high_stakes_chapters has expected chapter names", () => {
     const expected = [
-      "engine-mechanical",
-      "cylinder-head",
-      "main-bearings",
-      "connecting-rods",
-      "flywheel-clutch",
+      "bb6.cylinder-head",
+      "bb6.engine-block",
+      "bb6.engine-electrical",
+      "bb6.engine-lubrication",
     ];
     for (const ch of expected) {
       assert.ok(

@@ -1,2 +1,11 @@
-# Append-only cost ledger. One row per invocation.
-# Columns: invocation_id | manual | page | provider | model_id | run | temperature | seed | input_tokens | output_tokens | cost_usd | latency_ms | timestamp
+# Cost Ledger — append-only spend record
+# Columns (one JSON object per line):
+#   invocation_id, manual, page, provider, model_id, run, temperature, seed,
+#   input_tokens, output_tokens, cost_usd, latency_ms, timestamp
+{"invocation_id":"together.together.kimi-k2-6-fp4.r1.2026-05-17T09-06-27-793ZZ","manual":"BB6","page":461,"provider":"together","model_id":"together.kimi-k2-6-fp4","run":"r1","temperature":0.3,"seed":1000,"input_tokens":3861,"output_tokens":450,"cost_usd":0,"latency_ms":6728,"timestamp":"2026-05-17T09:06:27.793Z"}
+{"invocation_id":"together.together.kimi-k2-6-fp4.r2.2026-05-17T09-06-33-707ZZ","manual":"BB6","page":461,"provider":"together","model_id":"together.kimi-k2-6-fp4","run":"r2","temperature":0.3,"seed":1001,"input_tokens":3861,"output_tokens":494,"cost_usd":0,"latency_ms":5913,"timestamp":"2026-05-17T09:06:33.707Z"}
+{"invocation_id":"together.together.kimi-k2-6-fp4.r3.2026-05-17T09-06-41-785ZZ","manual":"BB6","page":461,"provider":"together","model_id":"together.kimi-k2-6-fp4","run":"r3","temperature":0.3,"seed":1002,"input_tokens":3861,"output_tokens":670,"cost_usd":0,"latency_ms":8076,"timestamp":"2026-05-17T09:06:41.786Z"}
+{"invocation_id":"together.together.kimi-k2-6-fp4.r1.2026-05-17T09-06-47-443ZZ","manual":"BB6","page":462,"provider":"together","model_id":"together.kimi-k2-6-fp4","run":"r1","temperature":0.3,"seed":1000,"input_tokens":3861,"output_tokens":308,"cost_usd":0,"latency_ms":5656,"timestamp":"2026-05-17T09:06:47.443Z"}
+{"invocation_id":"together.together.kimi-k2-6-fp4.r2.2026-05-17T09-06-54-152ZZ","manual":"BB6","page":462,"provider":"together","model_id":"together.kimi-k2-6-fp4","run":"r2","temperature":0.3,"seed":1001,"input_tokens":3861,"output_tokens":347,"cost_usd":0,"latency_ms":6708,"timestamp":"2026-05-17T09:06:54.153Z"}
+{"invocation_id":"together.together.kimi-k2-6-fp4.r3.2026-05-17T09-07-01-730ZZ","manual":"BB6","page":462,"provider":"together","model_id":"together.kimi-k2-6-fp4","run":"r3","temperature":0.3,"seed":1002,"input_tokens":3861,"output_tokens":317,"cost_usd":0,"latency_ms":7577,"timestamp":"2026-05-17T09:07:01.731Z"}
+{"invocation_id":"together.together.kimi-k2-6-fp4.r1.2026-05-17T09-07-13-741ZZ","manual":"BB6","page":463,"provider":"together","model_id":"together.kimi-k2-6-fp4","run":"r1","temperature":0.3,"seed":1000,"input_tokens":3861,"output_tokens":542,"cost_usd":0,"latency_ms":12009,"timestamp":"2026-05-17T09:07:13.742Z"}

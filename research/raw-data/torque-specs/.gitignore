@@ -10,8 +10,6 @@ responses/obd1/**/*.json
 # cache/index.json is committed separately
 
 # Intermediate JSONL outputs (generated from responses/)
-h22-torques-flat.jsonl
-h22-torques-rejects.jsonl
 h22-torques-disputed.jsonl
 h22-torques-arp.jsonl
 h22-torques.jsonl
