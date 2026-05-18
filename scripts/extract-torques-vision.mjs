@@ -390,7 +390,7 @@ export function buildPrompt(promptText, pageNum, manual = "BB6") {
   return {
     system:
       "You are an expert automotive technician extracting torque specifications from Honda service manual pages. Output valid JSON only.",
-    user: promptText.replace("{page}", String(pageNum)).replace("{manual}", manual),
+    user: promptText.replaceAll("{page}", String(pageNum)).replaceAll("{manual}", manual),
   };
 }
 
